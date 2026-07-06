@@ -48,17 +48,24 @@ npm run lint
 ## 프로젝트 구조
 
 ```
-TodayEng-FE/
-├── public/              # 정적 파일 (PWA 아이콘 등)
-├── src/
-│   ├── assets/          # 이미지, 폰트 등 정적 자산
-│   ├── App.tsx          # 루트 컴포넌트
-│   ├── main.tsx         # 앱 진입점
-│   └── index.css        # 전역 스타일
-├── vite.config.ts       # Vite 및 PWA 설정
-├── tailwind.config.js   # Tailwind CSS 설정
-└── tsconfig.json        # TypeScript 설정
+src/
+├── features/               # 기능별 모듈 (팀원이 기능 단위로 담당)
+│   └── auth/               # 로그인 / 회원가입
+│       ├── components/
+│       ├── hooks/
+│       └── api.ts
+├── shared/                 # 여러 기능에서 공유하는 코드
+│   ├── components/         # 공용 UI 컴포넌트 (Button, Input...)
+│   ├── hooks/              # 공용 커스텀 훅
+│   └── types/              # 공통 TypeScript 타입
+├── pages/                  # 라우트 진입점 (얇게 유지)
+├── assets/                 # 이미지, 폰트 등 정적 자산
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
+
+> 새 기능을 추가할 때는 `features/` 아래에 새 폴더를 만들고, 여러 기능에서 쓰는 것만 `shared/`로 올립니다.
 
 ## PWA 설정
 
