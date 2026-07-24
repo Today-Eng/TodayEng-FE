@@ -7,7 +7,7 @@ interface BackHeaderLayoutProps{
 
 export default function BackHeaderLayout({ title, onBack }: BackHeaderLayoutProps) {
   return (
-    <div className='flex gap-4 px-4 py-5'>
+    <div className='mt-[62px] flex gap-4 px-4 py-5'>
         <button onClick={onBack}>
           <img src={chevronLeft} alt="" />
         </button>
