@@ -1,3 +1,6 @@
+// utils
+import { useState } from "react"
+
 // components
 import BackHeaderLayout from "../shared/components/BackHeaderLayout"
 import TextLayout from "../shared/components/TextLayout"
@@ -9,6 +12,19 @@ import quoteIcon from '../assets/icons/quote-down-square.svg'
 import addIcon from '../assets/icons/add_circle_regular.svg'
 
 export default function  RetrospectSetup() {
+    const [previews, setPreviews] = useState<string[]>([])
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const file = e.target.files?.[0]
+        if(!file)
+            return
+        const url = URL.createObjectURL(file)
+        setPreviews(prev => {
+            const next = [...prev];
+            next[index] = url;
+            return next;
+        })
+    }
   return (
     <div>
         <BackHeaderLayout title="회고하기" onBack={()=>{}}/>
@@ -25,9 +41,16 @@ export default function  RetrospectSetup() {
                         <p className="text-caption1 text-gray-500">최대 2장</p>
                     </div>
                     <div className="flex gap-4">
-                        {Array.from({ length: 2}).map((_,index) => (
-                            <div key={index} className="flex-1 aspect-square bg-gray-50 rounded-[24px] flex justify-center items-center">
-                                <img src={addIcon} alt="" />
+                        {Array.from({ length: 2 }).map((_, index) => (
+                            <div key={index} className="flex-1">
+                                {previews[index] ? (
+                                    <img src={previews[index]} className="w-full aspect-square rounded-[24px] object-cover" alt="" />
+                                ) : (
+                                    <label className="w-full aspect-square bg-gray-50 rounded-[24px] flex justify-center items-center">
+                                        <input onChange={(e) => handleFileChange(e, index)} type="file" className="hidden" accept="image/*" />
+                                        <img src={addIcon} alt="" />
+                                    </label>
+                                )}
                             </div>
                         ))}
                     </div>
