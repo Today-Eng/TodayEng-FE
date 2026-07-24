@@ -2,15 +2,15 @@
 import { useState } from "react"
 
 // components
-import BackHeaderLayout from "../shared/components/BackHeaderLayout"
-import TextLayout from "../shared/components/TextLayout"
-import ButtonPair from "../shared/components/ButtonPair"
+import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
+import TextLayout from "@/shared/components/TextLayout"
+import ButtonPair from "@/shared/components/ButtonPair"
 
 // assets
-import galleryIcon from '../assets/icons/gallery.svg'
-import quoteIcon from '../assets/icons/quote-down-square.svg'
-import addIcon from '../assets/icons/add_circle_regular.svg'
-import deleteIcon from '../assets/icons/close_circle_filled.svg'
+import galleryIcon from '@/assets/icons/gallery.svg'
+import quoteIcon from '@/assets/icons/quote-down-square.svg'
+import addIcon from '@/assets/icons/add_circle_regular.svg'
+import deleteIcon from '@/assets/icons/close_circle_filled.svg'
 
 export default function  RetrospectSetup() {
     const [previews, setPreviews] = useState<string[]>([])

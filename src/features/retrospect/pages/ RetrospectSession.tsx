@@ -1,11 +1,11 @@
 // components
-import AiMessage from "../features/retrospect/components/AiMessage"
-import UserMessage from "../features/retrospect/components/UserMessage"
+import AiMessage from "@/features/retrospect/components/AiMessage"
+import UserMessage from "@/features/retrospect/components/UserMessage"
 
 // assets
-import speakIcon from '../assets/icons/mic_regular.svg'
-import checkIcon from '../assets/icons/check_regular.svg'
-import speakingGif from '../assets/speaking.gif'
+import speakIcon from '@/assets/icons/mic_regular.svg'
+import checkIcon from '@/assets/icons/check_regular.svg'
+import speakingGif from '@/assets/speaking.gif'
 
 // utils
 import { useState } from "react"
@@ -32,7 +32,7 @@ export default function  RetrospectSession() {
         
 
         {/* 하단바 */}
-        <div className="fixed bottom-[34px] left-0 right-0 px-4 flex items-center">
+        <div className="fixed z-10 bottom-[34px] left-0 right-0 px-4 flex items-center">
             <button className="w-[74px] h-[42px] bg-error-100 text-error-500 text-[14px] font-semibold rounded-[100px] hover:bg-error-200">종료</button>
 
             {(!isAiSpeaking && speakStatus === 'speaking') && <img src={speakingGif} alt="" className="absolute -top-[120px] left-1/2 -translate-x-1/2"/>}

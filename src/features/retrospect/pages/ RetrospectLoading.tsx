@@ -1,5 +1,5 @@
-import BackHeaderLayout from "../shared/components/BackHeaderLayout"
-import loadingVideo from '../assets/loading.mp4'
+import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
+import loadingVideo from '@/assets/loading.mp4'
 
 export default function  RetrospectLoading() {
   return (
