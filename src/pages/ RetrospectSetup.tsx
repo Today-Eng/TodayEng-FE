@@ -10,9 +10,18 @@ import ButtonPair from "../shared/components/ButtonPair"
 import galleryIcon from '../assets/icons/gallery.svg'
 import quoteIcon from '../assets/icons/quote-down-square.svg'
 import addIcon from '../assets/icons/add_circle_regular.svg'
+import deleteIcon from '../assets/icons/close_circle_filled.svg'
 
 export default function  RetrospectSetup() {
     const [previews, setPreviews] = useState<string[]>([])
+
+    const handleDelete = (index: number) => {
+        setPreviews(prev => {
+            const next = [...prev]
+            next[index] = ''
+            return next
+        })
+    }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const file = e.target.files?.[0]
@@ -25,6 +34,8 @@ export default function  RetrospectSetup() {
             return next;
         })
     }
+
+    
   return (
     <div>
         <BackHeaderLayout title="회고하기" onBack={()=>{}}/>
@@ -44,7 +55,10 @@ export default function  RetrospectSetup() {
                         {Array.from({ length: 2 }).map((_, index) => (
                             <div key={index} className="flex-1">
                                 {previews[index] ? (
-                                    <img src={previews[index]} className="w-full aspect-square rounded-[24px] object-cover" alt="" />
+                                    <div className="relative">
+                                        <img src={previews[index]} className="w-full aspect-square rounded-[24px] object-cover" alt="" />
+                                        <img src={deleteIcon} alt="이미지 삭제" onClick={() => handleDelete(index)} className="absolute top-4 right-4 cursor-pointer"/>
+                                    </div>
                                 ) : (
                                     <label className="w-full aspect-square bg-gray-50 rounded-[24px] flex justify-center items-center">
                                         <input onChange={(e) => handleFileChange(e, index)} type="file" className="hidden" accept="image/*" />
@@ -72,7 +86,7 @@ export default function  RetrospectSetup() {
                </div>
 
             </div>
-            <div className="mt-[38px]">
+            <div className="fixed bottom-[50px] left-0 right-0 px-4">
                 <ButtonPair onSkip={()=>{}} onClick={()=>{}}/>
             </div>
         </div>
