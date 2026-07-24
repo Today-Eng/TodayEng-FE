@@ -1,8 +1,8 @@
-import LogoIcon from "../../../shared/components/icons/LogoIcon"
+import LogoIcon from "@/shared/components/icons/LogoIcon"
 
 export default function RetrospectStartModal() {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+    <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/50">
     <div className="w-[320px] h-[214px] flex flex-col justify-center items-center gap-6 bg-main-500 rounded-[34px] p-4">
         <LogoIcon width={94.21} height={71}/>
         <div className="flex flex-col gap-2 justify-center items-center">
