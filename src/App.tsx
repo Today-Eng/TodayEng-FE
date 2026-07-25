@@ -1,9 +1,24 @@
+// react
+import { Routes, Route } from "react-router-dom";
+
+// retrospect
+import RetrospectSetup from "@/features/retrospect/pages/RetrospectSetup";
+import RetrospectLoading from "@/features/retrospect/pages/RetrospectLoading";
+import RetrospectSession from "@/features/retrospect/pages/RetrospectSession";
+import RetrospectMemo from "@/features/retrospect/pages/RetrospectMemo";
+import RetrospectComplete from "@/features/retrospect/pages/RetrospectComplete"
+
+
 function App() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <h1 className="text-3xl text-title1 font-bold text-main-500">TodayEng</h1>
-    </div>
-  );
+     <Routes>
+      <Route path="/retrospect" element={<RetrospectSetup />} />
+      <Route path="/retrospect-loading" element={<RetrospectLoading />} />
+      <Route path="/retrospect-session" element={<RetrospectSession />} />
+      <Route path="/retrospect-memo" element={<RetrospectMemo />} />
+      <Route path="/retrospect-complete" element={<RetrospectComplete />} />
+    </Routes>
+  )
 }
 
 export default App;
