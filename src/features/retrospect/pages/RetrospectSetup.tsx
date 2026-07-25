@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom"
 import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
 import TextLayout from "@/shared/components/TextLayout"
 import ButtonPair from "@/shared/components/ButtonPair"
+import CloseCircleIcon from "@/shared/components/icons/CloseCircleIcon"
 
 // assets
 import galleryIcon from '@/assets/icons/gallery.svg'
 import quoteIcon from '@/assets/icons/quote-down-square.svg'
 import addIcon from '@/assets/icons/add_circle_regular.svg'
-import deleteIcon from '@/assets/icons/close_circle_filled.svg'
 
 export default function  RetrospectSetup() {
     const navigate = useNavigate()
@@ -43,9 +43,9 @@ export default function  RetrospectSetup() {
     }
     
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen flex flex-col">
         <BackHeaderLayout title="회고하기" />
-        <div className="mt-2 p-4 pb-[120px] h-full overflow-y-auto">
+        <div className="flex-1 min-h-0 mt-2 p-4 pb-[120px] overflow-y-auto">
             <TextLayout mainText={"오늘 하루,\n무슨 일이 있었나요?"} subText="사진, 글 추가로 맞춤형 질문을 준비해드려요" />
             <div className="mt-[51px] flex flex-col gap-6">
                 {/* 이미지 추가 섹션 */}
@@ -63,7 +63,9 @@ export default function  RetrospectSetup() {
                                 {previews[index] ? (
                                     <div className="relative">
                                         <img src={previews[index]} className="w-full aspect-square rounded-[24px] object-cover" alt="" />
-                                        <img src={deleteIcon} alt="이미지 삭제" onClick={() => handleDelete(index)} className="absolute top-4 right-4 cursor-pointer"/>
+                                        <div onClick={() => handleDelete(index)} className="absolute top-4 right-4 cursor-pointer">
+                                            <CloseCircleIcon color="#A6B2BF"/>
+                                        </div>
                                     </div>
                                 ) : (
                                     <label className="w-full aspect-square bg-gray-50 rounded-[24px] flex justify-center items-center">
@@ -85,18 +87,28 @@ export default function  RetrospectSetup() {
                         </div>
                         <p className="text-caption1 text-gray-500">최대 200자</p>
                     </div>
-                    <textarea
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        maxLength={200}
-                        className="w-full h-[177px] border border-gray-200 placeholder:text-gray-300 rounded-[24px] p-4 resize-none"
-                        placeholder="오늘 있었던 일에 대해서 자유롭게 적어주세요"
-                    />
+                    <div className="relative">
+                        <textarea
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            maxLength={200}
+                            className={`w-full h-[177px] border placeholder:text-gray-300 rounded-[24px] p-4 resize-none focus:outline-none ${content ? 'border-gray-800' : 'border-gray-200 focus:border-gray-800'}`}
+                            placeholder="오늘 있었던 일에 대해서 자유롭게 적어주세요"
+                        />
+                        {content && (
+                            <button
+                                onClick={() => setContent('')}
+                                className="absolute top-[14px] right-[16px]"
+                            >
+                                <CloseCircleIcon />
+                            </button>
+                        )}
+                    </div>
                </div>
 
             </div>
             <div className="fixed bottom-[50px] left-0 right-0 px-4">
-                <ButtonPair disabled={!content.trim()} onSkip={()=>{}} onClick={handleSubmit}/>
+                <ButtonPair disabled={!content.trim() && !previews.some(p => p)} onSkip={()=>navigate('/retrospect-loading')} onClick={handleSubmit}/>
             </div>
         </div>
     </div>
