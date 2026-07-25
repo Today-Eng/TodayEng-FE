@@ -14,4 +14,3 @@ export default function ButtonPair({ leftLabel = '건너뛰기', rightLabel = '�
     </div>
   )
 }
-23

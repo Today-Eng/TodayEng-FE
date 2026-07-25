@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import chevronLeft from '../../assets/icons/chevron-left.svg'
+import chevronLeft from '@/assets/icons/chevron-left.svg'
 
 interface BackHeaderLayoutProps{
     title: string
