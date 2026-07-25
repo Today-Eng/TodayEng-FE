@@ -4,7 +4,7 @@ import loadingVideo from '@/assets/loading.mp4'
 export default function  RetrospectLoading() {
   return (
     <div> 
-        <BackHeaderLayout title="회고하기" onBack={()=>{}}/>
+        <BackHeaderLayout title="회고하기" />
         <div className="flex flex-col items-center mt-[78px]">
             <video src={loadingVideo} autoPlay loop muted className="w-[247px] h-[247px]"></video>
             <div className="mt-[30px] flex flex-col items-center">

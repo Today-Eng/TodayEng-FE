@@ -1,4 +1,9 @@
+// react
+import { useState } from "react"
+import { useNavigate } from "react-router-dom";
+
 // components
+import RetrospectStartModal from "@/features/retrospect/components/RetrospectStartModal";
 import AiMessage from "@/features/retrospect/components/AiMessage"
 import UserMessage from "@/features/retrospect/components/UserMessage"
 import Modal from "@/shared/components/Modal"
@@ -8,13 +13,12 @@ import speakIcon from '@/assets/icons/mic_regular.svg'
 import checkIcon from '@/assets/icons/check_regular.svg'
 import speakingGif from '@/assets/speaking.gif'
 
-// utils
-import { useState } from "react"
-
 type SpeakStatus =  'idle' | 'speaking'
 
 export default function  RetrospectSession() {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const navigate = useNavigate()
+    const [isStartModalOpen, setIsStartModalOpen] = useState(true)
+    const [isStopModalOpen, setIsStopModalOpen] = useState(false)
     const [isAiSpeaking, setIsAiSpeaking] = useState(false) // 비활성화 일때
     const [speakStatus, setSpeakStatus] = useState<SpeakStatus>('idle')
 
@@ -22,8 +26,12 @@ export default function  RetrospectSession() {
         setSpeakStatus(prev => prev === 'idle' ? 'speaking' : 'idle')
     }
 
-    const handleModal = () => {
-        setIsModalOpen(!isModalOpen)
+    const handleStartModal = () => {
+        setIsStartModalOpen(false)
+    }
+
+    const handleStopModal = () => {
+        setIsStopModalOpen(!isStopModalOpen)
     }
 
   return (
@@ -39,7 +47,7 @@ export default function  RetrospectSession() {
 
         {/* 하단바 */}
         <div className="fixed z-10 bottom-[34px] left-0 right-0 px-4 flex items-center">
-            <button onClick={handleModal} className="w-[74px] h-[42px] bg-error-100 text-error-500 text-[14px] font-semibold rounded-[100px] hover:bg-error-200">종료</button>
+            <button onClick={handleStopModal} className="w-[74px] h-[42px] bg-error-100 text-error-500 text-[14px] font-semibold rounded-[100px] hover:bg-error-200">종료</button>
 
             {(!isAiSpeaking && speakStatus === 'speaking') && <img src={speakingGif} alt="" className="absolute -top-[120px] left-1/2 -translate-x-1/2"/>}
 
@@ -52,9 +60,12 @@ export default function  RetrospectSession() {
                 {speakStatus === 'speaking' ? <img src={checkIcon} alt="" /> : <img src={speakIcon} alt="" />}
             </button>
         </div>
+        {isStartModalOpen && (
+            <RetrospectStartModal onStart={handleStartModal}/>
+        )}
 
-        {isModalOpen && (
-            <Modal mainText="회고를 종료할까요?" subText={"지금까지 나눈 대화는 저장되지만,\n오늘 회고는 여기서 끝나요."} leftButtonText="계속하기" rightButtonText="종료하기" onLeftClick={handleModal} onRightClick={()=>{}}/>
+        {isStopModalOpen && (
+            <Modal mainText="회고를 종료할까요?" subText={"지금까지 나눈 대화는 저장되지만,\n오늘 회고는 여기서 끝나요."} leftButtonText="계속하기" rightButtonText="종료하기" onLeftClick={handleStopModal} onRightClick={() => navigate('/retrospect-memo')}/>
         )}
     </div>
   )

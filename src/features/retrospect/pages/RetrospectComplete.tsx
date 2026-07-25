@@ -1,8 +1,14 @@
+// react
+import { useNavigate } from "react-router-dom"
+
+// components
 import NoteIcon from "@/shared/components/icons/NoteIcon"
 import TextLayout from "@/shared/components/TextLayout"
 import Button from "@/shared/components/Button"
 
 export default function RetrospectComplete() {
+  const navigate = useNavigate()
+  
   return (
     <div className="h-screen flex flex-col gap-20 justify-center items-center">
         <div className="flex flex-col justify-center items-center">
