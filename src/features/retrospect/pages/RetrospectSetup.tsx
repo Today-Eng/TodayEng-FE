@@ -88,6 +88,7 @@ export default function  RetrospectSetup() {
                     <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
+                        maxLength={200}
                         className="w-full h-[177px] border border-gray-200 placeholder:text-gray-300 rounded-[24px] p-4 resize-none"
                         placeholder="오늘 있었던 일에 대해서 자유롭게 적어주세요"
                     />
