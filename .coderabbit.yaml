@@ -8,6 +8,9 @@ reviews:
   auto_review:
     enabled: true
     drafts: false
+    base_branches:
+      - main
+      - dev
   path_instructions:
     - path: "src/components/**"
       instructions: "재사용 가능한 공통 컴포넌트입니다. props 타입 정의, 접근성(a11y), 재사용성을 중점적으로 검토해주세요."
