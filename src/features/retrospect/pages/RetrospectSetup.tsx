@@ -71,9 +71,9 @@ export default function  RetrospectSetup() {
                                 {previews[index] ? (
                                     <div className="relative">
                                         <img src={previews[index]} className="w-full aspect-square rounded-[24px] object-cover" alt="" />
-                                        <div onClick={() => handleDelete(index)} className="absolute top-4 right-4 cursor-pointer">
+                                        <button onClick={() => handleDelete(index)} className="absolute top-4 right-4 cursor-pointer" aria-label="이미지 삭제">
                                             <CloseCircleIcon color="#A6B2BF"/>
-                                        </div>
+                                        </button>
                                     </div>
                                 ) : (
                                     <label className="w-full aspect-square bg-gray-50 rounded-[24px] flex justify-center items-center">
