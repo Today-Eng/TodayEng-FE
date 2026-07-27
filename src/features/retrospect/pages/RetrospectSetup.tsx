@@ -1,5 +1,5 @@
 // react
-import { useState } from "react" 
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 // components
@@ -18,21 +18,29 @@ export default function  RetrospectSetup() {
     const [content, setContent] = useState('')
     const [previews, setPreviews] = useState<string[]>([])
 
+    useEffect(() => {
+        return () => {
+            previews.forEach(url => { if (url) URL.revokeObjectURL(url) })
+        }
+    }, [])
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const file = e.target.files?.[0]
         if(!file)
             return
         const url = URL.createObjectURL(file)
         setPreviews(prev => {
-            const next = [...prev];
-            next[index] = url;
-            return next;
+            const next = [...prev]
+            if (next[index]) URL.revokeObjectURL(next[index])
+            next[index] = url
+            return next
         })
     }
 
     const handleDelete = (index: number) => {
         setPreviews(prev => {
             const next = [...prev]
+            if (next[index]) URL.revokeObjectURL(next[index])
             next[index] = ''
             return next
         })
