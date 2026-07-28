@@ -19,7 +19,7 @@ export default function  RetrospectSession() {
     const navigate = useNavigate()
     const [isStartModalOpen, setIsStartModalOpen] = useState(true)
     const [isStopModalOpen, setIsStopModalOpen] = useState(false)
-    const [isAiSpeaking, setIsAiSpeaking] = useState(false) // 비활성화 일때
+    const [isAiSpeaking, _setIsAiSpeaking] = useState(false) // 비활성화 일때
     const [speakStatus, setSpeakStatus] = useState<SpeakStatus>('idle')
 
     const handleSpeak = () => {
