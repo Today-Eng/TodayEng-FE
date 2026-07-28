@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+      sans: ['Pretendard', 'system-ui', 'sans-serif'],
+      },
       colors: {
         main: {
           100: "#F4F0FA",
