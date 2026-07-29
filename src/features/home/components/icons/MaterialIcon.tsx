@@ -1,7 +1,7 @@
-import timeIcon from "@/assets/icons/home-time.svg"
-import weatherIcon from "@/assets/icons/home-weather.svg"
-import calendarIcon from "@/assets/icons/home-calendar.svg"
-import musicIcon from "@/assets/icons/home-music.svg"
+import timeIcon from "@/assets/icons/home/home-time.svg"
+import weatherIcon from "@/assets/icons/home/home-weather.svg"
+import calendarIcon from "@/assets/icons/home/home-calendar.svg"
+import musicIcon from "@/assets/icons/home/home-music.svg"
 
 export type MaterialIconType =
   | "time"

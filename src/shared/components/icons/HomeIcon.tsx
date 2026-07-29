@@ -1,5 +1,5 @@
-import homeEmpty from "@/assets/icons/home-empty.svg"
-import homeFilled from "@/assets/icons/home-filled.svg"
+import homeEmpty from "@/assets/icons/bottomNav/home-empty.svg"
+import homeFilled from "@/assets/icons/bottomNav/home-filled.svg"
 
 interface HomeIconProps {
   active?: boolean

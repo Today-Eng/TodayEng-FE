@@ -1,5 +1,5 @@
-import myPageEmpty from "@/assets/icons/my-empty.svg"
-import myPageFilled from "@/assets/icons/my-filled.svg"
+import myPageEmpty from "@/assets/icons/bottomNav/my-empty.svg"
+import myPageFilled from "@/assets/icons/bottomNav/my-filled.svg"
 
 interface MyPageIconProps {
   active?: boolean

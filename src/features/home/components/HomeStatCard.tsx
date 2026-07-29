@@ -1,5 +1,5 @@
-import editIcon from "@/assets/icons/home-edit.svg"
-import arrowIcon from "@/assets/icons/home-arrow.svg"
+import editIcon from "@/assets/icons/home/home-edit.svg"
+import arrowIcon from "@/assets/icons/home/home-arrow.svg"
 
 interface HomeStatCardProps {
   label: string

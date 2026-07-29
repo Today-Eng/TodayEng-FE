@@ -1,4 +1,6 @@
 import type { HomeMaterials } from "../types"
+import { useNavigate } from "react-router-dom"
+
 
 import MaterialItem from "./MaterialItem"
 
@@ -15,6 +17,7 @@ export default function TodayMaterials({
     Boolean(
       materials.calendar.representativeEvent,
     )
+  const navigate = useNavigate()
 
   const spotifyActive =
     materials.spotify.connected &&
@@ -30,7 +33,6 @@ export default function TodayMaterials({
     ? `${materials.spotify.trackTitle} · ${materials.spotify.artistName}`
     : "스포티파이 연동하기"
 
-    // 연동된 소재 연동할 때 각각 아이콘에 매핑 필요
   return (
     <section>
       <h2 className="text-headline font-semibold text-black">
@@ -56,12 +58,22 @@ export default function TodayMaterials({
           icon="music"
           label={spotifyLabel}
           active={spotifyActive}
-        />
+          onClick={
+              spotifyActive
+              ? undefined
+              : () => navigate("/mypage/spotify")
+          }
+          />
 
         <MaterialItem
           icon="calendar"
           label={calendarLabel}
           active={calendarActive}
+          onClick={
+              calendarActive
+              ? undefined
+              : () => navigate("/mypage/calendar")
+          }
         />
       </div>
     </section>
