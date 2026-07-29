@@ -17,15 +17,31 @@ export default function AppRoutes() {
 
       <Route path="/home" element={<HomePage />} />
 
-      <Route path="/retrospect">
-        <Route index element={<RetrospectSetup />} />
-        <Route path="loading" element={<RetrospectLoading />} />
-        <Route path="session" element={<RetrospectSession />} />
-        <Route path="memo" element={<RetrospectMemo />} />
-        <Route path="complete" element={<RetrospectComplete />} />
-      </Route>
+      <Route
+        path="/retrospect"
+        element={<RetrospectSetup />}
+      />
+      <Route
+        path="/retrospect-loading"
+        element={<RetrospectLoading />}
+      />
+      <Route
+        path="/retrospect-session"
+        element={<RetrospectSession />}
+      />
+      <Route
+        path="/retrospect-memo"
+        element={<RetrospectMemo />}
+      />
+      <Route
+        path="/retrospect-complete"
+        element={<RetrospectComplete />}
+      />
 
-      <Route path="*" element={<Navigate to="/home" replace />} />
+      <Route
+        path="*"
+        element={<Navigate to="/home" replace />}
+      />
     </Routes>
   );
 }
