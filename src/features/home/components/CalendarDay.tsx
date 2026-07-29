@@ -127,7 +127,7 @@ export default function CalendarDay({
 
       <span
         className={[
-          "relative z-10",
+          "relative z-10 translate-y-px",
           "flex h-[18px] min-w-4 items-center justify-center",
           "text-footnote font-normal leading-[18px]",
           textClassName,

@@ -112,7 +112,6 @@ export default function DiaryCalendar({
       </header>
 
       <div className="mt-4 border-t border-[#E4E5E7] pt-4">
-        {/* 요일: 28px 셀 7개 + space-between */}
         <div className="grid grid-cols-[repeat(7,28px)] justify-between">
           {WEEKDAYS.map((weekday) => (
             <div
@@ -133,8 +132,7 @@ export default function DiaryCalendar({
           ))}
         </div>
 
-        {/* 날짜: 28px 셀, 행 사이 12px */}
-        <div className="mt-3 grid grid-cols-[repeat(7,28px)] justify-between gap-y-3">
+        <div className="mt-2 grid grid-cols-[repeat(7,28px)] justify-between gap-y-3">
           {days.map((item, index) => {
             if (!item) {
               return (
