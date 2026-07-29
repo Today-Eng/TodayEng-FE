@@ -14,8 +14,15 @@ export default function RetrospectComplete() {
             </div>
         </div>
         <div className="w-full px-4 flex flex-col gap-1">
-            <Button type="sub" label="홈화면 바로가기" onClick={()=>{}}/>
-            <Button label="전체 교정문 보러가기" onClick={()=>{}}/>
+            <Button
+                type="sub"
+                label="홈화면 바로가기"
+                onClick={() => navigate("/home")}
+            />
+            <Button
+                label="전체 교정문 보러가기"
+                onClick={() => {}}
+            />
         </div>
     </div>
   )
