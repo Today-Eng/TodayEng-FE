@@ -1,7 +1,6 @@
-import questionIcon from "@/assets/icons/question-icon.svg"
-import answerIcon from "@/assets/icons/answer-icon.svg"
 import detailArrow from "@/assets/icons/detail-arrow.svg"
 
+import DiaryQuestionAnswer from "@/shared/components/DiaryQna"
 import KeywordList from "@/shared/components/KeywordList"
 
 import type { DiaryPreviewData } from "@/shared/types/diary"
@@ -20,7 +19,7 @@ export default function DiaryPreview({
       <header className="flex items-start justify-between gap-3">
         <div className="flex shrink-0 items-center gap-[6px]">
           <strong className="text-subheadline font-semibold text-black">
-            {formatDiaryDate(diary.date)}  
+            {formatDiaryDate(diary.date)}
           </strong>
 
           <span className="text-footnote font-normal text-grey-600">
@@ -31,30 +30,11 @@ export default function DiaryPreview({
         <KeywordList keywords={diary.keywords} />
       </header>
 
-      <div className="mt-4 space-y-2">
-        <div className="flex items-start gap-[9px]">
-          <img
-            src={questionIcon}
-            alt=""
-            className="h-5 w-5 shrink-0"
-          />
-
-          <p className="text-footnote font-normal text-black">
-            {diary.firstQuestion}
-          </p>
-        </div>
-
-        <div className="flex items-start gap-[9px]">
-          <img
-            src={answerIcon}
-            alt=""
-            className="h-5 w-5 shrink-0"
-          />
-
-          <p className="text-footnote font-normal text-black">
-            {diary.firstAnswer}
-          </p>
-        </div>
+      <div className="mt-4">
+        <DiaryQuestionAnswer
+          question={diary.firstQuestion}
+          answer={diary.firstAnswer}
+        />
       </div>
 
       {onDetailClick && (
