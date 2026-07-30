@@ -1,7 +1,7 @@
 import CalendarDay from "./CalendarDay"
-import DiaryPreview from "./DiaryPreview"
 import MaterialIcon from "./icons/MaterialIcon"
 
+import DiaryPreview from "@/shared/components/DiaryPreview"
 import PrevArrowIcon from "@/shared/components/icons/ArrowLeftIcon"
 import NextArrowIcon from "@/shared/components/icons/ArrowRightIcon"
 
@@ -161,138 +161,112 @@ export default function DiaryCalendar({
       </div>
 
       <div className="mt-4 border-t border-[#E4E5E7] pt-4">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex shrink-0 items-center gap-[6px]">
-            <strong className="text-subheadline font-semibold text-black">
-              {formatSelectedDate(selectedDate)}
-            </strong>
-
-            <span className="text-footnote font-normal text-grey-600">
-              {getKoreanDayOfWeek(
-                selectedDayOfWeek,
-              )}
-            </span>
-          </div>
-
-          {selectedDiary && (
-            <div className="flex flex-wrap justify-end gap-1">
-              {selectedDiary.keywords.map(
-                (keyword) => (
-                  <span
-                    key={keyword}
-                    className="
-                      rounded-full
-                      bg-sub-100
-                      px-[6px]
-                      py-1
-                      text-caption2
-                      font-semibold
-                      text-sub-500
-                    "
-                  >
-                    {keyword}
-                  </span>
-                ),
-              )}
-            </div>
-          )}
-        </div>
-
-        {selectedDiary && (
-          <DiaryPreview
+        {selectedDiary ? (
+            <DiaryPreview
             diary={selectedDiary}
             onDetailClick={onDiaryDetail}
-          />
-        )}
+            />
+        ) : (
+            <>
+            <div className="flex items-center gap-[6px]">
+                <strong className="text-subheadline font-semibold text-black">
+                {formatSelectedDate(selectedDate)}
+                </strong>
 
-        {!selectedDiary && isWritable && (
-          <div className="mt-2">
-            <div
-              className="
-                flex
-                h-9
-                items-center
-                justify-center
-                gap-1
-                rounded-full
-                bg-grey-50
-                px-3
-                text-footnote
-                text-grey-600
-              "
-            >
-              <img
-                src={homeMicro}
-                alt=""
-                className="h-[18px] w-[18px]"
-              />
-
-              영어로 질문에 답하며 하루를 정리해보세요
+                <span className="text-footnote font-normal text-grey-600">
+                {getKoreanDayOfWeek(selectedDayOfWeek)}
+                </span>
             </div>
 
-            <button
-              type="button"
-              onClick={onRetrospect}
-              className="
-                mt-2
-                flex
-                h-[42px]
-                w-full
-                items-center
-                justify-center
-                gap-[2px]
-                rounded-full
-                bg-[linear-gradient(180deg,rgba(119,76,190,0.9)_0%,#774CBE_100%)]
-                px-4
-                text-[14px]
-                font-semibold
-                leading-none
-                text-white
-              "
-            >
-              <span>회고하기</span>
+            {isWritable && (
+                <div className="mt-2">
+                <div
+                    className="
+                    flex
+                    h-9
+                    items-center
+                    justify-center
+                    gap-1
+                    rounded-full
+                    bg-grey-50
+                    px-3
+                    text-footnote
+                    text-grey-600
+                    "
+                >
+                    <img
+                    src={homeMicro}
+                    alt=""
+                    className="h-[18px] w-[18px]"
+                    />
 
-              <img
-                src={homeRetro}
-                alt=""
-                className="h-[19px] w-[18px] shrink-0"
-              />
-            </button>
-          </div>
+                    영어로 질문에 답하며 하루를 정리해보세요
+                </div>
+
+                <button
+                    type="button"
+                    onClick={onRetrospect}
+                    className="
+                    mt-2
+                    flex
+                    h-[42px]
+                    w-full
+                    items-center
+                    justify-center
+                    gap-[2px]
+                    rounded-full
+                    bg-[linear-gradient(180deg,rgba(119,76,190,0.9)_0%,#774CBE_100%)]
+                    px-4
+                    text-[14px]
+                    font-semibold
+                    leading-none
+                    text-white
+                    "
+                >
+                    <span>회고하기</span>
+
+                    <img
+                    src={homeRetro}
+                    alt=""
+                    className="h-[19px] w-[18px] shrink-0"
+                    />
+                </button>
+                </div>
+            )}
+
+            {isExpired && (
+                <div
+                className="
+                    mt-2
+                    flex
+                    min-h-[82px]
+                    flex-col
+                    items-center
+                    justify-center
+                    rounded-[38px]
+                    bg-grey-50
+                    px-6
+                    py-2
+                    text-center
+                "
+                >
+                <MaterialIcon
+                    type="time"
+                    active={false}
+                />
+
+                <p className="mt-1 text-subheadline font-semibold text-grey-600">
+                    회고 기간이 지났어요
+                </p>
+
+                <p className="mt-1 text-footnote font-normal text-grey-500">
+                    7일이 지나면 그날의 기록을 남길 수 없어요
+                </p>
+                </div>
+            )}
+            </>
         )}
-
-        {!selectedDiary && isExpired && (
-          <div
-            className="
-              mt-3
-              flex
-              min-h-[82px]
-              flex-col
-              items-center
-              justify-center
-              rounded-[38px]
-              bg-grey-50
-              px-6
-              py-2
-              text-center
-            "
-          >
-            <MaterialIcon
-              type="time"
-              active={false}
-            />
-
-            <p className="mt-1 text-subheadline font-semibold text-grey-600">
-              회고 기간이 지났어요
-            </p>
-
-            <p className="mt-1 text-footnote font-normal text-grey-500">
-              7일이 지나면 그날의 기록을 남길 수
-              없어요
-            </p>
-          </div>
-        )}
-      </div>
+        </div>
     </section>
   )
 }

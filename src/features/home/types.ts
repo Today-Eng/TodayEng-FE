@@ -1,11 +1,9 @@
-export type DayOfWeek =
-  | "MONDAY"
-  | "TUESDAY"
-  | "WEDNESDAY"
-  | "THURSDAY"
-  | "FRIDAY"
-  | "SATURDAY"
-  | "SUNDAY"
+import type { DayOfWeek } from "@/shared/types/diary"
+
+export type {
+  DayOfWeek,
+  DiaryPreviewData,
+} from "@/shared/types/diary"
 
 export type DiaryStatus =
   | "NOT_STARTED"
@@ -69,15 +67,6 @@ export interface HomeMaterials {
     trackTitle: string | null
     artistName: string | null
   }
-}
-
-export interface DiaryPreviewData {
-  diaryId: number
-  date: string
-  dayOfWeek: DayOfWeek
-  keywords: string[]
-  firstQuestion: string
-  firstAnswer: string
 }
 
 export type CalendarDayStatus =

@@ -4,11 +4,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "@/features/home/pages/HomePage";
 
 // retrospect
-import RetrospectSetup from "@/features/retrospect/pages/RetrospectSetup";
-import RetrospectLoading from "@/features/retrospect/pages/RetrospectLoading";
-import RetrospectSession from "@/features/retrospect/pages/RetrospectSession";
-import RetrospectMemo from "@/features/retrospect/pages/RetrospectMemo";
-import RetrospectComplete from "@/features/retrospect/pages/RetrospectComplete";
+import RetrospectSetup from "@/features/retrospect/create/pages/RetrospectSetup";
+import RetrospectLoading from "@/features/retrospect/create/pages/RetrospectLoading";
+import RetrospectSession from "@/features/retrospect/create/pages/RetrospectSession";
+import RetrospectMemo from "@/features/retrospect/create/pages/RetrospectMemo";
+import RetrospectComplete from "@/features/retrospect/create/pages/RetrospectComplete";
 
 export default function AppRoutes() {
   return (
