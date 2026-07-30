@@ -1,9 +1,10 @@
 import type { EnglishLevel, LoginResponse } from '@/features/auth/api';
 
-const ACCESS_TOKEN_KEY = 'todayeng.accessToken';
-const REFRESH_TOKEN_KEY = 'todayeng.refreshToken';
+const AUTHENTICATED_KEY = 'todayeng.authenticated';
 const ONBOARDING_COMPLETED_KEY = 'todayeng.onboardingCompleted';
 const ONBOARDING_DRAFT_KEY = 'todayeng.onboardingDraft';
+const LEGACY_ACCESS_TOKEN_KEY = 'todayeng.accessToken';
+const LEGACY_REFRESH_TOKEN_KEY = 'todayeng.refreshToken';
 
 export interface OnboardingDraft {
   nickname?: string;
@@ -11,25 +12,18 @@ export interface OnboardingDraft {
   interestTagIds?: number[];
 }
 
-export function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
-}
-
-export function getRefreshToken() {
-  return localStorage.getItem(REFRESH_TOKEN_KEY);
-}
-
 export function isAuthenticated() {
-  return Boolean(getAccessToken());
+  return localStorage.getItem(AUTHENTICATED_KEY) === 'true';
 }
 
 export function hasCompletedOnboarding() {
   return localStorage.getItem(ONBOARDING_COMPLETED_KEY) === 'true';
 }
 
-export function saveSession({ accessToken, refreshToken, isNewUser }: LoginResponse) {
-  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-  localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+export function saveSession({ isNewUser }: LoginResponse) {
+  localStorage.removeItem(LEGACY_ACCESS_TOKEN_KEY);
+  localStorage.removeItem(LEGACY_REFRESH_TOKEN_KEY);
+  localStorage.setItem(AUTHENTICATED_KEY, 'true');
   localStorage.setItem(ONBOARDING_COMPLETED_KEY, String(!isNewUser));
 
   if (!isNewUser) {
@@ -43,8 +37,9 @@ export function completeOnboarding() {
 }
 
 export function clearSession() {
-  localStorage.removeItem(ACCESS_TOKEN_KEY);
-  localStorage.removeItem(REFRESH_TOKEN_KEY);
+  localStorage.removeItem(LEGACY_ACCESS_TOKEN_KEY);
+  localStorage.removeItem(LEGACY_REFRESH_TOKEN_KEY);
+  localStorage.removeItem(AUTHENTICATED_KEY);
   localStorage.removeItem(ONBOARDING_COMPLETED_KEY);
   sessionStorage.removeItem(ONBOARDING_DRAFT_KEY);
 }

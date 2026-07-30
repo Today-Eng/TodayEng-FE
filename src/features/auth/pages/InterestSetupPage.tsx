@@ -98,10 +98,9 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
 
   return (
     <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white pb-24 text-black">
-
       <div className="px-4 pt-4">
         <section className="flex flex-col gap-4">
-          <OnboardingProgress currentStep={2} />
+          <OnboardingProgress currentStep={3} />
 
           <div className="flex flex-col gap-1">
             <h1 className="whitespace-pre-line text-title2 font-semibold tracking-[0.35px]">
