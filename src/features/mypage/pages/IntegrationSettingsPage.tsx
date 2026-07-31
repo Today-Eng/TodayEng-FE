@@ -40,7 +40,7 @@ export default function IntegrationSettingsPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="mx-auto min-h-screen w-full max-w-[402px]">
+      <div className="min-h-screen w-full">
         <BackHeaderLayout title="연동 관리" />
 
         <section aria-labelledby="linked-accounts-heading">

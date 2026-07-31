@@ -5,44 +5,14 @@ import ellipse16 from '@/features/auth/assets/ellipse-16.svg';
 import ellipse17 from '@/features/auth/assets/ellipse-17.svg';
 import ellipse18 from '@/features/auth/assets/ellipse-18.svg';
 import ellipse19 from '@/features/auth/assets/ellipse-19.svg';
-import googleBlue from '@/features/auth/assets/google-blue.svg';
-import googleGreen from '@/features/auth/assets/google-green.svg';
-import googleRed from '@/features/auth/assets/google-red.svg';
-import googleYellow from '@/features/auth/assets/google-yellow.svg';
 import todayEngCharacter from '@/features/auth/assets/todayeng-character.svg';
 import { ApiError, loginWithGoogle } from '@/features/auth/api';
+import GoogleIcon from '@/features/auth/components/GoogleIcon';
 import { requestGoogleIdToken } from '@/features/auth/googleIdentity';
 import { saveSession } from '@/features/auth/session';
 
 interface LoginPageProps {
   onGoogleLogin?: () => void;
-}
-
-function GoogleIcon() {
-  return (
-    <span className="relative block size-6 shrink-0 overflow-hidden" aria-hidden="true">
-      <img
-        src={googleRed}
-        alt=""
-        className="absolute bottom-[12.41%] left-[51%] right-[0.05%] top-[40.75%] h-auto w-auto"
-      />
-      <img
-        src={googleYellow}
-        alt=""
-        className="absolute bottom-[0.34%] left-[5.44%] right-[15.23%] top-[59.68%] h-auto w-auto"
-      />
-      <img
-        src={googleBlue}
-        alt=""
-        className="absolute bottom-[27.8%] left-0 right-[78.02%] top-[27.22%] h-auto w-auto"
-      />
-      <img
-        src={googleGreen}
-        alt=""
-        className="absolute bottom-[60.03%] left-[5.44%] right-[14.89%] top-0 h-auto w-auto"
-      />
-    </span>
-  );
 }
 
 export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
@@ -77,7 +47,7 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] overflow-hidden bg-gradient-to-b from-main-500 to-main-400">
+    <main className="relative min-h-dvh w-full overflow-hidden bg-gradient-to-b from-main-500 to-main-400">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <img
           src={ellipse19}
@@ -128,7 +98,7 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
           disabled={isLoading}
           className="absolute left-1/2 top-[581px] flex h-[54px] w-[calc(100%-32px)] -translate-x-1/2 items-center justify-center gap-1 rounded-full bg-white px-5 py-[14px] text-headline font-semibold tracking-[-0.41px] text-black transition-transform active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
-          <GoogleIcon />
+          <GoogleIcon className="size-6 shrink-0" />
           <span className="px-2">{isLoading ? '로그인 중...' : 'Google 로 로그인'}</span>
         </button>
         {errorMessage && (

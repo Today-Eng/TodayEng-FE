@@ -71,7 +71,7 @@ export default function LearningSettingsPage() {
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white text-black">
+    <main className="relative min-h-dvh w-full bg-white text-black">
       <header className="relative">
         <BackHeaderLayout title="학습 설정" />
         <button
