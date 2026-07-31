@@ -54,7 +54,6 @@ export default function ExplanationBottomSheet({
           left-1/2
           max-h-[78dvh]
           w-full
-          max-w-[402px]
           -translate-x-1/2
           overflow-y-auto
           rounded-t-[32px]

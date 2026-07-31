@@ -54,7 +54,6 @@ export default function MoreBottomSheet({
           bottom-0
           left-1/2
           w-full
-          max-w-[402px]
           -translate-x-1/2
           rounded-t-[32px]
           bg-white

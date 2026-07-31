@@ -70,7 +70,6 @@ export default function MonthBottomSheet({
           left-1/2
           max-h-[72dvh]
           w-full
-          max-w-[402px]
           -translate-x-1/2
           overflow-hidden
           rounded-t-[32px]
