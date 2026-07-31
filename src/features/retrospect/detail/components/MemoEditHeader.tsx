@@ -17,18 +17,17 @@ export default function RetrospectMemoEditHeader({
     <header
       className="
         fixed
+        inset-x-0
         top-0
-        left-1/2
         z-50
-        mt-[62px]
         flex
-        h-[68px]
+        h-[130px]
         w-full
-        -translate-x-1/2
-        items-center
+        items-end
         justify-between
         bg-white
         px-4
+        pb-5
       "
     >
       <div className="flex items-center gap-4">

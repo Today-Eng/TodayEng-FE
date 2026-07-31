@@ -84,7 +84,7 @@ export default function RetrospectDetailPage() {
           min-h-dvh
           w-full
           pb-[75px]
-          pt-[140px]
+          pt-[130px]
         "
       >
         <RetrospectDetailHeader

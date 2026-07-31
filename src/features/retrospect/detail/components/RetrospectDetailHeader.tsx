@@ -18,18 +18,17 @@ export default function RetrospectDetailHeader({
     <header
       className="
         fixed
+        inset-x-0
         top-0
-        left-1/2
         z-50
-        w-full
-        -translate-x-1/2
         flex
-        items-center
+        h-[130px]
+        w-full
+        items-end
         justify-between
         bg-white
         px-4
-        py-5
-        mt-[62px]
+        pb-5
       "
     >
       <div className="flex items-center gap-4">
