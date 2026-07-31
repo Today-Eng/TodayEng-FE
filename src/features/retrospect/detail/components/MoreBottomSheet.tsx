@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import deleteIcon from "@/assets/icons/retrospect/delete-icon.svg"
+import deleteIcon from "@/assets/icons/retrospect/delete-icon-temp.svg"
 import editIcon from "@/assets/icons/retrospect/memo-edit.svg"
 
 interface MoreBottomSheetProps {
