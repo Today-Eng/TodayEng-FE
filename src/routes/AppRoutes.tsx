@@ -17,7 +17,6 @@ import MyPage from '@/features/mypage/pages/MyPage';
 import ProfileSettingsPage from '@/features/mypage/pages/ProfileSettingsPage';
 import LearningSettingsPage from '@/features/mypage/pages/LearningSettingsPage';
 import InterestSettingsPage from '@/features/mypage/pages/InterestSettingsPage';
-import IntegrationSettingsPage from '@/features/mypage/pages/IntegrationSettingsPage';
 
 // retrospect
 import RetrospectSetup from '@/features/retrospect/pages/RetrospectSetup';
@@ -106,8 +105,8 @@ export default function AppRoutes() {
         path="/home"
         element={
           <>
-            {/* TODO: 회원가입 없이 홈 접근 테스트가 끝나면 MemberRoute 주석 해제 */}
-            {/*  <MemberRoute>  */}
+          {/* TODO: 회원가입 없이 홈 접근 테스트가 끝나면 MemberRoute 주석 해제 */}
+           {/*  <MemberRoute>  */}
             <HomePage />
             {/* </MemberRoute>  */}
           </>
@@ -158,9 +157,9 @@ export default function AppRoutes() {
       <Route
         path="/mypage"
         element={
-          //TODO: 주석 제거
-          // <MemberRoute>
-          <MyPage />
+           //TODO: 주석 제거 
+          // <MemberRoute>  
+            <MyPage />
           // </MemberRoute>
         }
       />
@@ -185,14 +184,6 @@ export default function AppRoutes() {
         element={
           <MemberRoute>
             <InterestSettingsPage />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/mypage/integrations"
-        element={
-          <MemberRoute>
-            <IntegrationSettingsPage />
           </MemberRoute>
         }
       />
