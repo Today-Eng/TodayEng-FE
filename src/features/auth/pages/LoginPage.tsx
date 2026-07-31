@@ -11,6 +11,8 @@ import GoogleIcon from '@/features/auth/components/GoogleIcon';
 import { requestGoogleIdToken } from '@/features/auth/googleIdentity';
 import { saveSession } from '@/features/auth/session';
 
+import './login-font.css';
+
 interface LoginPageProps {
   onGoogleLogin?: () => void;
 }
@@ -80,13 +82,13 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
         />
 
         <div
-          className="absolute left-[92px] top-[423px] -rotate-[11.15deg] font-['NanumSquareRoundExtraBold'] text-[70px] leading-none tracking-[-1.4px] text-white"
+          className="absolute left-[calc(50%-111px)] top-[calc(50%-19px)] -rotate-[11.15deg] font-['NanumSquareRound'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
           aria-label="Today Eng"
         >
           Today
         </div>
         <div
-          className="absolute left-[280px] top-[398px] rotate-[11.75deg] font-['NanumSquareRoundExtraBold'] text-[50px] leading-none tracking-[-1px] text-white"
+          className="absolute left-[calc(50%+75px)] top-[calc(50%-49px)] rotate-[11.75deg] font-['NanumSquareRound'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
           aria-hidden="true"
         >
           Eng

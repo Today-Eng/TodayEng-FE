@@ -111,11 +111,18 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
         </section>
 
         <div className="mt-11 flex flex-col gap-4">
-          {INTEREST_GROUPS.map((group) => (
-            <fieldset key={group.category} className="flex flex-col gap-4">
-              <legend className="text-headline font-semibold tracking-[-0.41px]">
+          {INTEREST_GROUPS.map((group, groupIndex) => (
+            <section
+              key={group.category}
+              className="flex flex-col gap-4"
+              aria-labelledby={`interest-category-${groupIndex}`}
+            >
+              <h2
+                id={`interest-category-${groupIndex}`}
+                className="text-headline font-semibold tracking-[-0.41px]"
+              >
                 {group.category}
-              </legend>
+              </h2>
               <div className="flex flex-wrap gap-x-3 gap-y-3">
                 {group.interests.map((interest) => {
                   const isSelected = selectedInterests.includes(interest.id);
@@ -126,7 +133,7 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
                       type="button"
                       onClick={() => toggleInterest(interest.id)}
                       aria-pressed={isSelected}
-                      className={`rounded-full border px-2 py-1.5 text-body tracking-[-0.41px] transition-colors ${
+                      className={`rounded-full border px-2 py-1.5 text-body tracking-[-0.41px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-main-500 focus-visible:ring-offset-2 ${
                         isSelected
                           ? 'border-main-500 bg-main-100 text-main-500'
                           : 'border-transparent bg-grey-100 text-grey-700'
@@ -137,7 +144,7 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
                   );
                 })}
               </div>
-            </fieldset>
+            </section>
           ))}
         </div>
       </div>

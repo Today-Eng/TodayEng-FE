@@ -1,3 +1,5 @@
+import { getAccessToken, getRefreshToken } from '@/features/auth/session';
+
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080').replace(
   /\/$/,
   '',
@@ -11,6 +13,8 @@ interface ApiResponse<T> {
 }
 
 export interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
   isNewUser: boolean;
 }
 
@@ -45,6 +49,11 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
   headers.set('Content-Type', 'application/json');
 
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    headers.set('Authorization', `Bearer ${accessToken}`);
+  }
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
     headers,
@@ -71,8 +80,11 @@ export function loginWithGoogle(idToken: string) {
 }
 
 export function logout() {
+  const refreshToken = getRefreshToken();
+
   return request<null>('/auth/logout', {
     method: 'POST',
+    body: JSON.stringify({ refreshToken }),
   });
 }
 

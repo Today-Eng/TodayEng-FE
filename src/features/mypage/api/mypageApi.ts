@@ -1,3 +1,5 @@
+import { getAccessToken } from '@/features/auth/session';
+
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080').replace(
   /\/$/,
   '',
@@ -45,6 +47,11 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
   headers.set('Content-Type', 'application/json');
 
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    headers.set('Authorization', `Bearer ${accessToken}`);
+  }
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
     headers,
@@ -85,5 +92,11 @@ export function updateInterests(interestTagIds: number[]) {
   return request<{ interests: Interest[] }>('/users/me/interests', {
     method: 'PUT',
     body: JSON.stringify({ interestTagIds }),
+  });
+}
+
+export function deleteAccount() {
+  return request<null>('/users/me', {
+    method: 'DELETE',
   });
 }

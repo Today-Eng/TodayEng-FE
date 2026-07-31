@@ -34,10 +34,7 @@ const LEVEL_OPTIONS: LevelOption[] = [
   {
     value: 'ADVANCED',
     title: '자유롭게 대화하고 싶어요',
-    description: [
-      '간단한 인사와 자기소개 정도는 할 수 있어요.',
-      '짧은 문장으로 천천히 시작하고 싶어요.',
-    ],
+    description: ['복잡한 주제도 이해하지만,', '원어민처럼 자연스러운 늬앙스를 더 다듬고 싶어요.'],
   },
 ];
 

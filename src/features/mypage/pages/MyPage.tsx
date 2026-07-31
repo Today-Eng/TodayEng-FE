@@ -3,11 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 import { logout } from '@/features/auth/api';
 import { clearSession } from '@/features/auth/session';
-import { getMyPageProfile, type MyPageProfile } from '@/features/mypage/api/mypageApi';
+import {
+  deleteAccount,
+  getMyPageProfile,
+  type MyPageProfile,
+} from '@/features/mypage/api/mypageApi';
 import MyPageMenuItem from '@/features/mypage/components/MyPageMenuItem';
 import NotificationSetting from '@/features/mypage/components/NotificationSetting';
 import ProfileSummary from '@/features/mypage/components/ProfileSummary';
 import BottomNav from '@/shared/components/BottomNav';
+import Modal from '@/shared/components/Modal';
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -15,6 +20,9 @@ export default function MyPage() {
   const [profile, setProfile] = useState<MyPageProfile | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+  const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
 
   useEffect(() => {
     let isActive = true;
@@ -47,6 +55,24 @@ export default function MyPage() {
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : '로그아웃에 실패했습니다.');
       setIsLoggingOut(false);
+      return;
+    }
+
+    clearSession();
+    navigate('/login', { replace: true });
+  };
+
+  const handleDeleteAccount = async () => {
+    if (isDeletingAccount) return;
+
+    setIsDeletingAccount(true);
+    setErrorMessage('');
+
+    try {
+      await deleteAccount();
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : '계정 삭제에 실패했습니다.');
+      setIsDeletingAccount(false);
       return;
     }
 
@@ -94,15 +120,46 @@ export default function MyPage() {
 
         <section aria-label="계정 관리">
           <MyPageMenuItem
-            label={isLoggingOut ? '로그아웃 중...' : '로그아웃'}
+            label="로그아웃"
             showArrow={false}
-            onClick={handleLogout}
+            onClick={() => setIsLogoutModalOpen(true)}
           />
-          <MyPageMenuItem label="계정 삭제" tone="danger" showArrow={false} />
+          <MyPageMenuItem
+            label="계정 삭제"
+            tone="danger"
+            showArrow={false}
+            onClick={() => setIsDeleteAccountModalOpen(true)}
+          />
         </section>
 
         <BottomNav />
       </div>
+
+      {isLogoutModalOpen && (
+        <Modal
+          mainText="로그아웃을 하시겠습니까?"
+          subText="다시 로그인할 수 있어요"
+          leftButtonText="취소"
+          rightButtonText={isLoggingOut ? '로그아웃 중...' : '로그아웃'}
+          onLeftClick={() => {
+            if (!isLoggingOut) setIsLogoutModalOpen(false);
+          }}
+          onRightClick={handleLogout}
+        />
+      )}
+
+      {isDeleteAccountModalOpen && (
+        <Modal
+          mainText="계정 삭제를 하시겠습니까?"
+          subText={'탈퇴하면 모든 데이터가 삭제되며\n복구할 수 없어요.'}
+          leftButtonText="취소"
+          rightButtonText={isDeletingAccount ? '삭제 중...' : '계정 삭제'}
+          onLeftClick={() => {
+            if (!isDeletingAccount) setIsDeleteAccountModalOpen(false);
+          }}
+          onRightClick={handleDeleteAccount}
+        />
+      )}
     </main>
   );
 }

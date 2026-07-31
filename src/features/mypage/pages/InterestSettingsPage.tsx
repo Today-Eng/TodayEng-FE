@@ -111,14 +111,14 @@ export default function InterestSettingsPage() {
       </p>
       {errorMessage && <p className="mt-2 px-4 text-footnote text-error-500">{errorMessage}</p>}
 
-      <div className="mt-[48px] flex flex-col gap-[60px] px-4">
+      <div className="mt-[47px] flex flex-col gap-[60px] px-4">
         {INTEREST_GROUPS.map((group) => (
-          <fieldset key={group.category} className="flex flex-col gap-4">
+          <fieldset key={group.category}>
             <legend className="text-headline font-semibold tracking-[-0.41px]">
               {group.category}
             </legend>
 
-            <div className="flex flex-wrap gap-x-3 gap-y-3">
+            <div className="mt-4 flex flex-wrap gap-x-3 gap-y-3">
               {group.interests.map((interest) => {
                 const isSelected = selectedInterests.includes(interest.id);
 
@@ -129,10 +129,10 @@ export default function InterestSettingsPage() {
                     onClick={() => toggleInterest(interest.id)}
                     aria-pressed={isSelected}
                     className={[
-                      'rounded-full border px-2 py-1.5 text-body tracking-[-0.41px] transition-colors',
+                      'rounded-full px-2 py-1.5 text-body tracking-[-0.41px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-main-500 focus-visible:ring-offset-2',
                       isSelected
-                        ? 'border-main-500 bg-main-100 text-main-500'
-                        : 'border-transparent bg-grey-100 text-grey-700',
+                        ? 'border border-main-500 bg-main-100 text-main-500'
+                        : 'bg-grey-100 text-grey-700',
                     ].join(' ')}
                   >
                     {interest.name}
