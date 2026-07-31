@@ -115,7 +115,7 @@ export default function useHomeMock() {
   const handleRetrospectDetail = (
     diaryId: number,
   ) => {
-    navigate(`/retrospect/${diaryId}`)
+    navigate(`/retrospects/${diaryId}`)
   }
 
   return {
