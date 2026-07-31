@@ -1,7 +1,4 @@
-import {
-  useEffect,
-  useState,
-} from "react"
+import { useState } from "react"
 import {
   useLocation,
   useNavigate,
@@ -32,10 +29,6 @@ export default function RetrospectMemoEditPage() {
 
   const [isSaving, setIsSaving] =
     useState(false)
-
-  useEffect(() => {
-    setMemo(initialMemo)
-  }, [initialMemo])
 
   const isChanged =
     memo.trim() !== initialMemo.trim()
@@ -78,7 +71,7 @@ export default function RetrospectMemoEditPage() {
           onSave={handleSave}
         />
 
-        <section className="px-4 mt-4">
+        <section className="mt-4 px-4">
           <textarea
             value={memo}
             onChange={(event) => {
