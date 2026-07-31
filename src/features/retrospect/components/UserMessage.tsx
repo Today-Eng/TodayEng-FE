@@ -1,4 +1,5 @@
 import { useState } from "react"
+import MessageBadge from "@/shared/components/MessageBadge"
 
 interface AiMessageProps{
     isSpeaking: boolean
@@ -12,7 +13,7 @@ export default function UserMessage({ isSpeaking }: AiMessageProps) {
     }
 
   return (
-     <div className="w-full h-full pr-4 pl-20">
+     <div className="w-full h-full pr-4 pl-20 flex flex-col gap-2">
         <div className='p-4 bg-main-500/30 rounded-[24px]'>
             <p className='text-subheadline text-white mb-2'>Will it rain this afternoon? Showers expected around 3 PM. Bring</p>
             <div className="flex justify-end">

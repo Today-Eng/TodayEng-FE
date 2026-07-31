@@ -1,7 +1,6 @@
 import type { DiaryPreviewData } from "../types"
 
-import questionIcon from "@/assets/icons/question-icon.svg"
-import answerIcon from "@/assets/icons/answer-icon.svg"
+import MessageBadge from "@/shared/components/MessageBadge"
 import detailArrow from "@/assets/icons/detail-arrow.svg"
 
 interface DiaryPreviewProps {
@@ -17,7 +16,7 @@ export default function DiaryPreview({
     <div className="mt-4">
       <div className="mt-3 space-y-2">
         <div className="flex items-start gap-[9px]">
-          <img src={questionIcon} alt="Question" className="h-[20px] w-[20px] shrink-0" />
+          <MessageBadge type="Q" variant="grey" />
 
           <p className="text-footnote text-black font-normal">
             {diary.firstQuestion}
@@ -25,7 +24,7 @@ export default function DiaryPreview({
         </div>
 
         <div className="flex items-start gap-[9px]">
-          <img src={answerIcon} alt="Answer" className="h-[20px] w-[20px] shrink-0" />
+          <MessageBadge type="A" />
 
           <p className="text-footnote text-black font-normal">
             {diary.firstAnswer}
