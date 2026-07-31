@@ -14,11 +14,11 @@ export default function RetrospectCard({
   return (
     <article
       className="
-        rounded-[24px]
+        rounded-[32px]
         bg-white
         px-4
         py-4
-        shadow-[0_3px_12px_rgba(18,18,18,0.10)]
+        shadow-[0_2px_8px_rgba(0,0,0,0.10)]
       "
     >
       <RetrospectPreview

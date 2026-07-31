@@ -10,6 +10,9 @@ import RetrospectSession from "@/features/retrospect/create/pages/RetrospectSess
 import RetrospectMemo from "@/features/retrospect/create/pages/RetrospectMemo";
 import RetrospectComplete from "@/features/retrospect/create/pages/RetrospectComplete";
 
+// retrospects
+import RetrospectList from "@/features/retrospect/record/pages/RetrospectList"
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -37,6 +40,11 @@ export default function AppRoutes() {
         path="/retrospect-complete"
         element={<RetrospectComplete />}
       />
+
+      <Route
+        path="/retrospects"
+        element={<RetrospectList />}
+        />
 
       <Route
         path="*"

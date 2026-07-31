@@ -59,7 +59,7 @@ export default function BottomNav() {
         />
 
         <NavItem
-          to="/"
+          to="/retrospects"
           label="회고록"
           Icon={RetrospectIcon}
         />
