@@ -12,6 +12,8 @@ import RetrospectComplete from "@/features/retrospect/create/pages/RetrospectCom
 
 // retrospects
 import RetrospectList from "@/features/retrospect/record/pages/RetrospectList"
+import RetrospectDetail from "@/features/retrospect/detail/pages/RetrospectDetail"
+import RetrospectMemoEdit from "@/features/retrospect/detail/pages/RetrospectMemoEdit"
 
 export default function AppRoutes() {
   return (
@@ -44,6 +46,14 @@ export default function AppRoutes() {
       <Route
         path="/retrospects"
         element={<RetrospectList />}
+        />
+      <Route
+        path="/retrospects/:diaryId"
+        element={<RetrospectDetail />}
+        />
+      <Route
+        path="/retrospects/:diaryId/memo/edit"
+        element={<RetrospectMemoEdit />}
         />
 
       <Route

@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 import type { YearMonth } from "../types"
 import CloseBtn from "@/assets/icons/retrospect/close-button.svg"
-import CheckBtn from "@/assets/icons/retrospect/check_regular.svg"
+import CheckBtn from "@/assets/icons/retrospect/check-regular.svg"
 
 interface MonthBottomSheetProps {
   open: boolean
@@ -77,11 +77,11 @@ export default function MonthBottomSheet({
           bg-white
         "
       >
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-3">
           <div className="h-1 w-[80px] rounded-full bg-grey-300" />
         </div>
 
-        <header className="flex pt-8 items-center justify-between px-4">
+        <header className="flex pt-9 items-center justify-between px-4">
           <h2
             id="month-sheet-title"
             className="text-title2 font-semibold text-black"

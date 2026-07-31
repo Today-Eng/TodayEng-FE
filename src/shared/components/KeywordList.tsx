@@ -1,12 +1,21 @@
 interface KeywordListProps {
   keywords: string[]
+  align?: "start" | "end"
 }
 
 export default function KeywordList({
   keywords,
+  align = "end",
 }: KeywordListProps) {
   return (
-    <div className="flex flex-wrap justify-end gap-1">
+    <div
+      className={[
+        "flex flex-wrap gap-1",
+        align === "start"
+          ? "justify-start"
+          : "justify-end",
+      ].join(" ")}
+    >
       {keywords.map((keyword) => (
         <span
           key={keyword}

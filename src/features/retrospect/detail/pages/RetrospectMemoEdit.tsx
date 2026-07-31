@@ -1,0 +1,114 @@
+import {
+  useEffect,
+  useState,
+} from "react"
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom"
+
+import MemoEditHeader from "../components/MemoEditHeader"
+
+interface MemoEditLocationState {
+  memo?: string
+}
+
+export default function RetrospectMemoEditPage() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { diaryId } = useParams()
+
+  const locationState =
+    location.state as
+      | MemoEditLocationState
+      | null
+
+  const initialMemo =
+    locationState?.memo ?? ""
+
+  const [memo, setMemo] =
+    useState(initialMemo)
+
+  const [isSaving, setIsSaving] =
+    useState(false)
+
+  useEffect(() => {
+    setMemo(initialMemo)
+  }, [initialMemo])
+
+  const isChanged =
+    memo.trim() !== initialMemo.trim()
+
+  const canSave =
+    memo.trim().length > 0 &&
+    isChanged &&
+    !isSaving
+
+  const handleSave = async () => {
+    if (!canSave) {
+      return
+    }
+
+    try {
+      setIsSaving(true)
+
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, 500)
+      })
+
+      navigate(-1)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  return (
+    <div className="min-h-dvh bg-white">
+      <main
+        className="
+          mx-auto
+          min-h-dvh
+          w-full
+          max-w-[402px]
+        "
+      >
+        <MemoEditHeader
+          canSave={canSave}
+          onSave={handleSave}
+        />
+
+        <section className="px-4 mt-4">
+          <textarea
+            value={memo}
+            onChange={(event) => {
+              setMemo(event.target.value)
+            }}
+            placeholder="나눈 대화에 대해서 느낀 점을 자유롭게 적어주세요"
+            maxLength={1000}
+            className="
+              h-[660px]
+              w-full
+              resize-none
+              rounded-[24px]
+              border
+              border-grey-200
+              bg-white
+              px-4
+              py-4
+              text-body
+              font-normal
+              text-black
+              outline-none
+              placeholder:text-grey-300
+            "
+          />
+
+          <span className="sr-only">
+            회고록 번호 {diaryId}
+          </span>
+        </section>
+      </main>
+    </div>
+  )
+}
