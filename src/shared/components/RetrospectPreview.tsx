@@ -1,6 +1,6 @@
 import detailArrow from "@/assets/icons/detail-arrow.svg"
 
-import DiaryQuestionAnswer from "@/shared/components/RetrospectQna"
+import RetrospectQna from "@/shared/components/RetrospectQna"
 import KeywordList from "@/shared/components/KeywordList"
 
 import type { RetrospectPreviewData } from "@/shared/types/retrospect"
@@ -31,7 +31,7 @@ export default function RetrospectPreview({
       </header>
 
       <div className="mt-4">
-        <DiaryQuestionAnswer
+        <RetrospectQna
           question={diary.firstQuestion}
           answer={diary.firstAnswer}
         />

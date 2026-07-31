@@ -1,9 +1,7 @@
 import { useEffect } from "react"
 
-import answerIcon from "@/assets/icons/answer-icon.svg"
-import questionIcon from "@/assets/icons/question-icon.svg"
 import CloseBtn from "@/assets/icons/retrospect/close-button.svg"
-
+import RetrospectQna from "@/shared/components/RetrospectQna"
 import type { RetrospectQuestionAnswer } from "../types"
 
 interface TranslationBottomSheetProps {
@@ -86,35 +84,13 @@ export default function TranslationBottomSheet({
           </button>
         </header>
 
-        <div className="space-y-2">
-          <div className="flex items-start gap-[9px]">
-            <img
-              src={questionIcon}
-              alt=""
-              className="h-5 w-5 shrink-0"
-            />
-
-            <p className="text-footnote font-normal text-black">
-              {qa.questionText}
-            </p>
-          </div>
-
-          <p className="text-subheadline font-normal text-grey-800">
-            {qa.questionKoreanTranslation}
-          </p>
-
-          <div className="flex items-start gap-[9px]">
-            <img
-              src={answerIcon}
-              alt=""
-              className="h-5 w-5 shrink-0"
-            />
-
-            <p className="text-footnote font-normal text-black">
-              {qa.answer.correctedText}
-            </p>
-          </div>
-        </div>
+        <RetrospectQna
+          question={qa.questionText}
+          questionTranslation={
+            qa.questionKoreanTranslation
+          }
+          answer={qa.answer.correctedText}
+        />
       </section>
     </div>
   )

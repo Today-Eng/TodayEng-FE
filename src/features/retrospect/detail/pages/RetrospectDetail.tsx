@@ -93,11 +93,10 @@ export default function RetrospectDetailPage() {
     <div className="min-h-dvh bg-white">
       <main
         className="
-          mx-auto
           min-h-dvh
           w-full
-          max-w-[402px]
           pb-[75px]
+          pt-[140px]
         "
       >
         <RetrospectDetailHeader

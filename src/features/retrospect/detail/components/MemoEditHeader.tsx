@@ -16,11 +16,18 @@ export default function RetrospectMemoEditHeader({
   return (
     <header
       className="
+        fixed
+        top-0
+        left-1/2
+        z-50
         mt-[62px]
         flex
         h-[68px]
+        w-full
+        -translate-x-1/2
         items-center
         justify-between
+        bg-white
         px-4
       "
     >

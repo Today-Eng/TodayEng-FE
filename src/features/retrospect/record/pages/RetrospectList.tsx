@@ -28,7 +28,7 @@ export default function RetrospectListPage() {
 
   return (
     <div className="min-h-dvh bg-gradient-to-b from-white to-grey-50">
-      <main className="mx-auto min-h-dvh w-full max-w-[402px] pb-[91px]">
+      <main className="min-h-dvh w-full pb-[91px]">
         <header
           className="
             sticky

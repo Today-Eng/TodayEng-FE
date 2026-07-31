@@ -17,9 +17,16 @@ export default function RetrospectDetailHeader({
   return (
     <header
       className="
+        fixed
+        top-0
+        left-1/2
+        z-50
+        w-full
+        -translate-x-1/2
         flex
         items-center
         justify-between
+        bg-white
         px-4
         py-5
         mt-[62px]

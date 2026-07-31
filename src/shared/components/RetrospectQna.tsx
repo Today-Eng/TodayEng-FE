@@ -1,35 +1,36 @@
-import questionIcon from "@/assets/icons/question-icon.svg"
-import answerIcon from "@/assets/icons/answer-icon.svg"
+import MessageBadge from "@/shared/components/MessageBadge"
 
 interface RetrospectQnaProps {
   question: string
   answer: string
+  questionTranslation?: string
+  questionVariant?: "pink" | "grey"
 }
 
 export default function RetrospectQna({
   question,
   answer,
+  questionTranslation,
+  questionVariant = "grey",
 }: RetrospectQnaProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-start gap-[9px]">
-        <img
-          src={questionIcon}
-          alt=""
-          className="h-5 w-5 shrink-0"
-        />
+        <MessageBadge type="Q" variant={questionVariant} />
 
         <p className="text-footnote font-normal text-black">
           {question}
         </p>
       </div>
 
+      {questionTranslation && (
+        <p className="text-subheadline font-normal text-grey-800">
+          {questionTranslation}
+        </p>
+      )}
+
       <div className="flex items-start gap-[9px]">
-        <img
-          src={answerIcon}
-          alt=""
-          className="h-5 w-5 shrink-0"
-        />
+        <MessageBadge type="A" />
 
         <p className="text-footnote font-normal text-black">
           {answer}

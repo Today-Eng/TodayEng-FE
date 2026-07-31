@@ -2,7 +2,6 @@ import { useState } from "react"
 import {
   useLocation,
   useNavigate,
-  useParams,
 } from "react-router-dom"
 
 import MemoEditHeader from "../components/MemoEditHeader"
@@ -14,7 +13,6 @@ interface MemoEditLocationState {
 export default function RetrospectMemoEditPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { diaryId } = useParams()
 
   const locationState =
     location.state as
@@ -60,10 +58,9 @@ export default function RetrospectMemoEditPage() {
     <div className="min-h-dvh bg-white">
       <main
         className="
-          mx-auto
           min-h-dvh
           w-full
-          max-w-[402px]
+          pt-[130px]
         "
       >
         <MemoEditHeader
@@ -96,10 +93,6 @@ export default function RetrospectMemoEditPage() {
               placeholder:text-grey-300
             "
           />
-
-          <span className="sr-only">
-            회고록 번호 {diaryId}
-          </span>
         </section>
       </main>
     </div>
