@@ -1,9 +1,9 @@
-import type { DayOfWeek } from "@/shared/types/diary"
+import type { DayOfWeek } from "@/shared/types/retrospect"
 
 export type {
   DayOfWeek,
-  DiaryPreviewData,
-} from "@/shared/types/diary"
+  RetrospectPreviewData,
+} from "@/shared/types/retrospect"
 
 export type DiaryStatus =
   | "NOT_STARTED"
@@ -40,7 +40,11 @@ export interface HomeData {
 
 export interface HomeMaterials {
   time: {
-    period: "MORNING" | "AFTERNOON" | "EVENING" | "NIGHT"
+    period:
+      | "MORNING"
+      | "AFTERNOON"
+      | "EVENING"
+      | "NIGHT"
     message: string
   }
 

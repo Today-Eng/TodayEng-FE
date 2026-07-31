@@ -1,15 +1,15 @@
 import questionIcon from "@/assets/icons/question-icon.svg"
 import answerIcon from "@/assets/icons/answer-icon.svg"
 
-interface DiaryQnaProps {
+interface RetrospectQnaProps {
   question: string
   answer: string
 }
 
-export default function DiaryQna({
+export default function RetrospectQna({
   question,
   answer,
-}: DiaryQnaProps) {
+}: RetrospectQnaProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-start gap-[9px]">

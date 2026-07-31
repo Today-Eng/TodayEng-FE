@@ -7,7 +7,7 @@ export type DayOfWeek =
   | "SATURDAY"
   | "SUNDAY"
 
-export interface DiaryPreviewData {
+export interface RetrospectPreviewData {
   diaryId: number
   date: string
   dayOfWeek: DayOfWeek

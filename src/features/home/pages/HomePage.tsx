@@ -1,4 +1,4 @@
-import DiaryCalendar from "@/features/home/components/DiaryCalendar"
+import RetrospectCalendar from "@/features/home/components/RetrospectCalendar"
 import HomeStatistics from "@/features/home/components/HomeStatistics"
 import TodayMaterials from "@/features/home/components/TodayMaterials"
 import useHomeMock from "@/features/home/hooks/useHomeMock"
@@ -10,13 +10,13 @@ export default function HomePage() {
     currentYear,
     currentMonth,
     selectedDate,
-    selectedDiary,
+    selectedRetrospect,
     getDateStatus,
     handlePreviousMonth,
     handleNextMonth,
     handleDateSelect,
     handleRetrospect,
-    handleDiaryDetail,
+    handleRetrospectDetail,
   } = useHomeMock()
 
   return (
@@ -43,18 +43,18 @@ export default function HomePage() {
           </div>
 
           <div className="mt-4">
-            <DiaryCalendar
+            <RetrospectCalendar
               year={currentYear}
               month={currentMonth}
               today={home.today.date}
               selectedDate={selectedDate}
-              selectedDiary={selectedDiary}
+              selectedRetrospect={selectedRetrospect}
               getDateStatus={getDateStatus}
               onPreviousMonth={handlePreviousMonth}
               onNextMonth={handleNextMonth}
               onDateSelect={handleDateSelect}
               onRetrospect={handleRetrospect}
-              onDiaryDetail={handleDiaryDetail}
+              onRetrospectDetail={handleRetrospectDetail}
             />
           </div>
         </div>

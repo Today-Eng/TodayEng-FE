@@ -13,7 +13,7 @@ import galleryIcon from '@/assets/icons/gallery.svg'
 import quoteIcon from '@/assets/icons/quote-down-square.svg'
 import addIcon from '@/assets/icons/add_circle_regular.svg'
 
-export default function  RetrospectSetup() {
+export default function RetrospectSetup() {
     const navigate = useNavigate()
     const [content, setContent] = useState('')
     const [previews, setPreviews] = useState<string[]>([])

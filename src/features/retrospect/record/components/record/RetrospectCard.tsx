@@ -1,16 +1,16 @@
-import DiaryPreview from "@/shared/components/DiaryPreview"
+import RetrospectPreview from "@/shared/components/RetrospectPreview"
 
-import type { DiaryPreviewData } from "@/shared/types/diary"
+import type { RetrospectPreviewData } from "@/shared/types/retrospect"
 
-interface DiaryCardProps {
-  diary: DiaryPreviewData
+interface RetrospectCardProps {
+  diary: RetrospectPreviewData
   onDetailClick: (diaryId: number) => void
 }
 
-export default function DiaryCard({
+export default function RetrospectCard({
   diary,
   onDetailClick,
-}: DiaryCardProps) {
+}: RetrospectCardProps) {
   return (
     <article
       className="
@@ -21,7 +21,7 @@ export default function DiaryCard({
         shadow-[0_3px_12px_rgba(18,18,18,0.10)]
       "
     >
-      <DiaryPreview
+      <RetrospectPreview
         diary={diary}
         onDetailClick={onDetailClick}
       />

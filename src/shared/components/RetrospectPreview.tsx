@@ -1,19 +1,19 @@
 import detailArrow from "@/assets/icons/detail-arrow.svg"
 
-import DiaryQuestionAnswer from "@/shared/components/DiaryQna"
+import DiaryQuestionAnswer from "@/shared/components/RetrospectQna"
 import KeywordList from "@/shared/components/KeywordList"
 
-import type { DiaryPreviewData } from "@/shared/types/diary"
+import type { RetrospectPreviewData } from "@/shared/types/retrospect"
 
-interface DiaryPreviewProps {
-  diary: DiaryPreviewData
+interface RetrospectPreviewProps {
+  diary: RetrospectPreviewData
   onDetailClick?: (diaryId: number) => void
 }
 
-export default function DiaryPreview({
+export default function RetrospectPreview({
   diary,
   onDetailClick,
-}: DiaryPreviewProps) {
+}: RetrospectPreviewProps) {
   return (
     <div>
       <header className="flex items-start justify-between gap-3">
@@ -78,7 +78,7 @@ function formatDiaryDate(date: string) {
 }
 
 function getKoreanDayOfWeek(
-  dayOfWeek: DiaryPreviewData["dayOfWeek"],
+  dayOfWeek: RetrospectPreviewData["dayOfWeek"],
 ) {
   const labels = {
     MONDAY: "월요일",
