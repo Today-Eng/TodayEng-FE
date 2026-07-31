@@ -18,22 +18,10 @@ import TranslationBottomSheet from "../components/TranslationBottomSheet"
 
 import useRetrospectDetailMock from "../hooks/useRetrospectDetailMock"
 
-const KOREAN_DAY_OF_WEEK = {
-  MONDAY: "월요일",
-  TUESDAY: "화요일",
-  WEDNESDAY: "수요일",
-  THURSDAY: "목요일",
-  FRIDAY: "금요일",
-  SATURDAY: "토요일",
-  SUNDAY: "일요일",
-} as const
-
-function formatDiaryDate(date: string) {
-  const [, month, day] =
-    date.split("-").map(Number)
-
-  return `${month}월 ${day}일`
-}
+import {
+  formatDiaryDate,
+  getKoreanDayOfWeek,
+} from "@/shared/utils/dateFormat"
 
 export default function RetrospectDetailPage() {
   const navigate = useNavigate()
@@ -116,11 +104,7 @@ export default function RetrospectDetailPage() {
               </strong>
 
               <span className="text-body font-normal text-grey-600">
-                {
-                  KOREAN_DAY_OF_WEEK[
-                    retrospect.dayOfWeek
-                  ]
-                }
+                {getKoreanDayOfWeek(retrospect.dayOfWeek)}
               </span>
             </div>
 

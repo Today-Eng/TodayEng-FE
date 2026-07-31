@@ -5,6 +5,11 @@ import KeywordList from "@/shared/components/KeywordList"
 
 import type { RetrospectPreviewData } from "@/shared/types/retrospect"
 
+import {
+  formatDiaryDate,
+  getKoreanDayOfWeek,
+} from "@/shared/utils/dateFormat"
+
 interface RetrospectPreviewProps {
   diary: RetrospectPreviewData
   onDetailClick?: (diaryId: number) => void
@@ -69,26 +74,4 @@ export default function RetrospectPreview({
       )}
     </div>
   )
-}
-
-function formatDiaryDate(date: string) {
-  const [, month, day] = date.split("-")
-
-  return `${Number(month)}월 ${Number(day)}일`
-}
-
-function getKoreanDayOfWeek(
-  dayOfWeek: RetrospectPreviewData["dayOfWeek"],
-) {
-  const labels = {
-    MONDAY: "월요일",
-    TUESDAY: "화요일",
-    WEDNESDAY: "수요일",
-    THURSDAY: "목요일",
-    FRIDAY: "금요일",
-    SATURDAY: "토요일",
-    SUNDAY: "일요일",
-  }
-
-  return labels[dayOfWeek]
 }

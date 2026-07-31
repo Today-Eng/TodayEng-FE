@@ -117,9 +117,9 @@ export default function ExplanationBottomSheet({
           </p>
         </div>
 
-          <p className="mt-4 whitespace-pre-wrap text-subheadline font-normal text-grey-800">
+        <p className="mt-4 whitespace-pre-wrap text-subheadline font-normal text-grey-800">
             {qa.answer.correctionReason}
-          </p>
+        </p>
       </section>
     </div>
   )
