@@ -53,7 +53,7 @@ export default function RetrospectSetup() {
   return (
     <div className="h-screen flex flex-col">
         <BackHeaderLayout title="회고하기" />
-        <div className="flex-1 min-h-0 mt-2 p-4 pb-[120px] overflow-y-auto">
+        <div className="flex-1 min-h-0 mt-2 p-4 pb-[120px] pt-[130px] overflow-y-auto">
             <TextLayout mainText={"오늘 하루,\n무슨 일이 있었나요?"} subText="사진, 글 추가로 맞춤형 질문을 준비해드려요" />
             <div className="mt-[51px] flex flex-col gap-6">
                 {/* 이미지 추가 섹션 */}

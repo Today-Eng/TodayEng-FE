@@ -10,7 +10,6 @@ import Modal from "@/shared/components/Modal"
 
 import ExplanationBottomSheet from "../components/ExplanationBottomSheet"
 import MoreBottomSheet from "../components/MoreBottomSheet"
-import RetrospectDetailHeader from "../components/RetrospectDetailHeader"
 import RetrospectDetailQna from "../components/RetrospectDetailQna"
 import RetrospectMemo from "../components/RetrospectMemo"
 import RetrospectViewToggle from "../components/RetrospectViewToggle"
@@ -22,6 +21,7 @@ import {
   formatDiaryDate,
   getKoreanDayOfWeek,
 } from "@/shared/utils/dateFormat"
+import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
 
 export default function RetrospectDetailPage() {
   const navigate = useNavigate()
@@ -87,12 +87,15 @@ export default function RetrospectDetailPage() {
           pt-[130px]
         "
       >
-        <RetrospectDetailHeader
-          title="회고록 상세 보기"
-          onMoreClick={() => {
-            setIsActionSheetOpen(true)
-          }}
-        />
+        <BackHeaderLayout
+            title="회고록 상세 보기"
+            rightAction={{
+                type: "more",
+                onClick: () => {
+                setIsActionSheetOpen(true)
+                },
+            }}
+            />
 
         <section className="bg-white px-4 pb-4">
           <div className="flex items-center justify-between">

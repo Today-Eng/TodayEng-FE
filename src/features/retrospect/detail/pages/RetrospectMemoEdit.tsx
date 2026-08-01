@@ -4,7 +4,7 @@ import {
   useNavigate,
 } from "react-router-dom"
 
-import MemoEditHeader from "../components/MemoEditHeader"
+import BackHeader from "@/shared/components/BackHeaderLayout"
 
 interface MemoEditLocationState {
   memo?: string
@@ -63,10 +63,14 @@ export default function RetrospectMemoEditPage() {
           pt-[130px]
         "
       >
-        <MemoEditHeader
-          canSave={canSave}
-          onSave={handleSave}
-        />
+        <BackHeader
+            title="메모 수정하기"
+            rightAction={{
+                type: "confirm",
+                onClick: handleSave,
+                disabled: !canSave,
+            }}
+            />
 
         <section className="mt-4 px-4">
           <textarea
