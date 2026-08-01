@@ -1,4 +1,8 @@
-import { useState } from "react"
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import {
   useLocation,
   useNavigate,
@@ -28,6 +32,9 @@ export default function RetrospectMemoEditPage() {
   const [isSaving, setIsSaving] =
     useState(false)
 
+  const saveTimerRef =
+    useRef<number | null>(null)
+
   const isChanged =
     memo.trim() !== initialMemo.trim()
 
@@ -35,6 +42,24 @@ export default function RetrospectMemoEditPage() {
     memo.trim().length > 0 &&
     isChanged &&
     !isSaving
+
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current !== null) {
+        window.clearTimeout(
+          saveTimerRef.current
+        )
+      }
+    }
+  }, [])
+
+  const handleBack = () => {
+    if (isSaving) {
+      return
+    }
+
+    navigate(-1)
+  }
 
   const handleSave = async () => {
     if (!canSave) {
@@ -44,8 +69,12 @@ export default function RetrospectMemoEditPage() {
     try {
       setIsSaving(true)
 
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 500)
+      await new Promise<void>((resolve) => {
+        saveTimerRef.current =
+          window.setTimeout(() => {
+            saveTimerRef.current = null
+            resolve()
+          }, 500)
       })
 
       navigate(-1)
@@ -64,13 +93,14 @@ export default function RetrospectMemoEditPage() {
         "
       >
         <BackHeader
-            title="메모 수정하기"
-            rightAction={{
-                type: "confirm",
-                onClick: handleSave,
-                disabled: !canSave,
-            }}
-            />
+          title="메모 수정하기"
+          onBack={handleBack}
+          rightAction={{
+            type: "confirm",
+            onClick: handleSave,
+            disabled: !canSave,
+          }}
+        />
 
         <section className="mt-4 px-4">
           <textarea
