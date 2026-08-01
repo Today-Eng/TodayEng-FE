@@ -40,7 +40,7 @@ const LEVEL_OPTIONS: LevelOption[] = [
 
 export default function LearningSettingsPage() {
   const navigate = useNavigate();
-  const [selectedLevel, setSelectedLevel] = useState<EnglishLevel>('INTERMEDIATE');
+  const [selectedLevel, setSelectedLevel] = useState<EnglishLevel | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [loadError, setLoadError] = useState('');
@@ -58,7 +58,7 @@ export default function LearningSettingsPage() {
   }, []);
 
   const handleSave = async () => {
-    if (!isLoaded || isSaving) return;
+    if (!isLoaded || selectedLevel === null || isSaving) return;
 
     setIsSaving(true);
     setSaveError('');
@@ -80,14 +80,16 @@ export default function LearningSettingsPage() {
         <button
           type="button"
           onClick={handleSave}
-          disabled={!isLoaded || isSaving}
+          disabled={!isLoaded || selectedLevel === null || isSaving}
           className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500 disabled:text-grey-300"
         >
           수정
         </button>
       </header>
       {(loadError || saveError) && (
-        <p className="px-4 text-footnote text-error-500">{loadError || saveError}</p>
+        <p role="alert" className="px-4 text-footnote text-error-500">
+          {loadError || saveError}
+        </p>
       )}
 
       <fieldset className="mt-[131px] flex flex-col gap-[26px] px-4">
