@@ -5,7 +5,6 @@ import ellipse16 from '@/features/auth/assets/ellipse-16.svg';
 import ellipse17 from '@/features/auth/assets/ellipse-17.svg';
 import ellipse18 from '@/features/auth/assets/ellipse-18.svg';
 import ellipse19 from '@/features/auth/assets/ellipse-19.svg';
-import todayEngCharacter from '@/features/auth/assets/todayeng-character.svg';
 import { ApiError, loginWithGoogle } from '@/features/auth/api';
 import GoogleIcon from '@/features/auth/components/GoogleIcon';
 import { requestGoogleIdToken } from '@/features/auth/googleIdentity';
