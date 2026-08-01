@@ -43,7 +43,8 @@ export default function LearningSettingsPage() {
   const [selectedLevel, setSelectedLevel] = useState<EnglishLevel>('INTERMEDIATE');
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [loadError, setLoadError] = useState('');
+  const [saveError, setSaveError] = useState('');
 
   useEffect(() => {
     getMyPageProfile()
@@ -52,23 +53,22 @@ export default function LearningSettingsPage() {
         setIsLoaded(true);
       })
       .catch((error: unknown) =>
-        setErrorMessage(
-          error instanceof Error ? error.message : '학습 설정을 불러오지 못했습니다.',
-        ),
+        setLoadError(error instanceof Error ? error.message : '학습 설정을 불러오지 못했습니다.'),
       );
   }, []);
 
   const handleSave = async () => {
-    if (!isLoaded || errorMessage) return;
+    if (!isLoaded || isSaving) return;
 
     setIsSaving(true);
-    setErrorMessage('');
+    setSaveError('');
 
     try {
       await updateEnglishLevel(selectedLevel);
       navigate('/mypage');
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : '학습 설정 수정에 실패했습니다.');
+      setSaveError(error instanceof Error ? error.message : '학습 설정 수정에 실패했습니다.');
+    } finally {
       setIsSaving(false);
     }
   };
@@ -80,13 +80,15 @@ export default function LearningSettingsPage() {
         <button
           type="button"
           onClick={handleSave}
-          disabled={!isLoaded || Boolean(errorMessage) || isSaving}
+          disabled={!isLoaded || isSaving}
           className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500 disabled:text-grey-300"
         >
           수정
         </button>
       </header>
-      {errorMessage && <p className="px-4 text-footnote text-error-500">{errorMessage}</p>}
+      {(loadError || saveError) && (
+        <p className="px-4 text-footnote text-error-500">{loadError || saveError}</p>
+      )}
 
       <fieldset className="mt-[131px] flex flex-col gap-[26px] px-4">
         <legend className="sr-only">현재 영어 레벨 선택</legend>
@@ -99,6 +101,7 @@ export default function LearningSettingsPage() {
               key={option.value}
               type="button"
               onClick={() => setSelectedLevel(option.value)}
+              disabled={!isLoaded || isSaving}
               aria-pressed={isSelected}
               className={[
                 'flex h-[100px] w-full flex-col items-start justify-center gap-1 rounded-2xl px-5 text-left transition-colors',
