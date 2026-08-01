@@ -13,7 +13,13 @@ export interface OnboardingDraft {
 }
 
 export function isAuthenticated() {
-  return localStorage.getItem(AUTHENTICATED_KEY) === 'true';
+  const authenticated = localStorage.getItem(AUTHENTICATED_KEY);
+
+  if (authenticated !== null) {
+    return authenticated === 'true';
+  }
+
+  return Boolean(getAccessToken());
 }
 
 export function hasCompletedOnboarding() {

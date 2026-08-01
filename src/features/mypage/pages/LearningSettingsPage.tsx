@@ -41,12 +41,16 @@ const LEVEL_OPTIONS: LevelOption[] = [
 export default function LearningSettingsPage() {
   const navigate = useNavigate();
   const [selectedLevel, setSelectedLevel] = useState<EnglishLevel>('INTERMEDIATE');
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     getMyPageProfile()
-      .then((profile) => setSelectedLevel(profile.englishLevel))
+      .then((profile) => {
+        setSelectedLevel(profile.englishLevel);
+        setIsLoaded(true);
+      })
       .catch((error: unknown) =>
         setErrorMessage(
           error instanceof Error ? error.message : '학습 설정을 불러오지 못했습니다.',
@@ -55,6 +59,8 @@ export default function LearningSettingsPage() {
   }, []);
 
   const handleSave = async () => {
+    if (!isLoaded || errorMessage) return;
+
     setIsSaving(true);
     setErrorMessage('');
 
@@ -74,8 +80,8 @@ export default function LearningSettingsPage() {
         <button
           type="button"
           onClick={handleSave}
-          disabled={isSaving}
-          className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500"
+          disabled={!isLoaded || Boolean(errorMessage) || isSaving}
+          className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500 disabled:text-grey-300"
         >
           수정
         </button>

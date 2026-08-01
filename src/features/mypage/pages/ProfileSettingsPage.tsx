@@ -5,7 +5,7 @@ import { getMyPageProfile, updateProfile } from '@/features/mypage/api/mypageApi
 import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import CloseCircleIcon from '@/shared/components/icons/CloseCircleIcon';
 
-const MAX_NICKNAME_LENGTH = 30;
+const MAX_NICKNAME_LENGTH = 20;
 
 export default function ProfileSettingsPage() {
   const navigate = useNavigate();

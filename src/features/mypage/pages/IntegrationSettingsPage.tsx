@@ -7,8 +7,6 @@ import type { IntegrationProvider, IntegrationStatus } from '@/features/mypage/t
 import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import Modal from '@/shared/components/Modal';
 
-const MOCK_EMAIL = 'abc@naver.com';
-
 function getInitialStatus(queryStatus: string | null): IntegrationStatus {
   if (queryStatus === 'linked' || queryStatus === 'terms-required') return queryStatus;
   return 'unlinked';
@@ -16,14 +14,17 @@ function getInitialStatus(queryStatus: string | null): IntegrationStatus {
 
 export default function IntegrationSettingsPage() {
   const [searchParams] = useSearchParams();
-  const initialStatus = getInitialStatus(searchParams.get('status'));
+  const queryProvider = searchParams.get('provider');
+  const queryStatus = getInitialStatus(searchParams.get('status'));
+  const initialStatus = (provider: IntegrationProvider): IntegrationStatus =>
+    queryProvider === provider ? queryStatus : 'unlinked';
   const [statuses, setStatuses] = useState<Record<IntegrationProvider, IntegrationStatus>>({
-    spotify: initialStatus,
-    googleCalendar: initialStatus,
+    spotify: initialStatus('spotify'),
+    googleCalendar: initialStatus('googleCalendar'),
   });
   const [settings, setSettings] = useState<Record<IntegrationProvider, boolean>>({
-    spotify: initialStatus === 'linked',
-    googleCalendar: initialStatus === 'linked',
+    spotify: initialStatus('spotify') === 'linked',
+    googleCalendar: initialStatus('googleCalendar') === 'linked',
   });
   const [deleteTarget, setDeleteTarget] = useState<IntegrationProvider | null>(null);
 
@@ -56,7 +57,6 @@ export default function IntegrationSettingsPage() {
               key={provider}
               provider={provider}
               status={statuses[provider]}
-              email={MOCK_EMAIL}
               onLink={() => updateStatus(provider, 'linked')}
               onDelete={() => setDeleteTarget(provider)}
             />

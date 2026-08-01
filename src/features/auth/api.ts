@@ -58,6 +58,7 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     ...init,
     headers,
     credentials: 'include',
+    signal: init.signal ?? AbortSignal.timeout(10_000),
   });
   const body = (await response.json().catch(() => null)) as ApiResponse<T> | null;
 

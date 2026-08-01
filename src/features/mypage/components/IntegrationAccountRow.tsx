@@ -42,7 +42,7 @@ export default function IntegrationAccountRow({
 
         {isLinked && (
           <span className="w-[96px] truncate text-caption1 text-grey-600">
-            {email ?? 'abc@naver.com'}
+            {email ?? '이메일 정보 없음'}
           </span>
         )}
       </div>
