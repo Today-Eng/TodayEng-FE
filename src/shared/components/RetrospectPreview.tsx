@@ -22,7 +22,7 @@ export default function RetrospectPreview({
   return (
     <div>
       <header className="flex items-start justify-between gap-3">
-        <div className="flex shrink-0 items-center gap-[6px]">
+        <div className="flex shrink-0 items-baseline gap-[6px]">
           <strong className="text-subheadline font-semibold text-black">
             {formatDiaryDate(diary.date)}
           </strong>
