@@ -10,6 +10,7 @@ import { ApiError, loginWithGoogle } from '@/features/auth/api';
 import GoogleIcon from '@/features/auth/components/GoogleIcon';
 import { requestGoogleIdToken } from '@/features/auth/googleIdentity';
 import { saveSession } from '@/features/auth/session';
+import LogoIcon from '@/shared/components/icons/LogoIcon';
 
 import './login-font.css';
 
@@ -74,31 +75,28 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
       </div>
 
       <section className="relative z-10 mx-auto h-[874px] min-h-dvh w-full">
-        <img
-          src={todayEngCharacter}
-          alt=""
-          className="absolute left-[39px] top-[198px] h-[198px] w-[263px]"
-          aria-hidden="true"
-        />
-
-        <div
-          className="absolute left-[calc(50%-111px)] top-[calc(50%-19px)] -rotate-[11.15deg] font-['NanumSquareRound'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
-          aria-label="Today Eng"
-        >
-          Today
+      <div className="flex justify-center pt-[25vh]">
+        <div className="relative h-[197px] w-[262px]">
+          <LogoIcon width={262} height={197} />
+          <div
+            className="absolute left-5 top-[207px] -rotate-[11.15deg] font-['NanumSquareRound'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
+            aria-label="Today Eng"
+          >
+            Today
+          </div>
+          <div
+            className="absolute left-[206px] top-[177px] rotate-[11.75deg] font-['NanumSquareRound'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
+            aria-hidden="true"
+          >
+            Eng
+          </div>
         </div>
-        <div
-          className="absolute left-[calc(50%+75px)] top-[calc(50%-49px)] rotate-[11.75deg] font-['NanumSquareRound'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
-          aria-hidden="true"
-        >
-          Eng
-        </div>
-
+      </div>
         <button
           type="button"
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="absolute left-1/2 top-[581px] flex h-[54px] w-[calc(100%-32px)] -translate-x-1/2 items-center justify-center gap-1 rounded-full bg-white px-5 py-[14px] text-headline font-semibold tracking-[-0.41px] text-black transition-transform active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className="absolute left-1/2 bottom-[239px] flex h-[54px] w-[calc(100%-32px)] -translate-x-1/2 items-center justify-center gap-1 rounded-full bg-white px-5 py-[14px] text-headline font-semibold tracking-[-0.41px] text-black transition-transform active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           <GoogleIcon className="size-6 shrink-0" />
           <span className="px-2">{isLoading ? '로그인 중...' : 'Google 로 로그인'}</span>
