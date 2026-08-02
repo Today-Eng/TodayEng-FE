@@ -8,6 +8,7 @@ import { ApiError, saveAgreements, saveOnboarding } from '@/features/auth/api';
 import { OnboardingProgress } from '@/features/auth/components/OnboardingChrome';
 import { getOnboardingDraft } from '@/features/auth/session';
 import ButtonPair from '@/shared/components/ButtonPair';
+import TextLayout from '@/shared/components/TextLayout';
 
 const TERMS = [
   {
@@ -192,14 +193,11 @@ export default function TermsAgreementPage({ onSubmit }: TermsAgreementPageProps
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white pb-24 text-black">
-
+    <main className="relative min-h-dvh w-full bg-white pb-24 text-black">
       <div className="px-[15px] pt-4">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={4} />
-          <h1 className="text-title2 font-semibold tracking-[0.35px]">
-            서비스 이용을 위해 약관에 동의해주세요
-          </h1>
+          <TextLayout mainText="서비스 이용을 위해 약관에 동의해주세요" mainTextSize="title2" />
         </section>
 
         <section className="mt-11 flex flex-col gap-10">
@@ -269,7 +267,7 @@ export default function TermsAgreementPage({ onSubmit }: TermsAgreementPageProps
         </section>
       </div>
 
-      <div className="fixed inset-x-0 bottom-4 z-10 mx-auto w-full max-w-[402px] bg-white px-4">
+      <div className="fixed inset-x-0 bottom-4 z-10 w-full bg-white px-4">
         {errorMessage && (
           <p role="alert" className="mb-2 text-center text-footnote text-red-500">
             {errorMessage}

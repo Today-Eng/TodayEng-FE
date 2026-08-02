@@ -12,6 +12,13 @@ import { hasCompletedOnboarding, isAuthenticated } from '@/features/auth/session
 // home
 import HomePage from '@/features/home/pages/HomePage';
 
+// mypage
+import MyPage from '@/features/mypage/pages/MyPage';
+import ProfileSettingsPage from '@/features/mypage/pages/ProfileSettingsPage';
+import LearningSettingsPage from '@/features/mypage/pages/LearningSettingsPage';
+import InterestSettingsPage from '@/features/mypage/pages/InterestSettingsPage';
+import IntegrationSettingsPage from '@/features/mypage/pages/IntegrationSettingsPage';
+
 // retrospect
 import RetrospectSetup from "@/features/retrospect/create/pages/RetrospectSetup";
 import RetrospectLoading from "@/features/retrospect/create/pages/RetrospectLoading";
@@ -38,9 +45,9 @@ function LoginRoute() {
 
 function OnboardingRoute({ children }: { children: React.ReactNode }) {
   // TODO: 회원가입 없이 온보딩 접근 테스트가 끝나면 아래 인증 가드 주석 해제
-  // if (!isAuthenticated()) {
-  //   return <Navigate to="/login" replace />;
-  // }
+  //  if (!isAuthenticated()) {
+  //    return <Navigate to="/login" replace />;
+  //  }
 
   return hasCompletedOnboarding() ? <Navigate to="/home" replace /> : children;
 }
@@ -105,9 +112,9 @@ export default function AppRoutes() {
         element={
           <>
             {/* TODO: 회원가입 없이 홈 접근 테스트가 끝나면 MemberRoute 주석 해제 */}
-            {/* <MemberRoute> */}
+            {/*  <MemberRoute>  */}
             <HomePage />
-            {/* </MemberRoute> */}
+            {/* </MemberRoute>  */}
           </>
         }
       />
@@ -177,6 +184,47 @@ export default function AppRoutes() {
         }
         />
 
+
+      <Route
+        path="/mypage"
+        element={
+          <MemberRoute>
+            <MyPage />
+          </MemberRoute>
+        }
+      />
+      <Route
+        path="/mypage/profile"
+        element={
+          <MemberRoute>
+            <ProfileSettingsPage />
+          </MemberRoute>
+        }
+      />
+      <Route
+        path="/mypage/learning"
+        element={
+          <MemberRoute>
+            <LearningSettingsPage />
+          </MemberRoute>
+        }
+      />
+      <Route
+        path="/mypage/interests"
+        element={
+          <MemberRoute>
+            <InterestSettingsPage />
+          </MemberRoute>
+        }
+      />
+      <Route
+        path="/mypage/integrations"
+        element={
+          <MemberRoute>
+            <IntegrationSettingsPage />
+          </MemberRoute>
+        }
+      />
 
       <Route path="*" element={<EntryRoute />} />
     </Routes>

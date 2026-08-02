@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { OnboardingProgress } from '@/features/auth/components/OnboardingChrome';
 import { getOnboardingDraft, updateOnboardingDraft } from '@/features/auth/session';
 import ButtonPair from '@/shared/components/ButtonPair';
+import TextLayout from '@/shared/components/TextLayout';
 
 const MIN_INTEREST_COUNT = 3;
 
@@ -97,28 +98,31 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white pb-24 text-black">
-
+    <main className="relative min-h-dvh w-full bg-white pb-24 text-black">
       <div className="px-4 pt-4">
         <section className="flex flex-col gap-4">
-          <OnboardingProgress currentStep={2} />
+          <OnboardingProgress currentStep={3} />
 
-          <div className="flex flex-col gap-1">
-            <h1 className="whitespace-pre-line text-title2 font-semibold tracking-[0.35px]">
-              {`${nickname}님의 관심사 태그를\n최소 3개 이상 선택해주세요`}
-            </h1>
-            <p className="text-subheadline tracking-[-0.24px] text-grey-600">
-              나중에 마이페이지에서 관심사 태그를 수정할 수 있어요
-            </p>
-          </div>
+          <TextLayout
+            mainText={`${nickname}님의 관심사 태그를\n최소 3개 이상 선택해주세요`}
+            subText="나중에 마이페이지에서 관심사 태그를 수정할 수 있어요"
+            mainTextSize="title2"
+          />
         </section>
 
         <div className="mt-11 flex flex-col gap-4">
-          {INTEREST_GROUPS.map((group) => (
-            <fieldset key={group.category} className="flex flex-col gap-4">
-              <legend className="text-headline font-semibold tracking-[-0.41px]">
+          {INTEREST_GROUPS.map((group, groupIndex) => (
+            <section
+              key={group.category}
+              className="flex flex-col gap-4"
+              aria-labelledby={`interest-category-${groupIndex}`}
+            >
+              <h2
+                id={`interest-category-${groupIndex}`}
+                className="text-headline font-semibold tracking-[-0.41px]"
+              >
                 {group.category}
-              </legend>
+              </h2>
               <div className="flex flex-wrap gap-x-3 gap-y-3">
                 {group.interests.map((interest) => {
                   const isSelected = selectedInterests.includes(interest.id);
@@ -129,7 +133,7 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
                       type="button"
                       onClick={() => toggleInterest(interest.id)}
                       aria-pressed={isSelected}
-                      className={`rounded-full border px-2 py-1.5 text-body tracking-[-0.41px] transition-colors ${
+                      className={`rounded-full border px-2 py-1.5 text-body tracking-[-0.41px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-main-500 focus-visible:ring-offset-2 ${
                         isSelected
                           ? 'border-main-500 bg-main-100 text-main-500'
                           : 'border-transparent bg-grey-100 text-grey-700'
@@ -140,12 +144,12 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
                   );
                 })}
               </div>
-            </fieldset>
+            </section>
           ))}
         </div>
       </div>
 
-      <div className="fixed inset-x-0 bottom-4 z-10 mx-auto w-full max-w-[402px] bg-white px-4">
+      <div className="fixed inset-x-0 bottom-4 z-10 w-full bg-white px-4">
         <ButtonPair
           leftLabel="이전으로"
           rightLabel="다음으로"

@@ -1,9 +1,10 @@
 import type { EnglishLevel, LoginResponse } from '@/features/auth/api';
 
-const ACCESS_TOKEN_KEY = 'todayeng.accessToken';
-const REFRESH_TOKEN_KEY = 'todayeng.refreshToken';
+const AUTHENTICATED_KEY = 'todayeng.authenticated';
 const ONBOARDING_COMPLETED_KEY = 'todayeng.onboardingCompleted';
 const ONBOARDING_DRAFT_KEY = 'todayeng.onboardingDraft';
+const ACCESS_TOKEN_KEY = 'todayeng.accessToken';
+const REFRESH_TOKEN_KEY = 'todayeng.refreshToken';
 
 export interface OnboardingDraft {
   nickname?: string;
@@ -11,15 +12,13 @@ export interface OnboardingDraft {
   interestTagIds?: number[];
 }
 
-export function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
-}
-
-export function getRefreshToken() {
-  return localStorage.getItem(REFRESH_TOKEN_KEY);
-}
-
 export function isAuthenticated() {
+  const authenticated = localStorage.getItem(AUTHENTICATED_KEY);
+
+  if (authenticated !== null) {
+    return authenticated === 'true';
+  }
+
   return Boolean(getAccessToken());
 }
 
@@ -30,6 +29,7 @@ export function hasCompletedOnboarding() {
 export function saveSession({ accessToken, refreshToken, isNewUser }: LoginResponse) {
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+  localStorage.setItem(AUTHENTICATED_KEY, 'true');
   localStorage.setItem(ONBOARDING_COMPLETED_KEY, String(!isNewUser));
 
   if (!isNewUser) {
@@ -45,8 +45,17 @@ export function completeOnboarding() {
 export function clearSession() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
+  localStorage.removeItem(AUTHENTICATED_KEY);
   localStorage.removeItem(ONBOARDING_COMPLETED_KEY);
   sessionStorage.removeItem(ONBOARDING_DRAFT_KEY);
+}
+
+export function getAccessToken() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
+export function getRefreshToken() {
+  return localStorage.getItem(REFRESH_TOKEN_KEY);
 }
 
 export function getOnboardingDraft(): OnboardingDraft {

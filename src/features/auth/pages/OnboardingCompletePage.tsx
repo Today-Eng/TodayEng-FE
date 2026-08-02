@@ -5,6 +5,7 @@ import completeBackground from '@/features/auth/assets/onboarding-complete-bg.sv
 import completeIcon from '@/features/auth/assets/onboarding-complete-icon.svg';
 import { completeOnboarding } from '@/features/auth/session';
 import Button from '@/shared/components/Button';
+import TextLayout from '@/shared/components/TextLayout';
 
 interface OnboardingCompletePageProps {
   onStartFirstRetrospect?: () => void;
@@ -29,10 +30,9 @@ export default function OnboardingCompletePage({
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white text-black">
-
-      <div className="absolute left-1/2 top-1/2 flex w-[370px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-20">
-        <section className="flex w-[268px] flex-col items-center gap-6 text-center">
+    <main className="relative min-h-dvh w-full bg-white text-black">
+      <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-20 px-4">
+        <section className="flex w-full flex-col items-center gap-6 text-center">
           <div className="relative h-[135px] w-[138px]" aria-hidden="true">
             <img
               src={completeBackground}
@@ -46,14 +46,12 @@ export default function OnboardingCompletePage({
             />
           </div>
 
-          <div className="flex flex-col items-center gap-1">
-            <h1 className="whitespace-pre-line text-title2 font-semibold tracking-[0.35px]">
-              {'회원가입이 완료되셨습니다\n첫 회고를 작성하러 가볼까요?'}
-            </h1>
-            <p className="whitespace-pre-line text-subheadline tracking-[-0.24px] text-grey-600">
-              {'나중에 마이페이지에서\n캘린더/스포티파이를 연동할 수 있어요.'}
-            </p>
-          </div>
+          <TextLayout
+            mainText={'회원가입이 완료되셨습니다\n첫 회고를 작성하러 가볼까요?'}
+            subText={'나중에 마이페이지에서\n캘린더/스포티파이를 연동할 수 있어요.'}
+            mainTextSize="title2"
+            center
+          />
         </section>
 
         <div className="flex w-full flex-col gap-2">
