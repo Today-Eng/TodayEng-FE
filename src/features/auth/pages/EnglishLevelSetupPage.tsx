@@ -5,6 +5,7 @@ import { OnboardingProgress } from '@/features/auth/components/OnboardingChrome'
 import type { EnglishLevel } from '@/features/auth/api';
 import { getOnboardingDraft, updateOnboardingDraft } from '@/features/auth/session';
 import ButtonPair from '@/shared/components/ButtonPair';
+import TextLayout from '@/shared/components/TextLayout';
 
 interface LevelOption {
   value: EnglishLevel;
@@ -36,10 +37,7 @@ const LEVEL_OPTIONS: LevelOption[] = [
   {
     value: 'ADVANCED',
     title: '자유롭게 대화하고 싶어요',
-    description: [
-      '간단한 인사와 자기소개 정도는 할 수 있어요.',
-      '짧은 문장으로 천천히 시작하고 싶어요.',
-    ],
+    description: ['복잡한 주제도 이해하지만,', '원어민처럼 자연스러운 늬앙스를 더 다듬고 싶어요.'],
   },
 ];
 
@@ -77,21 +75,16 @@ export default function EnglishLevelSetupPage({ onNext }: EnglishLevelSetupPageP
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white text-black">
-      
-
+    <main className="relative min-h-dvh w-full bg-white text-black">
       <div className="px-4 pt-4">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={2} />
 
-          <div className="flex flex-col gap-2">
-            <h1 className="whitespace-pre-line text-title2 font-semibold tracking-[0.35px]">
-              {`${nickname}님의\n현재 영어 레벨을 설정해주세요`}
-            </h1>
-            <p className="text-subheadline tracking-[-0.24px] text-grey-600">
-              나중에 마이페이지에서 학습레벨을 수정할 수 있어요
-            </p>
-          </div>
+          <TextLayout
+            mainText={`${nickname}님의\n현재 영어 레벨을 설정해주세요`}
+            subText="나중에 마이페이지에서 학습레벨을 수정할 수 있어요"
+            mainTextSize="title2"
+          />
         </section>
 
         <fieldset className="mt-11 flex flex-col gap-4">

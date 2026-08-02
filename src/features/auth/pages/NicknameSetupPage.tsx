@@ -6,6 +6,7 @@ import { OnboardingProgress } from '@/features/auth/components/OnboardingChrome'
 import { disableGoogleAutoSelect } from '@/features/auth/googleIdentity';
 import { clearSession, getOnboardingDraft, updateOnboardingDraft } from '@/features/auth/session';
 import ButtonPair from '@/shared/components/ButtonPair';
+import TextLayout from '@/shared/components/TextLayout';
 import CloseCircleIcon from '@/shared/components/icons/CloseCircleIcon';
 
 const MAX_NICKNAME_LENGTH = 20;
@@ -56,20 +57,16 @@ export default function NicknameSetupPage({ onNext }: NicknameSetupPageProps) {
   };
 
   return (
-    <main className="relative mx-auto min-h-dvh w-full max-w-[402px] bg-white text-black">
-
+    <main className="relative min-h-dvh w-full bg-white text-black">
       <div className="px-4 pt-4">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={1} />
 
-          <div className="flex flex-col gap-2">
-            <h1 className="text-title2 font-semibold tracking-[0.35px]">
-              사용할 닉네임을 설정해주세요
-            </h1>
-            <p className="text-subheadline tracking-[-0.24px] text-grey-600">
-              대화할 때 AI가 이 이름으로 불러드려요
-            </p>
-          </div>
+          <TextLayout
+            mainText="사용할 닉네임을 설정해주세요"
+            subText="대화할 때 AI가 이 이름으로 불러드려요"
+            mainTextSize="title2"
+          />
         </section>
 
         <section className="mt-11 flex flex-col gap-4">
