@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-import type { YearMonth } from "../types"
+import type { YearMonth } from "@/features/retrospect/record/types"
 import CloseBtn from "@/assets/icons/retrospect/close-button.svg"
 import CheckBtn from "@/assets/icons/retrospect/check-regular.svg"
 

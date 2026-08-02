@@ -4,7 +4,7 @@ import RetrospectQna from "@/shared/components/RetrospectQna"
 
 import CloseBtn from "@/assets/icons/retrospect/close-button.svg"
 
-import type { RetrospectQuestionAnswer } from "../types"
+import type { RetrospectQuestionAnswer } from "@/features/retrospect/detail/types"
 
 interface ExplanationBottomSheetProps {
   qa: RetrospectQuestionAnswer | null

@@ -1,6 +1,6 @@
-import MaterialIcon from "./icons/MaterialIcon"
+import MaterialIcon from "@/features/home/components/icons/MaterialIcon"
 
-import type { MaterialIconType } from "./icons/MaterialIcon"
+import type { MaterialIconType } from "@/features/home/components/icons/MaterialIcon"
 import ArrowRightIcon from "@/shared/components/icons/ArrowRightIcon";
 
 interface MaterialItemProps {

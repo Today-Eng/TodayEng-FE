@@ -1,10 +1,10 @@
 import BottomNav from "@/shared/components/BottomNav"
 
-import MonthBottomSheet from "../components/MonthBottomSheet"
-import RetrospectCard from "../components/RetrospectCard"
-import RetrospectMonthButton from "../components/RetrospectMonthButton"
+import MonthBottomSheet from "@/features/retrospect/record/components/MonthBottomSheet"
+import RetrospectCard from "@/features/retrospect/record/components/RetrospectCard"
+import RetrospectMonthButton from "@/features/retrospect/record/components/RetrospectMonthButton"
 
-import useRetrospectListMock from "../hooks/useRetrospectListMock"
+import useRetrospectListMock from "@/features/retrospect/record/hooks/useRetrospectListMock"
 
 export default function RetrospectListPage() {
   const {

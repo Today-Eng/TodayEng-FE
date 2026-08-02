@@ -1,4 +1,4 @@
-import type { RetrospectDetailData } from "../types"
+import type { RetrospectDetailData } from "@/features/retrospect/detail/types"
 
 export const retrospectDetailMock: RetrospectDetailData = {
   diaryId: 4521,

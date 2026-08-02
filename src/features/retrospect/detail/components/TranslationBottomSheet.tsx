@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 import CloseBtn from "@/assets/icons/retrospect/close-button.svg"
 import RetrospectQna from "@/shared/components/RetrospectQna"
-import type { RetrospectQuestionAnswer } from "../types"
+import type { RetrospectQuestionAnswer } from "@/features/retrospect/detail/types"
 
 interface TranslationBottomSheetProps {
   qa: RetrospectQuestionAnswer | null

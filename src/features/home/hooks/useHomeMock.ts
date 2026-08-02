@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom"
 import {
   homeMock,
   retrospectPreviewMock,
-} from "../mocks/homeMock"
+} from "@/features/home/mocks/homeMock"
 
 import {
   getCalendarDayStatus,
   getNextMonth,
   getPreviousMonth,
-} from "../utils/calendar"
+} from "@/features/home/utils/calendar"
 
 import type {
   CalendarDayStatus,
   RetrospectPreviewData,
-} from "../types"
+} from "@/features/home/types"
 
 export default function useHomeMock() {
   const navigate = useNavigate()

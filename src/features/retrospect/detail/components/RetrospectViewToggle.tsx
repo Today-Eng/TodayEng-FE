@@ -1,4 +1,4 @@
-import type { RetrospectViewMode } from "../types"
+import type { RetrospectViewMode } from "@/features/retrospect/detail/types"
 
 interface RetrospectViewToggleProps {
   value: RetrospectViewMode

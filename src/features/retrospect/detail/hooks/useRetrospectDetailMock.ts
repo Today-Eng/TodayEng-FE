@@ -1,11 +1,11 @@
 import { useState } from "react"
 
-import { retrospectDetailMock } from "../mocks/retrospectDetailMock"
+import { retrospectDetailMock } from "@/features/retrospect/detail/mocks/retrospectDetailMock"
 
 import type {
   RetrospectQuestionAnswer,
   RetrospectViewMode,
-} from "../types"
+} from "@/features/retrospect/detail/types"
 
 export default function useRetrospectDetailMock() {
   const [viewMode, setViewMode] =

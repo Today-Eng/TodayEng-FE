@@ -8,14 +8,14 @@ import BottomNav from "@/shared/components/BottomNav"
 import KeywordList from "@/shared/components/KeywordList"
 import Modal from "@/shared/components/Modal"
 
-import ExplanationBottomSheet from "../components/ExplanationBottomSheet"
-import MoreBottomSheet from "../components/MoreBottomSheet"
-import RetrospectDetailQna from "../components/RetrospectDetailQna"
-import RetrospectMemo from "../components/RetrospectMemo"
-import RetrospectViewToggle from "../components/RetrospectViewToggle"
-import TranslationBottomSheet from "../components/TranslationBottomSheet"
+import ExplanationBottomSheet from "@/features/retrospect/detail/components/ExplanationBottomSheet"
+import MoreBottomSheet from "@/features/retrospect/detail/components/MoreBottomSheet"
+import RetrospectDetailQna from "@/features/retrospect/detail/components/RetrospectDetailQna"
+import RetrospectMemo from "@/features/retrospect/detail/components/RetrospectMemo"
+import RetrospectViewToggle from "@/features/retrospect/detail/components/RetrospectViewToggle"
+import TranslationBottomSheet from "@/features/retrospect/detail/components/TranslationBottomSheet"
 
-import useRetrospectDetailMock from "../hooks/useRetrospectDetailMock"
+import useRetrospectDetailMock from "@/features/retrospect/detail/hooks/useRetrospectDetailMock"
 
 import {
   formatDiaryDate,

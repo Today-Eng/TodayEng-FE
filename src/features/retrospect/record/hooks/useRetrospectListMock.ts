@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { retrospectListMock } from "../mocks/retrospectListMock"
+import { retrospectListMock } from "@/features/retrospect/record/mocks/retrospectListMock"
 
 import type { RetrospectPreviewData } from "@/shared/types/retrospect"
-import type { YearMonth } from "../types"
+import type { YearMonth } from "@/features/retrospect/record/types"
 
 const MOCK_CURRENT_YEAR = 2026
 const MOCK_CURRENT_MONTH = 7

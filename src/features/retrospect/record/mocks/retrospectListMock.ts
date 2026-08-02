@@ -1,4 +1,4 @@
-import type { RetrospectListData } from "../types"
+import type { RetrospectListData } from "@/features/retrospect/record/types"
 
 export const retrospectListMock: RetrospectListData[] = [
   {

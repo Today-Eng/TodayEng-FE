@@ -1,6 +1,6 @@
-import CalendarWrittenMarker from "./WrittenMarker"
+import type { CalendarDayStatus } from "@/features/home/types"
+import CalendarWrittenMarker from "@/features/home/components/WrittenMarker"
 
-import type { CalendarDayStatus } from "../types"
 
 interface CalendarDayProps {
   day: number

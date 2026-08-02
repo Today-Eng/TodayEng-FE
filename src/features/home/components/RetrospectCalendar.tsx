@@ -1,5 +1,5 @@
-import CalendarDay from "./CalendarDay"
-import MaterialIcon from "./icons/MaterialIcon"
+import CalendarDay from "@/features/home/components/CalendarDay"
+import MaterialIcon from "@/features/home/components/icons/MaterialIcon"
 
 import RetrospectPreview from "@/shared/components/RetrospectPreview"
 import PrevArrowIcon from "@/shared/components/icons/ArrowLeftIcon"
@@ -13,12 +13,12 @@ import {
   formatSelectedDate,
   getDayOfWeekFromDate,
   getKoreanDayOfWeek,
-} from "../utils/calendar"
+} from "@/features/home/utils/calendar"
 
 import type {
   CalendarDayStatus,
   RetrospectPreviewData,
-} from "../types"
+} from "@/features/home/types"
 
 interface RetrospectCalendarProps {
   year: number

@@ -3,7 +3,7 @@ import RetrospectQna from "@/shared/components/RetrospectQna"
 import type {
   RetrospectQuestionAnswer,
   RetrospectViewMode,
-} from "../types"
+} from "@/features/retrospect/detail/types"
 
 interface RetrospectDetailQnaProps {
   qa: RetrospectQuestionAnswer

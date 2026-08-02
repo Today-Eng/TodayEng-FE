@@ -1,7 +1,7 @@
 import type {
   RetrospectPreviewData,
   HomeData,
-} from "../types"
+} from "@/features/home/types"
 
 export const homeMock: HomeData = {
   user: {
