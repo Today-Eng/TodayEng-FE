@@ -1,16 +1,7 @@
 import { getAccessToken, getRefreshToken } from '@/features/auth/session';
+import sharedRequest from '@/shared/api/request';
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080').replace(
-  /\/$/,
-  '',
-);
-
-interface ApiResponse<T> {
-  success: boolean;
-  code: string;
-  message: string;
-  data: T;
-}
+export { default as ApiError } from '@/shared/api/ApiError';
 
 export interface LoginResponse {
   accessToken: string;
@@ -32,45 +23,8 @@ export interface Agreement {
   agree: boolean;
 }
 
-export class ApiError extends Error {
-  readonly code?: string;
-  readonly status?: number;
-
-  constructor(message: string, code?: string, status?: number) {
-    super(message);
-    this.name = 'ApiError';
-    this.code = code;
-    this.status = status;
-  }
-}
-
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const headers = new Headers(init.headers);
-
-  headers.set('Content-Type', 'application/json');
-
-  const accessToken = getAccessToken();
-  if (accessToken) {
-    headers.set('Authorization', `Bearer ${accessToken}`);
-  }
-
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...init,
-    headers,
-    credentials: 'include',
-    signal: init.signal ?? AbortSignal.timeout(10_000),
-  });
-  const body = (await response.json().catch(() => null)) as ApiResponse<T> | null;
-
-  if (!response.ok || !body?.success) {
-    throw new ApiError(
-      body?.message ?? '서버 요청에 실패했습니다. 잠시 후 다시 시도해주세요.',
-      body?.code,
-      response.status,
-    );
-  }
-
-  return body.data;
+function request<T>(path: string, init: RequestInit = {}) {
+  return sharedRequest<T>(path, init, { accessToken: getAccessToken() });
 }
 
 export function loginWithGoogle(idToken: string) {
