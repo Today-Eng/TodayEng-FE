@@ -1,8 +1,8 @@
-import type { HomeMaterials } from "../types"
+import type { HomeMaterials } from "@/features/home/types"
 import { useNavigate } from "react-router-dom"
 
 
-import MaterialItem from "./MaterialItem"
+import MaterialItem from "@/features/home/components/MaterialItem"
 
 interface TodayMaterialsProps {
   materials: HomeMaterials

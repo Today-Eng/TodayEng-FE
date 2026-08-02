@@ -50,7 +50,7 @@ function NavItem({
 
 export default function BottomNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 mx-auto h-[75px] w-full max-w-[402px] border-t border-grey-100 bg-white">
+    <nav className="fixed inset-x-0 bottom-0 z-50 h-[75px] w-full border-t border-grey-100 bg-white">
       <div className="grid h-full grid-cols-3 gap-[10px] px-3 pt-3">
         <NavItem
           to="/home"
@@ -59,7 +59,7 @@ export default function BottomNav() {
         />
 
         <NavItem
-          to="/"
+          to="/retrospects"
           label="회고록"
           Icon={RetrospectIcon}
         />

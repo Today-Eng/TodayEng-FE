@@ -1,8 +1,10 @@
-import DiaryCalendar from "@/features/home/components/DiaryCalendar"
+import BottomNav from "@/shared/components/BottomNav"
+import TextLayout from "@/shared/components/TextLayout"
+
+import RetrospectCalendar from "@/features/home/components/RetrospectCalendar"
 import HomeStatistics from "@/features/home/components/HomeStatistics"
 import TodayMaterials from "@/features/home/components/TodayMaterials"
 import useHomeMock from "@/features/home/hooks/useHomeMock"
-import BottomNav from "@/shared/components/BottomNav"
 
 export default function HomePage() {
   const {
@@ -10,25 +12,23 @@ export default function HomePage() {
     currentYear,
     currentMonth,
     selectedDate,
-    selectedDiary,
+    selectedRetrospect,
     getDateStatus,
     handlePreviousMonth,
     handleNextMonth,
     handleDateSelect,
     handleRetrospect,
-    handleDiaryDetail,
+    handleRetrospectDetail,
   } = useHomeMock()
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-main-100 via-white to-white pb-[110px]">
-      <div className="mx-auto w-full max-w-[402px]">
+    <main className="min-h-screen w-full bg-gradient-to-b from-main-100 via-white to-white pb-[110px]">
+      <div className="w-full">
         <div className="px-4 pt-[61px]">
           <header>
-            <div className="text-title1 font-semibold text-black">
-              {home.user.nickname}님
-              <br />
-              오늘 하루는 어땠나요?
-            </div>
+            <TextLayout
+            mainText={`${home.user.nickname}님\n오늘 하루는 어땠나요?`}
+            />
           </header>
 
           <div className="mt-4">
@@ -43,18 +43,18 @@ export default function HomePage() {
           </div>
 
           <div className="mt-4">
-            <DiaryCalendar
+            <RetrospectCalendar
               year={currentYear}
               month={currentMonth}
               today={home.today.date}
               selectedDate={selectedDate}
-              selectedDiary={selectedDiary}
+              selectedRetrospect={selectedRetrospect}
               getDateStatus={getDateStatus}
               onPreviousMonth={handlePreviousMonth}
               onNextMonth={handleNextMonth}
               onDateSelect={handleDateSelect}
               onRetrospect={handleRetrospect}
-              onDiaryDetail={handleDiaryDetail}
+              onRetrospectDetail={handleRetrospectDetail}
             />
           </div>
         </div>

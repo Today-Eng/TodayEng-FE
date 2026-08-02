@@ -1,4 +1,4 @@
-import HomeStatCard from "./HomeStatCard"
+import HomeStatCard from "@/features/home/components/HomeStatCard"
 
 interface HomeStatisticsProps {
   totalDiaryCount: number

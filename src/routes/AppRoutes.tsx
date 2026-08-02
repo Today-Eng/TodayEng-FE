@@ -20,11 +20,16 @@ import InterestSettingsPage from '@/features/mypage/pages/InterestSettingsPage';
 import IntegrationSettingsPage from '@/features/mypage/pages/IntegrationSettingsPage';
 
 // retrospect
-import RetrospectSetup from '@/features/retrospect/pages/RetrospectSetup';
-import RetrospectLoading from '@/features/retrospect/pages/RetrospectLoading';
-import RetrospectSession from '@/features/retrospect/pages/RetrospectSession';
-import RetrospectMemo from '@/features/retrospect/pages/RetrospectMemo';
-import RetrospectComplete from '@/features/retrospect/pages/RetrospectComplete';
+import RetrospectSetup from "@/features/retrospect/create/pages/RetrospectSetup";
+import RetrospectLoading from "@/features/retrospect/create/pages/RetrospectLoading";
+import RetrospectSession from "@/features/retrospect/create/pages/RetrospectSession";
+import RetrospectMemo from "@/features/retrospect/create/pages/RetrospectMemo";
+import RetrospectComplete from "@/features/retrospect/create/pages/RetrospectComplete";
+
+// retrospects
+import RetrospectList from "@/features/retrospect/record/pages/RetrospectList"
+import RetrospectDetail from "@/features/retrospect/detail/pages/RetrospectDetail"
+import RetrospectMemoEdit from "@/features/retrospect/detail/pages/RetrospectMemoEdit"
 
 function EntryRoute() {
   if (!isAuthenticated()) {
@@ -154,6 +159,31 @@ export default function AppRoutes() {
           </MemberRoute>
         }
       />
+      
+       <Route
+        path="/retrospects"
+        element={
+        <MemberRoute>
+            <RetrospectList />
+            </MemberRoute>}
+        />
+      <Route
+        path="/retrospects/:diaryId"
+        element={
+          <MemberRoute>
+            <RetrospectDetail />
+          </MemberRoute>
+        }
+        />
+      <Route
+        path="/retrospects/:diaryId/memo/edit"
+        element={
+          <MemberRoute>
+            <RetrospectMemoEdit />
+          </MemberRoute>
+        }
+        />
+
 
       <Route
         path="/mypage"

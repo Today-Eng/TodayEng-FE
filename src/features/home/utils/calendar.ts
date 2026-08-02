@@ -2,7 +2,7 @@ import type {
   CalendarDayItem,
   CalendarDayStatus,
   DayOfWeek,
-} from "../types"
+} from "@/features/home/types"
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24
 

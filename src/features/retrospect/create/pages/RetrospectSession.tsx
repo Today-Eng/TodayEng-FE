@@ -3,9 +3,9 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 // components
-import RetrospectStartModal from "@/features/retrospect/components/RetrospectStartModal";
-import AiMessage from "@/features/retrospect/components/AiMessage"
-import UserMessage from "@/features/retrospect/components/UserMessage"
+import RetrospectStartModal from "@/features/retrospect/create/components/RetrospectStartModal";
+import AiMessage from "@/features/retrospect/create/components/AiMessage"
+import UserMessage from "@/features/retrospect/create/components/UserMessage"
 import Modal from "@/shared/components/Modal"
 
 // assets
