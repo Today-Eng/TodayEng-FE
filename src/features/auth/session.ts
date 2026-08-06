@@ -73,14 +73,12 @@ export function saveSessionExpiredNotice() {
   sessionStorage.setItem(LOGIN_NOTICE_KEY, SESSION_EXPIRED_MESSAGE);
 }
 
-export function consumeLoginNotice() {
-  const notice = sessionStorage.getItem(LOGIN_NOTICE_KEY);
+export function getLoginNotice() {
+  return sessionStorage.getItem(LOGIN_NOTICE_KEY);
+}
 
-  if (notice) {
-    sessionStorage.removeItem(LOGIN_NOTICE_KEY);
-  }
-
-  return notice;
+export function clearLoginNotice() {
+  sessionStorage.removeItem(LOGIN_NOTICE_KEY);
 }
 
 export function getOnboardingDraft(): OnboardingDraft {

@@ -7,7 +7,7 @@ import ellipse18 from '@/features/auth/assets/ellipse-18.svg';
 import ellipse19 from '@/features/auth/assets/ellipse-19.svg';
 import { ApiError, loginWithGoogle } from '@/features/auth/api';
 import { renderGoogleSignInButton } from '@/features/auth/googleIdentity';
-import { consumeLoginNotice, saveSession } from '@/features/auth/session';
+import { clearLoginNotice, getLoginNotice, saveSession } from '@/features/auth/session';
 import LogoIcon from '@/shared/components/icons/LogoIcon';
 
 import './login-font.css';
@@ -20,7 +20,11 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
   const navigate = useNavigate();
   const googleButtonRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(() => consumeLoginNotice() ?? '');
+  const [errorMessage, setErrorMessage] = useState(() => getLoginNotice() ?? '');
+
+  useEffect(() => {
+    clearLoginNotice();
+  }, []);
 
   useEffect(() => {
     const googleButton = googleButtonRef.current;

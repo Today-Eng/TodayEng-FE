@@ -98,16 +98,30 @@ export async function renderGoogleSignInButton(
     initializedClientId = clientId;
   }
 
-  window.google.accounts.id.renderButton(element, {
-    type: 'standard',
-    theme: 'outline',
-    size: 'large',
-    text: 'signin_with',
-    shape: 'pill',
-    width: Math.min(element.clientWidth, 400),
-  });
+  const googleAccountsId = window.google.accounts.id;
+  const renderButton = () => {
+    if (element.clientWidth <= 0) {
+      return;
+    }
+
+    googleAccountsId.renderButton(element, {
+      type: 'standard',
+      theme: 'outline',
+      size: 'large',
+      text: 'signin_with',
+      shape: 'pill',
+      width: Math.min(element.clientWidth, 400),
+    });
+    resizeObserver.disconnect();
+  };
+  const resizeObserver = new ResizeObserver(renderButton);
+
+  resizeObserver.observe(element);
+  renderButton();
 
   return () => {
+    resizeObserver.disconnect();
+
     if (activeCredentialHandler === onCredential) {
       activeCredentialHandler = null;
     }
