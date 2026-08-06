@@ -2,20 +2,20 @@ import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import {
-  diaryPreviewMock,
   homeMock,
-} from "../mocks/homeMock"
+  retrospectPreviewMock,
+} from "@/features/home/mocks/homeMock"
 
 import {
   getCalendarDayStatus,
   getNextMonth,
   getPreviousMonth,
-} from "../utils/calendar"
+} from "@/features/home/utils/calendar"
 
 import type {
   CalendarDayStatus,
-  DiaryPreviewData,
-} from "../types"
+  RetrospectPreviewData,
+} from "@/features/home/types"
 
 export default function useHomeMock() {
   const navigate = useNavigate()
@@ -32,9 +32,12 @@ export default function useHomeMock() {
     homeMock.today.date,
   )
 
-  const selectedDiary = useMemo<DiaryPreviewData | null>(() => {
-    return diaryPreviewMock[selectedDate] ?? null
-  }, [selectedDate])
+  const selectedRetrospect =
+    useMemo<RetrospectPreviewData | null>(() => {
+      return (
+        retrospectPreviewMock[selectedDate] ?? null
+      )
+    }, [selectedDate])
 
   const getDateStatus = (
     date: string,
@@ -42,9 +45,12 @@ export default function useHomeMock() {
     return getCalendarDayStatus({
       date,
       today: homeMock.today.date,
-      writtenDates: homeMock.calendar.writtenDates,
-      writableFrom: homeMock.calendar.writableFrom,
-      writableTo: homeMock.calendar.writableTo,
+      writtenDates:
+        homeMock.calendar.writtenDates,
+      writableFrom:
+        homeMock.calendar.writableFrom,
+      writableTo:
+        homeMock.calendar.writableTo,
     })
   }
 
@@ -59,7 +65,10 @@ export default function useHomeMock() {
   }
 
   const handleNextMonth = () => {
-    const next = getNextMonth(currentYear, currentMonth)
+    const next = getNextMonth(
+      currentYear,
+      currentMonth,
+    )
 
     const nextCalendarValue =
       next.year * 12 + next.month
@@ -68,7 +77,9 @@ export default function useHomeMock() {
       homeMock.calendar.year * 12 +
       homeMock.calendar.month
 
-    if (nextCalendarValue > todayCalendarValue) {
+    if (
+      nextCalendarValue > todayCalendarValue
+    ) {
       return
     }
 
@@ -96,11 +107,15 @@ export default function useHomeMock() {
       return
     }
 
-    navigate(`/retrospect?date=${selectedDate}`)
+    navigate(
+      `/retrospect?date=${selectedDate}`,
+    )
   }
 
-  const handleDiaryDetail = (diaryId: number) => {
-    navigate(`/diaries/${diaryId}`)
+  const handleRetrospectDetail = (
+    diaryId: number,
+  ) => {
+    navigate(`/retrospects/${diaryId}`)
   }
 
   return {
@@ -108,12 +123,12 @@ export default function useHomeMock() {
     currentYear,
     currentMonth,
     selectedDate,
-    selectedDiary,
+    selectedRetrospect,
     getDateStatus,
     handlePreviousMonth,
     handleNextMonth,
     handleDateSelect,
     handleRetrospect,
-    handleDiaryDetail,
+    handleRetrospectDetail,
   }
 }

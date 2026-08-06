@@ -1,11 +1,9 @@
-export type DayOfWeek =
-  | "MONDAY"
-  | "TUESDAY"
-  | "WEDNESDAY"
-  | "THURSDAY"
-  | "FRIDAY"
-  | "SATURDAY"
-  | "SUNDAY"
+import type { DayOfWeek } from "@/shared/types/retrospect"
+
+export type {
+  DayOfWeek,
+  RetrospectPreviewData,
+} from "@/shared/types/retrospect"
 
 export type DiaryStatus =
   | "NOT_STARTED"
@@ -42,7 +40,11 @@ export interface HomeData {
 
 export interface HomeMaterials {
   time: {
-    period: "MORNING" | "AFTERNOON" | "EVENING" | "NIGHT"
+    period:
+      | "MORNING"
+      | "AFTERNOON"
+      | "EVENING"
+      | "NIGHT"
     message: string
   }
 
@@ -69,15 +71,6 @@ export interface HomeMaterials {
     trackTitle: string | null
     artistName: string | null
   }
-}
-
-export interface DiaryPreviewData {
-  diaryId: number
-  date: string
-  dayOfWeek: DayOfWeek
-  keywords: string[]
-  firstQuestion: string
-  firstAnswer: string
 }
 
 export type CalendarDayStatus =

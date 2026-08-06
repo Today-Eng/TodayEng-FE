@@ -1,7 +1,7 @@
 import type {
-  DiaryPreviewData,
+  RetrospectPreviewData,
   HomeData,
-} from "../types"
+} from "@/features/home/types"
 
 export const homeMock: HomeData = {
   user: {
@@ -66,7 +66,7 @@ export const homeMock: HomeData = {
   },
 }
 
-export const diaryPreviewMock: Record<string, DiaryPreviewData> = {
+export const retrospectPreviewMock: Record<string, RetrospectPreviewData> = {
   "2026-07-26": {
     diaryId: 26,
     date: "2026-07-26",
