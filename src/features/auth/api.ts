@@ -1,4 +1,4 @@
-import { getAccessToken, getRefreshToken } from '@/features/auth/session';
+import { getRefreshToken } from '@/features/auth/session';
 import sharedRequest from '@/shared/api/request';
 
 export { default as ApiError } from '@/shared/api/ApiError';
@@ -24,23 +24,31 @@ export interface Agreement {
 }
 
 function request<T>(path: string, init: RequestInit = {}) {
-  return sharedRequest<T>(path, init, { accessToken: getAccessToken() });
+  return sharedRequest<T>(path, init);
 }
 
 export function loginWithGoogle(idToken: string) {
-  return request<LoginResponse>('/auth/google', {
-    method: 'POST',
-    body: JSON.stringify({ idToken }),
-  });
+  return sharedRequest<LoginResponse>(
+    '/auth/google',
+    {
+      method: 'POST',
+      body: JSON.stringify({ idToken }),
+    },
+    { auth: false },
+  );
 }
 
 export function logout() {
   const refreshToken = getRefreshToken();
 
-  return request<null>('/auth/logout', {
-    method: 'POST',
-    body: JSON.stringify({ refreshToken }),
-  });
+  return sharedRequest<null>(
+    '/auth/logout',
+    {
+      method: 'POST',
+      body: JSON.stringify({ refreshToken }),
+    },
+    { retryOnUnauthorized: false },
+  );
 }
 
 export function saveAgreements(agreements: Agreement[]) {

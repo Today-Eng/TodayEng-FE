@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ellipse16 from '@/features/auth/assets/ellipse-16.svg';
@@ -6,9 +6,8 @@ import ellipse17 from '@/features/auth/assets/ellipse-17.svg';
 import ellipse18 from '@/features/auth/assets/ellipse-18.svg';
 import ellipse19 from '@/features/auth/assets/ellipse-19.svg';
 import { ApiError, loginWithGoogle } from '@/features/auth/api';
-import GoogleIcon from '@/features/auth/components/GoogleIcon';
-import { requestGoogleIdToken } from '@/features/auth/googleIdentity';
-import { saveSession } from '@/features/auth/session';
+import { renderGoogleSignInButton } from '@/features/auth/googleIdentity';
+import { consumeLoginNotice, saveSession } from '@/features/auth/session';
 import LogoIcon from '@/shared/components/icons/LogoIcon';
 
 import './login-font.css';
@@ -19,34 +18,75 @@ interface LoginPageProps {
 
 export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
   const navigate = useNavigate();
+  const googleButtonRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(() => consumeLoginNotice() ?? '');
 
-  const handleGoogleLogin = async () => {
-    if (isLoading) {
+  useEffect(() => {
+    const googleButton = googleButtonRef.current;
+
+    if (!googleButton) {
       return;
     }
 
-    setIsLoading(true);
-    setErrorMessage('');
+    let isActive = true;
+    let removeCredentialHandler: (() => void) | undefined;
 
-    try {
-      const idToken = await requestGoogleIdToken();
-      const loginResponse = await loginWithGoogle(idToken);
+    const handleCredential = async (idToken: string) => {
+      if (!isActive) {
+        return;
+      }
 
-      saveSession(loginResponse);
-      onGoogleLogin?.();
-      navigate(loginResponse.isNewUser ? '/onboarding/nickname' : '/home', { replace: true });
-    } catch (error) {
-      setErrorMessage(
-        error instanceof ApiError || error instanceof Error
-          ? error.message
-          : '로그인에 실패했습니다. 잠시 후 다시 시도해주세요.',
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      setIsLoading(true);
+      setErrorMessage('');
+
+      try {
+        const loginResponse = await loginWithGoogle(idToken);
+
+        if (!isActive) {
+          return;
+        }
+
+        saveSession(loginResponse);
+        onGoogleLogin?.();
+        navigate(loginResponse.isNewUser ? '/onboarding/nickname' : '/home', { replace: true });
+      } catch (error) {
+        if (isActive) {
+          setErrorMessage(
+            error instanceof ApiError || error instanceof Error
+              ? error.message
+              : '로그인에 실패했습니다. 잠시 후 다시 시도해주세요.',
+          );
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void renderGoogleSignInButton(googleButton, handleCredential)
+      .then((cleanup) => {
+        if (isActive) {
+          removeCredentialHandler = cleanup;
+        } else {
+          cleanup();
+        }
+      })
+      .catch((error: unknown) => {
+        if (isActive) {
+          setErrorMessage(
+            error instanceof Error ? error.message : 'Google 로그인 버튼을 불러오지 못했습니다.',
+          );
+        }
+      });
+
+    return () => {
+      isActive = false;
+      removeCredentialHandler?.();
+      googleButton.replaceChildren();
+    };
+  }, [navigate, onGoogleLogin]);
 
   return (
     <main className="relative min-h-dvh w-full overflow-hidden bg-gradient-to-b from-main-500 to-main-400">
@@ -74,32 +114,29 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
       </div>
 
       <section className="relative z-10 mx-auto h-[874px] min-h-dvh w-full">
-      <div className="flex justify-center pt-[25vh]">
-        <div className="relative h-[197px] w-[262px]">
-          <LogoIcon width={262} height={197} />
-          <div
-            className="absolute left-5 top-[207px] -rotate-[11.15deg] font-['NanumSquareRound'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
-            aria-label="Today Eng"
-          >
-            Today
-          </div>
-          <div
-            className="absolute left-[206px] top-[177px] rotate-[11.75deg] font-['NanumSquareRound'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
-            aria-hidden="true"
-          >
-            Eng
+        <div className="flex justify-center pt-[25vh]">
+          <div className="relative h-[197px] w-[262px]">
+            <LogoIcon width={262} height={197} />
+            <div
+              className="absolute left-5 top-[207px] -rotate-[11.15deg] font-['NanumSquareRound'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
+              aria-label="Today Eng"
+            >
+              Today
+            </div>
+            <div
+              className="absolute left-[206px] top-[177px] rotate-[11.75deg] font-['NanumSquareRound'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
+              aria-hidden="true"
+            >
+              Eng
+            </div>
           </div>
         </div>
-      </div>
-        <button
-          type="button"
-          onClick={handleGoogleLogin}
-          disabled={isLoading}
-          className="absolute left-1/2 bottom-[239px] flex h-[54px] w-[calc(100%-32px)] -translate-x-1/2 items-center justify-center gap-1 rounded-full bg-white px-5 py-[14px] text-headline font-semibold tracking-[-0.41px] text-black transition-transform active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        >
-          <GoogleIcon className="size-6 shrink-0" />
-          <span className="px-2">{isLoading ? '로그인 중...' : 'Google 로 로그인'}</span>
-        </button>
+        <div
+          ref={googleButtonRef}
+          className={`absolute bottom-[239px] left-1/2 flex h-[54px] w-[calc(100%-32px)] -translate-x-1/2 items-center justify-center ${isLoading ? 'pointer-events-none opacity-60' : ''}`}
+          aria-label="Google 로그인"
+          aria-busy={isLoading}
+        />
         {errorMessage && (
           <p
             role="alert"

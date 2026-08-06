@@ -52,14 +52,12 @@ export default function MyPage() {
 
     try {
       await logout();
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : '로그아웃에 실패했습니다.');
-      setIsLoggingOut(false);
-      return;
+    } catch {
+      // 서버의 토큰 폐기 실패 여부와 관계없이 기기의 로그인 정보는 제거합니다.
+    } finally {
+      clearSession();
+      navigate('/login', { replace: true });
     }
-
-    clearSession();
-    navigate('/login', { replace: true });
   };
 
   const handleDeleteAccount = async () => {

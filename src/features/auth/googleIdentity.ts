@@ -6,8 +6,19 @@ interface GoogleAccountsId {
   initialize(config: {
     client_id: string;
     callback: (response: GoogleCredentialResponse) => void;
+    use_fedcm_for_button?: boolean;
   }): void;
-  prompt(callback?: (notification: { isNotDisplayed: () => boolean }) => void): void;
+  renderButton(
+    parent: HTMLElement,
+    options: {
+      type: 'standard';
+      theme: 'outline';
+      size: 'large';
+      text: 'signin_with';
+      shape: 'pill';
+      width: number;
+    },
+  ): void;
   disableAutoSelect(): void;
 }
 
@@ -26,6 +37,8 @@ declare global {
 }
 
 const GOOGLE_SCRIPT_ID = 'google-identity-services';
+let initializedClientId: string | null = null;
+let activeCredentialHandler: ((idToken: string) => void) | null = null;
 
 function loadGoogleIdentityScript() {
   if (window.google) {
@@ -54,29 +67,49 @@ function loadGoogleIdentityScript() {
   });
 }
 
-export async function requestGoogleIdToken() {
+export async function renderGoogleSignInButton(
+  element: HTMLElement,
+  onCredential: (idToken: string) => void,
+) {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   if (!clientId) {
     throw new Error('VITE_GOOGLE_CLIENT_ID 환경 변수가 설정되지 않았습니다.');
   }
 
+  activeCredentialHandler = onCredential;
+
   await loadGoogleIdentityScript();
 
-  return new Promise<string>((resolve, reject) => {
-    if (!window.google) {
-      reject(new Error('Google 로그인을 초기화하지 못했습니다.'));
-      return;
-    }
+  if (!window.google) {
+    throw new Error('Google 로그인을 초기화하지 못했습니다.');
+  }
 
+  if (initializedClientId && initializedClientId !== clientId) {
+    throw new Error('Google Client ID가 이미 다른 값으로 초기화되었습니다.');
+  }
+
+  if (!initializedClientId) {
     window.google.accounts.id.initialize({
       client_id: clientId,
-      callback: ({ credential }) => resolve(credential),
+      callback: ({ credential }) => activeCredentialHandler?.(credential),
+      use_fedcm_for_button: true,
     });
-    window.google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed()) {
-        reject(new Error('Google 로그인 창을 표시하지 못했습니다.'));
-      }
-    });
+    initializedClientId = clientId;
+  }
+
+  window.google.accounts.id.renderButton(element, {
+    type: 'standard',
+    theme: 'outline',
+    size: 'large',
+    text: 'signin_with',
+    shape: 'pill',
+    width: Math.min(element.clientWidth, 400),
   });
+
+  return () => {
+    if (activeCredentialHandler === onCredential) {
+      activeCredentialHandler = null;
+    }
+  };
 }
