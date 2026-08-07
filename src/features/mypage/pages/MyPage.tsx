@@ -51,7 +51,10 @@ export default function MyPage() {
 
   const toggleNotification = useToggleNotification();
 
-  const notificationEnabled = notificationSetting?.isEnabled ?? false;
+  const notificationEnabled =
+    notificationSetting?.isEnabled === true &&
+    notificationSetting?.hasPushSubscription === true &&
+    Notification.permission === 'granted';
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
@@ -93,7 +96,7 @@ export default function MyPage() {
     queryClient.clear();
 
     sessionStorage.removeItem('todayeng.dailyContextPreloadedDate');
-    
+
     clearSession();
     navigate('/login', { replace: true });
   };
