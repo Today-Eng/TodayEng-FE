@@ -5,6 +5,9 @@ const ONBOARDING_COMPLETED_KEY = 'todayeng.onboardingCompleted';
 const ONBOARDING_DRAFT_KEY = 'todayeng.onboardingDraft';
 const ACCESS_TOKEN_KEY = 'todayeng.accessToken';
 const REFRESH_TOKEN_KEY = 'todayeng.refreshToken';
+const LOGIN_NOTICE_KEY = 'todayeng.loginNotice';
+
+export const SESSION_EXPIRED_MESSAGE = '로그인이 만료되었습니다';
 
 export interface OnboardingDraft {
   nickname?: string;
@@ -37,6 +40,14 @@ export function saveSession({ accessToken, refreshToken, isNewUser }: LoginRespo
   }
 }
 
+export function updateTokens(accessToken: string, refreshToken?: string) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+
+  if (refreshToken) {
+    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+  }
+}
+
 export function completeOnboarding() {
   localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
   sessionStorage.removeItem(ONBOARDING_DRAFT_KEY);
@@ -56,6 +67,18 @@ export function getAccessToken() {
 
 export function getRefreshToken() {
   return localStorage.getItem(REFRESH_TOKEN_KEY);
+}
+
+export function saveSessionExpiredNotice() {
+  sessionStorage.setItem(LOGIN_NOTICE_KEY, SESSION_EXPIRED_MESSAGE);
+}
+
+export function getLoginNotice() {
+  return sessionStorage.getItem(LOGIN_NOTICE_KEY);
+}
+
+export function clearLoginNotice() {
+  sessionStorage.removeItem(LOGIN_NOTICE_KEY);
 }
 
 export function getOnboardingDraft(): OnboardingDraft {

@@ -1,4 +1,3 @@
-import { getAccessToken } from '@/features/auth/session';
 import sharedRequest from '@/shared/api/request';
 
 export { default as MyPageApiError } from '@/shared/api/ApiError';
@@ -22,7 +21,7 @@ export interface MyPageProfile {
 }
 
 function request<T>(path: string, init: RequestInit = {}) {
-  return sharedRequest<T>(path, init, { accessToken: getAccessToken() });
+  return sharedRequest<T>(path, init);
 }
 
 export function getMyPageProfile() {
