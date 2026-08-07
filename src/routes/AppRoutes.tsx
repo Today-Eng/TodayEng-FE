@@ -128,7 +128,7 @@ export default function AppRoutes() {
         }
       />
       <Route
-        path="/retrospect-loading"
+        path="/retrospect-loading/:diaryId"
         element={
           <MemberRoute>
             <RetrospectLoading />
@@ -136,7 +136,7 @@ export default function AppRoutes() {
         }
       />
       <Route
-        path="/retrospect-session"
+        path="/retrospect-session/:diaryId"
         element={
           <MemberRoute>
             <RetrospectSession />
@@ -144,7 +144,7 @@ export default function AppRoutes() {
         }
       />
       <Route
-        path="/retrospect-memo"
+        path="/retrospect-memo/:diaryId"
         element={
           <MemberRoute>
             <RetrospectMemo />
