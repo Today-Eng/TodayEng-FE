@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 
 import MaterialItem from "@/features/home/components/MaterialItem"
+import { getWeatherEmoji, getWeatherLabel } from '@/features/home/utils/weather';
 
 interface TodayMaterialsProps {
   materials: HomeMaterials
@@ -25,9 +26,8 @@ export default function TodayMaterials({
     materials.spotify.recentTrackAvailable
 
   const calendarLabel = calendarActive
-    ? materials.calendar.representativeEvent
-        ?.title ?? "일정이 있어요"
-    : "구글캘린더 연동하기"
+  ? `오늘 일정 ${materials.calendar.eventCount}개`
+  : "구글캘린더 연동하기"
 
   const spotifyLabel = spotifyActive
     ? `${materials.spotify.trackTitle} · ${materials.spotify.artistName}`
@@ -48,8 +48,8 @@ export default function TodayMaterials({
 
         {materials.weather.available && (
           <MaterialItem
-            icon="weather"
-            label={`${materials.weather.condition} ${materials.weather.temperature}도`}
+            src={getWeatherEmoji(materials.weather.condition)}
+            label={`${getWeatherLabel(materials.weather.condition)} ${materials.weather.temperature}도`}
             active
           />
         )}
@@ -61,7 +61,7 @@ export default function TodayMaterials({
           onClick={
               spotifyActive
               ? undefined
-              : () => navigate("/mypage/spotify")
+              : () => navigate("/mypage/integrations")
           }
           />
 
@@ -72,7 +72,7 @@ export default function TodayMaterials({
           onClick={
               calendarActive
               ? undefined
-              : () => navigate("/mypage/calendar")
+              : () => navigate("/mypage/integrations")
           }
         />
       </div>

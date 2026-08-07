@@ -22,8 +22,18 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
+
       registerType: 'autoUpdate',
+
+      devOptions: {
+        enabled: true,
+      },
+
       includeAssets: ['favicon.svg', 'favicon.ico', 'apple-touch-icon.png'],
+
       manifest: {
         name: 'TodayEng',
         short_name: 'TodayEng',
@@ -51,6 +61,6 @@ export default defineConfig({
           },
         ],
       },
-    }),
+    })
   ],
 })

@@ -1,6 +1,6 @@
 // react
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // components
 import TextLayout from "@/shared/components/TextLayout"
@@ -9,10 +9,11 @@ import ButtonPair from "@/shared/components/ButtonPair"
 
 export default function RetrospectMemo() {
   const navigate = useNavigate()
+  const { diaryId } = useParams();
   const [memo, setMemo] = useState('')
 
   const handleSubmit = () => {
-    navigate('/retrospect-complete')
+    navigate(`/retrospect/${diaryId}/complete`)
   }
 
   return (
@@ -30,7 +31,7 @@ export default function RetrospectMemo() {
         ></textarea>
       </div>
       <div className="fixed bottom-[50px] left-0 right-0 px-4">
-          <ButtonPair rightLabel="완료하기" disabled={!memo.trim()} onSkip={()=>navigate('/retrospect-complete')} onClick={handleSubmit}/>
+          <ButtonPair rightLabel="완료하기" disabled={!memo.trim()} onSkip={()=>navigate(`/retrospect/${diaryId}/complete`)} onClick={handleSubmit}/>
       </div>
     </div>
   )

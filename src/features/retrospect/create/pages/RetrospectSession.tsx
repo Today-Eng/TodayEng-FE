@@ -1,6 +1,6 @@
 // react
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // components
 import RetrospectStartModal from "@/features/retrospect/create/components/RetrospectStartModal";
@@ -17,6 +17,7 @@ type SpeakStatus =  'idle' | 'speaking'
 
 export default function  RetrospectSession() {
     const navigate = useNavigate()
+    const { diaryId } = useParams();
     const [isStartModalOpen, setIsStartModalOpen] = useState(true)
     const [isStopModalOpen, setIsStopModalOpen] = useState(false)
     const [isAiSpeaking, _setIsAiSpeaking] = useState(false) // 비활성화 일때
@@ -65,7 +66,7 @@ export default function  RetrospectSession() {
         )}
 
         {isStopModalOpen && (
-            <Modal mainText="회고를 종료할까요?" subText={"지금까지 나눈 대화는 저장되지만,\n오늘 회고는 여기서 끝나요."} leftButtonText="계속하기" rightButtonText="종료하기" onLeftClick={handleStopModal} onRightClick={() => navigate('/retrospect-memo')}/>
+            <Modal mainText="회고를 종료할까요?" subText={"지금까지 나눈 대화는 저장되지만,\n오늘 회고는 여기서 끝나요."} leftButtonText="계속하기" rightButtonText="종료하기" onLeftClick={handleStopModal} onRightClick={() => navigate(`/retrospect/${diaryId}/memo`)}/>
         )}
     </div>
   )

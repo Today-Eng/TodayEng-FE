@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import completeBackground from '@/features/auth/assets/onboarding-complete-bg.svg';
@@ -6,6 +5,7 @@ import completeIcon from '@/features/auth/assets/onboarding-complete-icon.svg';
 import { completeOnboarding } from '@/features/auth/session';
 import Button from '@/shared/components/Button';
 import TextLayout from '@/shared/components/TextLayout';
+import { enablePushNotification } from '@/features/notification/push';
 
 interface OnboardingCompletePageProps {
   onStartFirstRetrospect?: () => void;
@@ -16,18 +16,21 @@ export default function OnboardingCompletePage({
 }: OnboardingCompletePageProps) {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    completeOnboarding();
-  }, []);
+  const finishOnboarding = async (destination: '/home' | '/retrospect') => {
+  completeOnboarding();
 
-  const finishOnboarding = (destination: '/home' | '/retrospect') => {
-    if (destination === '/retrospect' && onStartFirstRetrospect) {
-      onStartFirstRetrospect();
-      return;
-    }
+  try {
+  await enablePushNotification();
+  } catch {
+  }
 
-    navigate(destination, { replace: true });
-  };
+  if (destination === '/retrospect' && onStartFirstRetrospect) {
+    onStartFirstRetrospect();
+    return;
+  }
+
+  navigate(destination, { replace: true });
+};
 
   return (
     <main className="relative min-h-dvh w-full bg-white text-black">

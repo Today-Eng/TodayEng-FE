@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { logout } from '@/features/auth/api';
+import { deletePushSubscription } from '@/features/notification/api';
 import { clearSession } from '@/features/auth/session';
 import {
   deleteAccount,
@@ -13,10 +14,12 @@ import NotificationSetting from '@/features/mypage/components/NotificationSettin
 import ProfileSummary from '@/features/mypage/components/ProfileSummary';
 import BottomNav from '@/shared/components/BottomNav';
 import Modal from '@/shared/components/Modal';
+import { useNotificationSetting, useToggleNotification } from '@/features/notification/queries';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function MyPage() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [notificationEnabled, setNotificationEnabled] = useState(true);
   const [profile, setProfile] = useState<MyPageProfile | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -44,6 +47,12 @@ export default function MyPage() {
     };
   }, []);
 
+  const { data: notificationSetting } = useNotificationSetting();
+
+  const toggleNotification = useToggleNotification();
+
+  const notificationEnabled = notificationSetting?.isEnabled ?? false;
+
   const handleLogout = async () => {
     if (isLoggingOut) return;
 
@@ -51,10 +60,17 @@ export default function MyPage() {
     setErrorMessage('');
 
     try {
+      try {
+        await deletePushSubscription();
+      } catch {}
+
       await logout();
     } catch {
-      // 서버의 토큰 폐기 실패 여부와 관계없이 기기의 로그인 정보는 제거합니다.
     } finally {
+      queryClient.clear();
+
+      sessionStorage.removeItem('todayeng.dailyContextPreloadedDate');
+
       clearSession();
       navigate('/login', { replace: true });
     }
@@ -74,6 +90,10 @@ export default function MyPage() {
       return;
     }
 
+    queryClient.clear();
+
+    sessionStorage.removeItem('todayeng.dailyContextPreloadedDate');
+    
     clearSession();
     navigate('/login', { replace: true });
   };
@@ -107,7 +127,11 @@ export default function MyPage() {
           <MyPageMenuItem label="프로필 설정" onClick={() => navigate('/mypage/profile')} />
           <NotificationSetting
             enabled={notificationEnabled}
-            onToggle={() => setNotificationEnabled((enabled) => !enabled)}
+            onToggle={() => {
+              if (toggleNotification.isPending) return;
+
+              toggleNotification.mutate(!notificationEnabled);
+            }}
           />
           <MyPageMenuItem label="학습 설정" onClick={() => navigate('/mypage/learning')} />
           <MyPageMenuItem label="관심사 설정" onClick={() => navigate('/mypage/interests')} />

@@ -20,16 +20,16 @@ import InterestSettingsPage from '@/features/mypage/pages/InterestSettingsPage';
 import IntegrationSettingsPage from '@/features/mypage/pages/IntegrationSettingsPage';
 
 // retrospect
-import RetrospectSetup from "@/features/retrospect/create/pages/RetrospectSetup";
-import RetrospectLoading from "@/features/retrospect/create/pages/RetrospectLoading";
-import RetrospectSession from "@/features/retrospect/create/pages/RetrospectSession";
-import RetrospectMemo from "@/features/retrospect/create/pages/RetrospectMemo";
-import RetrospectComplete from "@/features/retrospect/create/pages/RetrospectComplete";
+import RetrospectSetup from '@/features/retrospect/create/pages/RetrospectSetup';
+import RetrospectLoading from '@/features/retrospect/create/pages/RetrospectLoading';
+import RetrospectSession from '@/features/retrospect/create/pages/RetrospectSession';
+import RetrospectMemo from '@/features/retrospect/create/pages/RetrospectMemo';
+import RetrospectComplete from '@/features/retrospect/create/pages/RetrospectComplete';
 
 // retrospects
-import RetrospectList from "@/features/retrospect/record/pages/RetrospectList"
-import RetrospectDetail from "@/features/retrospect/detail/pages/RetrospectDetail"
-import RetrospectMemoEdit from "@/features/retrospect/detail/pages/RetrospectMemoEdit"
+import RetrospectList from '@/features/retrospect/record/pages/RetrospectList';
+import RetrospectDetail from '@/features/retrospect/detail/pages/RetrospectDetail';
+import RetrospectMemoEdit from '@/features/retrospect/detail/pages/RetrospectMemoEdit';
 
 function EntryRoute() {
   if (!isAuthenticated()) {
@@ -44,11 +44,6 @@ function LoginRoute() {
 }
 
 function OnboardingRoute({ children }: { children: React.ReactNode }) {
-  // TODO: 회원가입 없이 온보딩 접근 테스트가 끝나면 아래 인증 가드 주석 해제
-  //  if (!isAuthenticated()) {
-  //    return <Navigate to="/login" replace />;
-  //  }
-
   return hasCompletedOnboarding() ? <Navigate to="/home" replace /> : children;
 }
 
@@ -111,62 +106,64 @@ export default function AppRoutes() {
         path="/home"
         element={
           <>
-            {/* TODO: 회원가입 없이 홈 접근 테스트가 끝나면 MemberRoute 주석 해제 */}
-            {/*  <MemberRoute>  */}
             <HomePage />
-            {/* </MemberRoute>  */}
           </>
         }
       />
 
       <Route
-        path="/retrospect"
+        path="/retrospect/:diaryId"
         element={
           <MemberRoute>
             <RetrospectSetup />
           </MemberRoute>
         }
       />
+
       <Route
-        path="/retrospect-loading"
+        path="/retrospect/:diaryId/loading"
         element={
           <MemberRoute>
             <RetrospectLoading />
           </MemberRoute>
         }
       />
+
       <Route
-        path="/retrospect-session"
+        path="/retrospect/:diaryId/session"
         element={
           <MemberRoute>
             <RetrospectSession />
           </MemberRoute>
         }
       />
+
       <Route
-        path="/retrospect-memo"
+        path="/retrospect/:diaryId/memo"
         element={
           <MemberRoute>
             <RetrospectMemo />
           </MemberRoute>
         }
       />
+
       <Route
-        path="/retrospect-complete"
+        path="/retrospect/:diaryId/complete"
         element={
           <MemberRoute>
             <RetrospectComplete />
           </MemberRoute>
         }
       />
-      
-       <Route
+
+      <Route
         path="/retrospects"
         element={
-        <MemberRoute>
+          <MemberRoute>
             <RetrospectList />
-            </MemberRoute>}
-        />
+          </MemberRoute>
+        }
+      />
       <Route
         path="/retrospects/:diaryId"
         element={
@@ -174,7 +171,7 @@ export default function AppRoutes() {
             <RetrospectDetail />
           </MemberRoute>
         }
-        />
+      />
       <Route
         path="/retrospects/:diaryId/memo/edit"
         element={
@@ -182,8 +179,7 @@ export default function AppRoutes() {
             <RetrospectMemoEdit />
           </MemberRoute>
         }
-        />
-
+      />
 
       <Route
         path="/mypage"
