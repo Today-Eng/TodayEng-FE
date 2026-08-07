@@ -1,6 +1,10 @@
 /// <reference lib="webworker" />
 
+import { precacheAndRoute } from 'workbox-precaching';
+
 declare const self: ServiceWorkerGlobalScope;
+
+precacheAndRoute(self.__WB_MANIFEST);
 
 self.addEventListener('push', (event) => {
   if (!event.data) {
@@ -29,5 +33,7 @@ self.addEventListener('notificationclick', (event) => {
 
   const url = event.notification.data?.url ?? '/';
 
-  event.waitUntil(self.clients.openWindow(url));
+  event.waitUntil(
+    self.clients.openWindow(url),
+  );
 });
