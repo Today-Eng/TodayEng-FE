@@ -10,6 +10,7 @@ interface IntegrationAccountRowProps {
   provider: IntegrationProvider;
   status: IntegrationStatus;
   email?: string;
+  disabled?: boolean;
   onLink: () => void;
   onDelete: () => void;
 }
@@ -18,12 +19,13 @@ export default function IntegrationAccountRow({
   provider,
   status,
   email,
+  disabled = false,
   onLink,
   onDelete,
 }: IntegrationAccountRowProps) {
   const isSpotify = provider === 'spotify';
   const isLinked = status === 'linked';
-  const isLinkDisabled = status === 'terms-required';
+  const isLinkDisabled = status === 'terms-required' || disabled;
 
   return (
     <div className="flex h-[70px] items-center justify-between px-4">
@@ -50,8 +52,9 @@ export default function IntegrationAccountRow({
       {isLinked ? (
         <button
           type="button"
+          disabled={disabled}
           onClick={onDelete}
-          className="h-8 rounded-full bg-error-100 px-5 text-xs font-semibold text-error-500"
+          className="h-8 rounded-full bg-error-100 px-5 text-xs font-semibold text-error-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
           연동 삭제
         </button>
