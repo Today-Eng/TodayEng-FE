@@ -108,7 +108,7 @@ export default function MyPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white pb-[75px]">
+    <main className="min-h-screen bg-white pb-[109px]">
       <div className="w-full">
         <header className="flex h-[130px] items-end px-4 pb-5">
           <h1 className="text-title2 font-semibold tracking-[0.35px] text-black">마이페이지</h1>
