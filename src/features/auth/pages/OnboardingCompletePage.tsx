@@ -8,7 +8,6 @@ import Button from '@/shared/components/Button';
 import TextLayout from '@/shared/components/TextLayout';
 import { enablePushNotification } from '@/features/notification/push';
 import { updateNotificationSetting } from '@/features/notification/api';
-import { startDiary } from '@/features/home/api';
 
 export default function OnboardingCompletePage() {
   const navigate = useNavigate();
@@ -27,29 +26,8 @@ export default function OnboardingCompletePage() {
     }
 
     if (destination === 'retrospect') {
-      try {
-        const today = new Date();
-
-        const diaryDate = [
-          today.getFullYear(),
-          String(today.getMonth() + 1).padStart(2, '0'),
-          String(today.getDate()).padStart(2, '0'),
-        ].join('-');
-
-        const { diaryId, resumed } = await startDiary(diaryDate);
-
-        navigate(resumed ? `/retrospect-loading/${diaryId}` : `/retrospect/${diaryId}`, {
-          replace: true,
-        });
-
-        return;
-      } catch {
-        navigate('/home', {
-          replace: true,
-        });
-
-        return;
-      }
+      navigate('/retrospect', { replace: true });
+      return;
     }
 
     navigate('/home', {

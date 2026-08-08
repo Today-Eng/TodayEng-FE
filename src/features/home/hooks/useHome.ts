@@ -195,17 +195,18 @@ export default function useHome() {
       return;
     }
 
-    if (
-      selectedDiary.diaryStatus !== 'NOT_STARTED' &&
-      selectedDiary.diaryStatus !== 'IN_PROGRESS'
-    ) {
+    if (selectedDiary.diaryStatus === 'NOT_STARTED') {
+      navigate('/retrospect');
+      return;
+    }
+
+    if (selectedDiary.diaryStatus !== 'IN_PROGRESS') {
       return;
     }
 
     try {
-      const { diaryId, resumed } = await startDiary(selectedDate);
-
-      navigate(resumed ? `/retrospect-loading/${diaryId}` : `/retrospect/${diaryId}`);
+      const { diaryId } = await startDiary(selectedDate);
+      navigate(`/retrospect-session/${diaryId}`);
     } catch {
       // 회고 시작 실패 시 현재 화면 유지
     }
