@@ -36,15 +36,14 @@ export default function OnboardingCompletePage() {
           String(today.getDate()).padStart(2, '0'),
         ].join('-');
 
-        const diary = await startDiary(diaryDate);
+        await startDiary(diaryDate);
 
-        navigate(`/retrospect/${diary.diaryId}`, {
+        navigate('/retrospect', {
           replace: true,
         });
 
         return;
       } catch {
-        // 첫 회고 생성 실패 시 홈으로 이동
         navigate('/home', {
           replace: true,
         });
@@ -84,8 +83,17 @@ export default function OnboardingCompletePage() {
         </section>
 
         <div className="flex w-full flex-col gap-2">
-          <Button label="첫 회고 작성하기" disabled={isFinishing} onClick={() => finishOnboarding('retrospect')} />
-          <Button label="건너뛰기" type="sub" disabled={isFinishing} onClick={() => finishOnboarding('home')} />
+          <Button
+            label="첫 회고 작성하기"
+            disabled={isFinishing}
+            onClick={() => finishOnboarding('retrospect')}
+          />
+          <Button
+            label="건너뛰기"
+            type="sub"
+            disabled={isFinishing}
+            onClick={() => finishOnboarding('home')}
+          />
         </div>
       </div>
     </main>

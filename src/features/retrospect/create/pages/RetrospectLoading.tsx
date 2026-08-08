@@ -1,15 +1,14 @@
 import { useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
 import loadingVideo from '@/assets/loading.mp4'
 
 export default function RetrospectLoading() {
   const navigate = useNavigate()
-  const { diaryId } = useParams();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate(`/retrospect/${diaryId}/session`)
+      navigate("/retrospect-session")
     }, 3000)
     return () => clearTimeout(timer)
   }, [navigate])

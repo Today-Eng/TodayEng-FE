@@ -1,6 +1,6 @@
 // react
 import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 // components
 import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
@@ -15,7 +15,6 @@ import addIcon from '@/assets/icons/add_circle_regular.svg'
 
 export default function RetrospectSetup() {
     const navigate = useNavigate()
-    const { diaryId } = useParams();
     const [content, setContent] = useState('')
     const [previews, setPreviews] = useState<string[]>([])
 
@@ -48,7 +47,7 @@ export default function RetrospectSetup() {
     }
 
     const handleSubmit = () => {
-        navigate(`/retrospect/${diaryId}/loading`)
+        navigate('/retrospect-loading')
     }
     
   return (
@@ -117,7 +116,7 @@ export default function RetrospectSetup() {
 
             </div>
             <div className="fixed bottom-[50px] left-0 right-0 px-4">
-                <ButtonPair disabled={!content.trim() && !previews.some(p => p)} onSkip={()=>navigate(`/retrospect/${diaryId}/loading`)} onClick={handleSubmit}/>
+                <ButtonPair disabled={!content.trim() && !previews.some(p => p)} onSkip={()=>navigate('/retrospect-loading')} onClick={handleSubmit}/>
             </div>
         </div>
     </div>

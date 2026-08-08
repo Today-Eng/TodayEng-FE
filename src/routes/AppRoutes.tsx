@@ -112,43 +112,39 @@ export default function AppRoutes() {
       />
 
       <Route
-        path="/retrospect/:diaryId"
+        path="/retrospect"
         element={
           <MemberRoute>
             <RetrospectSetup />
           </MemberRoute>
         }
       />
-
       <Route
-        path="/retrospect/:diaryId/loading"
+        path="/retrospect-loading"
         element={
           <MemberRoute>
             <RetrospectLoading />
           </MemberRoute>
         }
       />
-
       <Route
-        path="/retrospect/:diaryId/session"
+        path="/retrospect-session"
         element={
           <MemberRoute>
             <RetrospectSession />
           </MemberRoute>
         }
       />
-
       <Route
-        path="/retrospect/:diaryId/memo"
+        path="/retrospect-memo"
         element={
           <MemberRoute>
             <RetrospectMemo />
           </MemberRoute>
         }
       />
-
       <Route
-        path="/retrospect/:diaryId/complete"
+        path="/retrospect-complete"
         element={
           <MemberRoute>
             <RetrospectComplete />

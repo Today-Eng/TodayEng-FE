@@ -203,11 +203,11 @@ export default function useHome() {
     }
 
     try {
-      const diary = await startDiary(selectedDate);
+      await startDiary(selectedDate);
 
-      navigate(`/retrospect/${diary.diaryId}`);
+      navigate('/retrospect');
     } catch {
-      // 회고 시작 실패 시 현재 화면을 유지
+      // 회고 시작 실패 시 현재 화면 유지
     }
   };
 
