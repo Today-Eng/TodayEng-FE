@@ -65,10 +65,13 @@ export default function MyPage() {
     try {
       try {
         await deletePushSubscription();
-      } catch {}
+      } catch {
+        // 구독 삭제 실패와 관계없이 로그아웃을 계속 진행
+      }
 
       await logout();
     } catch {
+      // 로그아웃 API 실패와 관계없이 클라이언트 세션을 정리
     } finally {
       queryClient.clear();
 

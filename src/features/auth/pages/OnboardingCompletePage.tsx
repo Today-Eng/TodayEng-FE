@@ -6,6 +6,7 @@ import { completeOnboarding } from '@/features/auth/session';
 import Button from '@/shared/components/Button';
 import TextLayout from '@/shared/components/TextLayout';
 import { enablePushNotification } from '@/features/notification/push';
+import { updateNotificationSetting } from '@/features/notification/api';
 
 interface OnboardingCompletePageProps {
   onStartFirstRetrospect?: () => void;
@@ -17,20 +18,22 @@ export default function OnboardingCompletePage({
   const navigate = useNavigate();
 
   const finishOnboarding = async (destination: '/home' | '/retrospect') => {
-  completeOnboarding();
+    completeOnboarding();
 
-  try {
-  await enablePushNotification();
-  } catch {
-  }
+    try {
+      await enablePushNotification();
+      await updateNotificationSetting(true);
+    } catch {
+      // 푸시 활성화 실패가 온보딩 완료를 차단하지 않도록 무시
+    }
 
-  if (destination === '/retrospect' && onStartFirstRetrospect) {
-    onStartFirstRetrospect();
-    return;
-  }
+    if (destination === '/retrospect' && onStartFirstRetrospect) {
+      onStartFirstRetrospect();
+      return;
+    }
 
-  navigate(destination, { replace: true });
-};
+    navigate(destination, { replace: true });
+  };
 
   return (
     <main className="relative min-h-dvh w-full bg-white text-black">

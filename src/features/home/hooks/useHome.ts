@@ -30,7 +30,7 @@ export default function useHome() {
 
   const [currentMonth, setCurrentMonth] = useState(now.getMonth() + 1);
 
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [userSelectedDate, setUserSelectedDate] = useState<string | null>(null);
 
   const {
     data: home,
@@ -38,24 +38,26 @@ export default function useHome() {
     isError: isHomeError,
   } = useHomeQuery(currentYear, currentMonth);
 
-  const { mutate: preloadDailyContexts } = useDailyContextPreloadMutation(
-    currentYear,
-    currentMonth,
-  );
+  const selectedDate = useMemo(() => {
+    if (!home) {
+      return null;
+    }
 
-  useEffect(() => {
-    if (!home || selectedDate !== null) {
-      return;
+    if (userSelectedDate) {
+      return userSelectedDate;
     }
 
     const [todayYear, todayMonth] = home.today.date.split('-').map(Number);
 
     const isCurrentMonth = currentYear === todayYear && currentMonth === todayMonth;
 
-    if (isCurrentMonth) {
-      setSelectedDate(home.today.date);
-    }
-  }, [home, selectedDate, currentYear, currentMonth]);
+    return isCurrentMonth ? home.today.date : null;
+  }, [home, userSelectedDate, currentYear, currentMonth]);
+
+  const { mutate: preloadDailyContexts } = useDailyContextPreloadMutation(
+    currentYear,
+    currentMonth,
+  );
 
   useEffect(() => {
     if (!home) {
@@ -152,7 +154,7 @@ export default function useHome() {
 
     setCurrentYear(previous.year);
     setCurrentMonth(previous.month);
-    setSelectedDate(null);
+    setUserSelectedDate(null);
   };
 
   const handleNextMonth = () => {
@@ -174,7 +176,7 @@ export default function useHome() {
 
     setCurrentYear(next.year);
     setCurrentMonth(next.month);
-    setSelectedDate(null);
+    setUserSelectedDate(null);
   };
 
   const handleDateSelect = (date: string) => {
@@ -184,9 +186,8 @@ export default function useHome() {
       return;
     }
 
-    setSelectedDate(date);
+    setUserSelectedDate(date);
   };
-
   const { mutateAsync: startDiary } = useStartDiaryMutation();
 
   const handleRetrospect = async () => {
@@ -205,7 +206,8 @@ export default function useHome() {
       const diary = await startDiary(selectedDate);
 
       navigate(`/retrospect/${diary.diaryId}`);
-    } catch {}
+    } catch {// 회고 시작 실패 시 현재 화면을 유지
+      }
   };
 
   const handleRetrospectDetail = (diaryId: number) => {
