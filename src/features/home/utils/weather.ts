@@ -32,7 +32,7 @@ export function getWeatherLabel(
   condition?: WeatherCondition,
 ) {
   if (!condition) {
-    return '';
+    return WEATHER_LABELS.UNKNOWN;
   }
 
   return WEATHER_LABELS[condition];

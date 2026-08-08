@@ -26,7 +26,7 @@ export default function TodayMaterials({
 
   const calendarLabel =
     calendarConnected
-      ? materials.calendar.representativeEvent
+      ? materials.calendar.eventCount > 0
         ? `오늘 일정 ${materials.calendar.eventCount}개`
         : '오늘 등록된 일정이 없어요'
       : '구글캘린더 연동하기';

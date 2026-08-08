@@ -69,16 +69,26 @@ export function getDifferenceInDays(
   firstDate: string,
   secondDate: string,
 ): number {
-  const first = new Date(
-    `${firstDate}T00:00:00`,
+  const [firstYear, firstMonth, firstDay] =
+    firstDate.split('-').map(Number);
+
+  const [secondYear, secondMonth, secondDay] =
+    secondDate.split('-').map(Number);
+
+  const firstUtc = Date.UTC(
+    firstYear,
+    firstMonth - 1,
+    firstDay,
   );
 
-  const second = new Date(
-    `${secondDate}T00:00:00`,
+  const secondUtc = Date.UTC(
+    secondYear,
+    secondMonth - 1,
+    secondDay,
   );
 
   return Math.floor(
-    (second.getTime() - first.getTime()) /
+    (secondUtc - firstUtc) /
       DAY_IN_MILLISECONDS,
   );
 }

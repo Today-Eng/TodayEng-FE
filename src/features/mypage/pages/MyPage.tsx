@@ -51,10 +51,13 @@ export default function MyPage() {
 
   const toggleNotification = useToggleNotification();
 
+  const notificationPermission =
+    typeof Notification === 'undefined' ? 'denied' : Notification.permission;
+
   const notificationEnabled =
     notificationSetting?.isEnabled === true &&
     notificationSetting?.hasPushSubscription === true &&
-    Notification.permission === 'granted';
+    notificationPermission === 'granted';
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
