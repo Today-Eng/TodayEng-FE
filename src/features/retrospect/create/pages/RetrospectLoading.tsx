@@ -1,31 +1,52 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import BackHeaderLayout from "@/shared/components/BackHeaderLayout"
-import loadingVideo from '@/assets/loading.mp4'
+// react
+import { useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+// components
+import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
+
+// api
+import { startReflectionSession } from '@/features/retrospect/create/api/diaryApi';
+
+// assets
+import loadingVideo from '@/assets/loading.mp4';
 
 export default function RetrospectLoading() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { diaryId: diaryIdParam } = useParams<{ diaryId: string }>();
+  const diaryId = Number(diaryIdParam);
+
+  const calledRef = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate("/retrospect-session")
-    }, 3000)
-    return () => clearTimeout(timer)
-  }, [navigate])
+    if (!diaryId || calledRef.current) return;
+    calledRef.current = true;
+
+    const delay = new Promise<void>(resolve => setTimeout(resolve, 3000));
+
+    void Promise.allSettled([startReflectionSession(diaryId), delay])
+      .then(([sessionResult]) => {
+        if (sessionResult.status === 'rejected') {
+          const status = (sessionResult.reason as { status?: number })?.status;
+          if (status !== 409) return;
+        }
+        navigate(`/retrospect-session/${diaryId}`);
+      });
+  }, [diaryId, navigate]);
 
   return (
-    <div> 
-        <BackHeaderLayout title="회고하기" />
-        <div className="flex flex-col items-center mt-[78px]">
-            <video src={loadingVideo} autoPlay loop muted className="w-[247px] h-[247px]"></video>
-            <div className="mt-[30px] flex flex-col items-center">
-                <h1 className="text-title2 font-semibold mb-4">오늘의 질문을 준비하고 있어요</h1>
-                <p className="text-body text-gray-600 text-center">
-                    입력한 내용과 오늘의 정보를 
-                    <br /> 바탕으로 대화를 만들고 있어요.
-                </p>
-            </div>
+    <div>
+      <BackHeaderLayout title="회고하기" />
+      <div className="flex flex-col items-center mt-[208px]">
+        <video src={loadingVideo} autoPlay loop muted className="w-[247px] h-[247px]" />
+        <div className="mt-[30px] flex flex-col items-center">
+          <h1 className="text-title2 font-semibold mb-4">오늘의 질문을 준비하고 있어요</h1>
+          <p className="text-body text-gray-600 text-center">
+            입력한 내용과 오늘의 정보를
+            <br /> 바탕으로 대화를 만들고 있어요.
+          </p>
         </div>
+      </div>
     </div>
-  )
+  );
 }
