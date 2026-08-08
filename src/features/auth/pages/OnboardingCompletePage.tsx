@@ -7,17 +7,12 @@ import Button from '@/shared/components/Button';
 import TextLayout from '@/shared/components/TextLayout';
 import { enablePushNotification } from '@/features/notification/push';
 import { updateNotificationSetting } from '@/features/notification/api';
+import { startDiary } from '@/features/home/api';
 
-interface OnboardingCompletePageProps {
-  onStartFirstRetrospect?: () => void;
-}
-
-export default function OnboardingCompletePage({
-  onStartFirstRetrospect,
-}: OnboardingCompletePageProps) {
+export default function OnboardingCompletePage() {
   const navigate = useNavigate();
 
-  const finishOnboarding = async (destination: '/home' | '/retrospect') => {
+  const finishOnboarding = async (destination: 'home' | 'retrospect') => {
     completeOnboarding();
 
     try {
@@ -27,12 +22,36 @@ export default function OnboardingCompletePage({
       // 푸시 활성화 실패가 온보딩 완료를 차단하지 않도록 무시
     }
 
-    if (destination === '/retrospect' && onStartFirstRetrospect) {
-      onStartFirstRetrospect();
-      return;
+    if (destination === 'retrospect') {
+      try {
+        const today = new Date();
+
+        const diaryDate = [
+          today.getFullYear(),
+          String(today.getMonth() + 1).padStart(2, '0'),
+          String(today.getDate()).padStart(2, '0'),
+        ].join('-');
+
+        const diary = await startDiary(diaryDate);
+
+        navigate(`/retrospect/${diary.diaryId}`, {
+          replace: true,
+        });
+
+        return;
+      } catch {
+        // 첫 회고 생성 실패 시 홈으로 이동
+        navigate('/home', {
+          replace: true,
+        });
+
+        return;
+      }
     }
 
-    navigate(destination, { replace: true });
+    navigate('/home', {
+      replace: true,
+    });
   };
 
   return (
@@ -61,8 +80,8 @@ export default function OnboardingCompletePage({
         </section>
 
         <div className="flex w-full flex-col gap-2">
-          <Button label="첫 회고 작성하기" onClick={() => finishOnboarding('/retrospect')} />
-          <Button label="건너뛰기" type="sub" onClick={() => finishOnboarding('/home')} />
+          <Button label="첫 회고 작성하기" onClick={() => finishOnboarding('retrospect')} />
+          <Button label="건너뛰기" type="sub" onClick={() => finishOnboarding('home')} />
         </div>
       </div>
     </main>
