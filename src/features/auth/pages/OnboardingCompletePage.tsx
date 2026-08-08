@@ -38,7 +38,7 @@ export default function OnboardingCompletePage() {
 
         const { diaryId, resumed } = await startDiary(diaryDate);
 
-        navigate(resumed ? `/retrospect-session/${diaryId}` : `/retrospect/${diaryId}`, {
+        navigate(resumed ? `/retrospect-loading/${diaryId}` : `/retrospect/${diaryId}`, {
           replace: true,
         });
 

@@ -205,7 +205,7 @@ export default function useHome() {
     try {
       const { diaryId, resumed } = await startDiary(selectedDate);
 
-      navigate(resumed ? `/retrospect-session/${diaryId}` : `/retrospect/${diaryId}`);
+      navigate(resumed ? `/retrospect-loading/${diaryId}` : `/retrospect/${diaryId}`);
     } catch {
       // 회고 시작 실패 시 현재 화면 유지
     }
