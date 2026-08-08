@@ -113,7 +113,7 @@ export default function useHome() {
       },
       {
         enableHighAccuracy: false,
-        timeout: 5000,
+        timeout: 10000,
         maximumAge: 10 * 60 * 1000,
       },
     );
@@ -206,8 +206,9 @@ export default function useHome() {
       const diary = await startDiary(selectedDate);
 
       navigate(`/retrospect/${diary.diaryId}`);
-    } catch {// 회고 시작 실패 시 현재 화면을 유지
-      }
+    } catch {
+      // 회고 시작 실패 시 현재 화면을 유지
+    }
   };
 
   const handleRetrospectDetail = (diaryId: number) => {

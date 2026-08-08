@@ -45,9 +45,14 @@ export function useDailyContextPreloadMutation(
   return useMutation({
     mutationFn: preloadDailyContexts,
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['home', year, month],
+    onSuccess: async () => {
+      await queryClient.refetchQueries({
+        queryKey: [
+          'home',
+          year,
+          month,
+        ],
+        type: 'active',
       });
     },
   });
