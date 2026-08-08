@@ -40,8 +40,8 @@ export interface HomeMaterials {
 
   weather: {
     available: boolean;
-    condition?: WeatherCondition;
-    temperature?: number;
+    condition: WeatherCondition | null;
+    temperature: number | null;
   };
 
   calendar: {
