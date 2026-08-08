@@ -112,7 +112,7 @@ export default function AppRoutes() {
       />
 
       <Route
-        path="/retrospect"
+        path="/retrospect/:diaryId"
         element={
           <MemberRoute>
             <RetrospectSetup />

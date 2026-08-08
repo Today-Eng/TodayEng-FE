@@ -203,9 +203,9 @@ export default function useHome() {
     }
 
     try {
-      await startDiary(selectedDate);
+      const { diaryId, resumed } = await startDiary(selectedDate);
 
-      navigate('/retrospect');
+      navigate(resumed ? `/retrospect-session/${diaryId}` : `/retrospect/${diaryId}`);
     } catch {
       // 회고 시작 실패 시 현재 화면 유지
     }

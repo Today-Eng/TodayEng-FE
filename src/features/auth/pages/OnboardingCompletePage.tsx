@@ -36,9 +36,9 @@ export default function OnboardingCompletePage() {
           String(today.getDate()).padStart(2, '0'),
         ].join('-');
 
-        await startDiary(diaryDate);
+        const { diaryId, resumed } = await startDiary(diaryDate);
 
-        navigate('/retrospect', {
+        navigate(resumed ? `/retrospect-session/${diaryId}` : `/retrospect/${diaryId}`, {
           replace: true,
         });
 

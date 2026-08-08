@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import TextLayout from '@/shared/components/TextLayout';
 import ButtonPair from '@/shared/components/ButtonPair';
 import CloseCircleIcon from '@/shared/components/icons/CloseCircleIcon';
-import { startDiary, createDiaryContext } from '@/features/retrospect/create/api/diaryApi';
+import { createDiaryContext } from '@/features/retrospect/create/api/diaryApi';
 
 import galleryIcon from '@/assets/icons/gallery.svg';
 import quoteIcon from '@/assets/icons/quote-down-square.svg';
@@ -13,6 +13,8 @@ import addIcon from '@/assets/icons/add_circle_regular.svg';
 
 export default function RetrospectSetup() {
   const navigate = useNavigate();
+  const { diaryId: diaryIdParam } = useParams<{ diaryId: string }>();
+  const diaryId = Number(diaryIdParam);
   const [content, setContent] = useState('');
   const [previews, setPreviews] = useState<string[]>([]);
   const [files, setFiles] = useState<(File | null)[]>([null, null]);
@@ -69,14 +71,6 @@ export default function RetrospectSetup() {
     setError(null);
 
     try {
-      const today = new Date().toISOString().slice(0, 10);
-      const { diaryId, resumed } = await startDiary(today);
-
-      if (resumed) {
-        navigate(`/retrospect-session/${diaryId}`);
-        return;
-      }
-
       await createDiaryContext(diaryId, {
         memo: content.trim() || undefined,
         images: files.filter((f): f is File => f !== null),
@@ -96,14 +90,6 @@ export default function RetrospectSetup() {
     setError(null);
 
     try {
-      const today = new Date().toISOString().slice(0, 10);
-      const { diaryId, resumed } = await startDiary(today);
-
-      if (resumed) {
-        navigate(`/retrospect-session/${diaryId}`);
-        return;
-      }
-
       await createDiaryContext(diaryId, { ...locationRef.current });
       navigate(`/retrospect-loading/${diaryId}`);
     } catch {
