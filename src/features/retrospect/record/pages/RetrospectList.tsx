@@ -3,8 +3,7 @@ import BottomNav from "@/shared/components/BottomNav"
 import MonthBottomSheet from "@/features/retrospect/record/components/MonthBottomSheet"
 import RetrospectCard from "@/features/retrospect/record/components/RetrospectCard"
 import RetrospectMonthButton from "@/features/retrospect/record/components/RetrospectMonthButton"
-
-import useRetrospectListMock from "@/features/retrospect/record/hooks/useRetrospectListMock"
+import useRetrospectList from "../hooks/useRetrospectList"
 
 export default function RetrospectListPage() {
   const {
@@ -20,7 +19,7 @@ export default function RetrospectListPage() {
     handleMonthSheetClose,
     handleMonthSelect,
     handleDetailClick,
-  } = useRetrospectListMock()
+  } = useRetrospectList()
 
   const isCurrentMonth =
     selectedYear === currentYear &&

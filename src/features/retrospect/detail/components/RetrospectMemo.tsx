@@ -1,10 +1,8 @@
 interface RetrospectMemoProps {
-  memo: string
+  memo: string;
 }
 
-export default function RetrospectMemo({
-  memo,
-}: RetrospectMemoProps) {
+export default function RetrospectMemo({ memo }: RetrospectMemoProps) {
   return (
     <section
       className="
@@ -16,13 +14,11 @@ export default function RetrospectMemo({
         pt-4
       "
     >
-      <h2 className="text-headline font-semibold text-black">
-        메모
-      </h2>
+      <h2 className="text-headline font-semibold text-black">메모</h2>
 
       <p className="mt-[14px] whitespace-pre-wrap text-subheadline font-normal text-grey-800">
-        {memo}
+        {memo.trim() ? memo : '작성된 메모가 없습니다.'}
       </p>
     </section>
-  )
+  );
 }

@@ -1,17 +1,30 @@
-import { useState } from "react"
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { retrospectDetailMock } from "@/features/retrospect/detail/mocks/retrospectDetailMock"
+import { useRetrospectDetailQuery } from '@/features/retrospect/detail/queries';
 
 import type {
   RetrospectQuestionAnswer,
   RetrospectViewMode,
-} from "@/features/retrospect/detail/types"
+} from '@/features/retrospect/detail/types';
 
-export default function useRetrospectDetailMock() {
+export default function useRetrospectDetail() {
+  const { diaryId } = useParams();
+
+  const parsedDiaryId = Number(diaryId);
+
+  const {
+    data: retrospect,
+    isLoading,
+    isError,
+  } = useRetrospectDetailQuery(
+    parsedDiaryId,
+  );
+
   const [viewMode, setViewMode] =
     useState<RetrospectViewMode>(
-      "CORRECTED",
-    )
+      'CORRECTED',
+    );
 
   const [
     translationTarget,
@@ -19,7 +32,7 @@ export default function useRetrospectDetailMock() {
   ] =
     useState<RetrospectQuestionAnswer | null>(
       null,
-    )
+    );
 
   const [
     explanationTarget,
@@ -27,43 +40,48 @@ export default function useRetrospectDetailMock() {
   ] =
     useState<RetrospectQuestionAnswer | null>(
       null,
-    )
+    );
 
   const handleViewModeChange = (
     mode: RetrospectViewMode,
   ) => {
-    setViewMode(mode)
-  }
+    setViewMode(mode);
+  };
 
   const handleTranslationOpen = (
     qa: RetrospectQuestionAnswer,
   ) => {
-    setTranslationTarget(qa)
-  }
+    setTranslationTarget(qa);
+  };
 
   const handleTranslationClose = () => {
-    setTranslationTarget(null)
-  }
+    setTranslationTarget(null);
+  };
 
   const handleExplanationOpen = (
     qa: RetrospectQuestionAnswer,
   ) => {
-    setExplanationTarget(qa)
-  }
+    setExplanationTarget(qa);
+  };
 
   const handleExplanationClose = () => {
-    setExplanationTarget(null)
-  }
+    setExplanationTarget(null);
+  };
 
   return {
-    retrospect: retrospectDetailMock,
+    retrospect,
+
+    isLoading,
+    isError,
+
     viewMode,
     translationTarget,
     explanationTarget,
+
     handleViewModeChange,
     handleTranslationOpen,
     handleTranslationClose,
     handleExplanationOpen,
     handleExplanationClose,
-  }
+  };
 }
