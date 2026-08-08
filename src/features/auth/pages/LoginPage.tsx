@@ -9,6 +9,7 @@ import { ApiError, loginWithGoogle } from '@/features/auth/api';
 import { renderGoogleSignInButton } from '@/features/auth/googleIdentity';
 import { clearLoginNotice, getLoginNotice, saveSession } from '@/features/auth/session';
 import LogoIcon from '@/shared/components/icons/LogoIcon';
+import { restorePushSubscriptionIfNeeded } from '@/features/notification/push';
 
 import './login-font.css';
 
@@ -52,7 +53,13 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
         }
 
         saveSession(loginResponse);
+        if (!loginResponse.isNewUser) {
+          void restorePushSubscriptionIfNeeded().catch(() => {
+          });
+        }
+
         onGoogleLogin?.();
+
         navigate(loginResponse.isNewUser ? '/onboarding/nickname' : '/home', { replace: true });
       } catch (error) {
         if (isActive) {

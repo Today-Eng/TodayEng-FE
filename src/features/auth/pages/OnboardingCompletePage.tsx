@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import completeBackground from '@/features/auth/assets/onboarding-complete-bg.svg';
@@ -6,27 +6,55 @@ import completeIcon from '@/features/auth/assets/onboarding-complete-icon.svg';
 import { completeOnboarding } from '@/features/auth/session';
 import Button from '@/shared/components/Button';
 import TextLayout from '@/shared/components/TextLayout';
+import { enablePushNotification } from '@/features/notification/push';
+import { updateNotificationSetting } from '@/features/notification/api';
+import { startDiary } from '@/features/home/api';
 
-interface OnboardingCompletePageProps {
-  onStartFirstRetrospect?: () => void;
-}
-
-export default function OnboardingCompletePage({
-  onStartFirstRetrospect,
-}: OnboardingCompletePageProps) {
+export default function OnboardingCompletePage() {
   const navigate = useNavigate();
+  const [isFinishing, setIsFinishing] = useState(false);
 
-  useEffect(() => {
+  const finishOnboarding = async (destination: 'home' | 'retrospect') => {
+    if (isFinishing) return;
+    setIsFinishing(true);
     completeOnboarding();
-  }, []);
 
-  const finishOnboarding = (destination: '/home' | '/retrospect') => {
-    if (destination === '/retrospect' && onStartFirstRetrospect) {
-      onStartFirstRetrospect();
-      return;
+    try {
+      await enablePushNotification();
+      await updateNotificationSetting(true);
+    } catch {
+      // 푸시 활성화 실패가 온보딩 완료를 차단하지 않도록 무시
     }
 
-    navigate(destination, { replace: true });
+    if (destination === 'retrospect') {
+      try {
+        const today = new Date();
+
+        const diaryDate = [
+          today.getFullYear(),
+          String(today.getMonth() + 1).padStart(2, '0'),
+          String(today.getDate()).padStart(2, '0'),
+        ].join('-');
+
+        await startDiary(diaryDate);
+
+        navigate('/retrospect', {
+          replace: true,
+        });
+
+        return;
+      } catch {
+        navigate('/home', {
+          replace: true,
+        });
+
+        return;
+      }
+    }
+
+    navigate('/home', {
+      replace: true,
+    });
   };
 
   return (
@@ -55,8 +83,17 @@ export default function OnboardingCompletePage({
         </section>
 
         <div className="flex w-full flex-col gap-2">
-          <Button label="첫 회고 작성하기" onClick={() => finishOnboarding('/retrospect')} />
-          <Button label="건너뛰기" type="sub" onClick={() => finishOnboarding('/home')} />
+          <Button
+            label="첫 회고 작성하기"
+            disabled={isFinishing}
+            onClick={() => finishOnboarding('retrospect')}
+          />
+          <Button
+            label="건너뛰기"
+            type="sub"
+            disabled={isFinishing}
+            onClick={() => finishOnboarding('home')}
+          />
         </div>
       </div>
     </main>
