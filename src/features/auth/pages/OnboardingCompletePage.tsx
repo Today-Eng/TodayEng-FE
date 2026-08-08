@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import completeBackground from '@/features/auth/assets/onboarding-complete-bg.svg';
@@ -11,8 +12,11 @@ import { startDiary } from '@/features/home/api';
 
 export default function OnboardingCompletePage() {
   const navigate = useNavigate();
+  const [isFinishing, setIsFinishing] = useState(false);
 
   const finishOnboarding = async (destination: 'home' | 'retrospect') => {
+    if (isFinishing) return;
+    setIsFinishing(true);
     completeOnboarding();
 
     try {
@@ -80,8 +84,8 @@ export default function OnboardingCompletePage() {
         </section>
 
         <div className="flex w-full flex-col gap-2">
-          <Button label="첫 회고 작성하기" onClick={() => finishOnboarding('retrospect')} />
-          <Button label="건너뛰기" type="sub" onClick={() => finishOnboarding('home')} />
+          <Button label="첫 회고 작성하기" disabled={isFinishing} onClick={() => finishOnboarding('retrospect')} />
+          <Button label="건너뛰기" type="sub" disabled={isFinishing} onClick={() => finishOnboarding('home')} />
         </div>
       </div>
     </main>
