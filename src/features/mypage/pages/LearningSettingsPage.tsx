@@ -74,7 +74,7 @@ export default function LearningSettingsPage() {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white text-black">
+    <main className="relative flex min-h-dvh w-full flex-col bg-white pt-[130px] text-black">
       <BackHeaderLayout
         title="학습 설정"
         rightAction={{
@@ -90,7 +90,7 @@ export default function LearningSettingsPage() {
         </p>
       )}
 
-      <fieldset className="absolute left-1/2 top-1/2 flex w-[calc(100%-31px)] max-w-[371px] -translate-x-1/2 -translate-y-1/2 flex-col gap-[26px]">
+      <fieldset className="flex w-[calc(100%-31px)] max-w-[371px] flex-1 flex-col justify-center gap-[26px] self-center py-4">
         <legend className="sr-only">현재 영어 레벨 선택</legend>
 
         {LEVEL_OPTIONS.map((option) => {

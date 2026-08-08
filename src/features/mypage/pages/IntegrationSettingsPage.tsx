@@ -17,8 +17,8 @@ import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import Modal from '@/shared/components/Modal';
 
 const AGREEMENT_TERM_ID: Record<IntegrationProvider, number> = {
-  spotify: 6,
-  googleCalendar: 5,
+  spotify: 15,
+  googleCalendar: 14,
 };
 
 const API_PROVIDER: Record<IntegrationProvider, ExternalProvider> = {
@@ -216,12 +216,14 @@ export default function IntegrationSettingsPage() {
 
         if (popup.closed || pollCount >= OAUTH_MAX_POLL_COUNT) {
           stopOAuthPolling();
+          popup.close();
           oauthPopupRef.current = null;
           setErrorMessage(`${providerName} 연동이 완료되지 않았습니다. 다시 시도해주세요.`);
         }
       } catch {
         if (popup.closed || pollCount >= OAUTH_MAX_POLL_COUNT) {
           stopOAuthPolling();
+          popup.close();
           oauthPopupRef.current = null;
           setErrorMessage(`${providerName} 연동 결과를 확인하지 못했습니다.`);
         }
