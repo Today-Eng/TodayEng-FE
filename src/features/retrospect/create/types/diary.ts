@@ -3,6 +3,7 @@ export type ReflectionUiState =
   | 'AI_SPEAKING'
   | 'READY_TO_RECORD'
   | 'RECORDING'
+  | 'RECORDED'
   | 'UPLOADING'
   | 'PROCESSING'
   | 'READY_TO_COMPLETE'
@@ -80,10 +81,10 @@ export interface Answer {
   questionOrder: number;
   questionText: string;
   koreanTranslation: string;
-  originalText: string;
-  correctedText: string;
-  correctionReason: string;
-  alternativeExpression: Record<string, unknown>;
+  originalText?: string;
+  correctedText?: string;
+  correctionReason?: string;
+  alternativeExpression?: Record<string, unknown>;
   correctionStatus: CorrectionStatus;
   transcriptionStatus: TranscriptionStatus;
 }
