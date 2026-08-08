@@ -1,86 +1,89 @@
-import type { DayOfWeek } from "@/shared/types/retrospect"
+import type { DayOfWeek } from '@/shared/types/retrospect';
 
-export type {
-  DayOfWeek,
-  RetrospectPreviewData,
-} from "@/shared/types/retrospect"
-
-export type DiaryStatus =
-  | "NOT_STARTED"
-  | "IN_PROGRESS"
-  | "COMPLETED"
+export type { DayOfWeek, RetrospectPreviewData } from '@/shared/types/retrospect';
+export type DiaryStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' | 'DELETED';
 
 export interface HomeData {
   user: {
-    nickname: string
-  }
+    nickname: string;
+  };
 
   statistics: {
-    totalDiaryCount: number
-    currentDiaryStreak: number
-  }
+    totalDiaryCount: number;
+    currentDiaryStreak: number;
+  };
 
   calendar: {
-    year: number
-    month: number
-    writtenDates: string[]
-    writableFrom: string
-    writableTo: string
-  }
+    year: number;
+    month: number;
+    writtenDates: string[];
+  };
 
   today: {
-    date: string
-    dayOfWeek: DayOfWeek
-    diaryStatus: DiaryStatus
-    diaryId: number | null
-  }
+    date: string;
+    dayOfWeek: DayOfWeek;
+    diaryStatus: DiaryStatus;
+    diaryId?: number | null;
+  };
 
-  materials: HomeMaterials
+  materials: HomeMaterials;
 }
+
+export type WeatherCondition =
+  'CLEAR' | 'CLOUDY' | 'FOG' | 'RAIN' | 'SNOW' | 'THUNDERSTORM' | 'UNKNOWN';
 
 export interface HomeMaterials {
   time: {
-    period:
-      | "MORNING"
-      | "AFTERNOON"
-      | "EVENING"
-      | "NIGHT"
-    message: string
-  }
+    period: 'MORNING' | 'AFTERNOON' | 'EVENING' | 'NIGHT';
+    message: string;
+  };
 
   weather: {
-    available: boolean
-    condition: string
-    temperature: number
-  }
+    available: boolean;
+    condition: WeatherCondition | null;
+    temperature: number | null;
+  };
 
   calendar: {
-    connected: boolean
-    useEnabled: boolean
-    eventCount: number
-    representativeEvent: {
-      title: string
-      startAt: string
-    } | null
-  }
+    connected: boolean;
+    useEnabled: boolean;
+    eventCount: number;
+    representativeEvent?: {
+      title: string;
+      startAt: string;
+    } | null;
+  };
 
   spotify: {
-    connected: boolean
-    useEnabled: boolean
-    recentTrackAvailable: boolean
-    trackTitle: string | null
-    artistName: string | null
-  }
+    connected: boolean;
+    useEnabled: boolean;
+    recentTrackAvailable: boolean;
+    trackTitle?: string | null;
+    artistName?: string | null;
+  };
 }
 
-export type CalendarDayStatus =
-  | "WRITTEN"
-  | "TODAY"
-  | "WRITABLE"
-  | "EXPIRED"
-  | "FUTURE"
+export interface HomeDateData {
+  diaryId?: number;
+  diaryDate: string;
+  dayOfWeek: DayOfWeek;
+  diaryStatus: DiaryStatus;
+  keywords: string[];
+  questionText?: string;
+  correctedText?: string;
+}
+
+export type CalendarDayStatus = 'WRITTEN' | 'TODAY' | 'WRITABLE' | 'EXPIRED' | 'FUTURE';
 
 export interface CalendarDayItem {
-  date: string
-  day: number
+  date: string;
+  day: number;
+}
+
+export interface StartDiaryResponse {
+  diaryId: number;
+  diaryDate: string;
+  status: 'IN_PROGRESS';
+  resumed: boolean;
+  createdAt: string;
 }
