@@ -28,9 +28,9 @@ export default function IntegrationAccountRow({
   const isLinkDisabled = status === 'terms-required' || disabled;
 
   return (
-    <div className="flex h-[70px] items-center justify-between px-4">
-      <div className="flex items-center gap-4">
-        <div className="flex w-[96px] items-center gap-2">
+    <div className="flex min-h-[70px] items-center gap-3 px-4 py-3">
+      <div className="flex min-w-0 flex-1 items-center gap-4">
+        <div className="flex w-[96px] shrink-0 items-center gap-2">
           <IntegrationIcon provider={provider} />
           <span
             className={[
@@ -43,7 +43,7 @@ export default function IntegrationAccountRow({
         </div>
 
         {isLinked && (
-          <span className="w-[96px] truncate text-caption1 text-grey-600">
+          <span className="min-w-0 flex-1 break-all text-caption1 text-grey-600">
             {email ?? '이메일 정보 없음'}
           </span>
         )}
@@ -54,7 +54,7 @@ export default function IntegrationAccountRow({
           type="button"
           disabled={disabled}
           onClick={onDelete}
-          className="h-8 rounded-full bg-error-100 px-5 text-xs font-semibold text-error-500 disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-8 shrink-0 rounded-full bg-error-100 px-5 text-xs font-semibold text-error-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
           연동 삭제
         </button>
@@ -64,7 +64,7 @@ export default function IntegrationAccountRow({
           disabled={isLinkDisabled}
           onClick={onLink}
           className={[
-            'h-8 rounded-full px-5 text-xs font-semibold',
+            'h-8 shrink-0 rounded-full px-5 text-xs font-semibold',
             isLinkDisabled
               ? 'cursor-not-allowed bg-grey-100 text-grey-300'
               : 'bg-main-100 text-main-500',
