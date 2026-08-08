@@ -1,11 +1,9 @@
 import timeIcon from "@/assets/icons/home/home-time.svg"
-import weatherIcon from "@/assets/icons/home/home-weather.svg"
 import calendarIcon from "@/assets/icons/home/home-calendar.svg"
 import musicIcon from "@/assets/icons/home/home-music.svg"
 
 export type MaterialIconType =
   | "time"
-  | "weather"
   | "calendar"
   | "music"
 
@@ -16,7 +14,6 @@ interface MaterialIconProps {
 
 const iconMap: Record<MaterialIconType, string> = {
   time: timeIcon,
-  weather: weatherIcon,
   calendar: calendarIcon,
   music: musicIcon,
 }

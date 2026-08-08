@@ -103,7 +103,7 @@ export default function RetrospectDetailPage() {
         className="
           min-h-dvh
           w-full
-          pb-[75px]
+          pb-[109px]
           pt-[130px]
         "
       >
