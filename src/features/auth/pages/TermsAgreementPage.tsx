@@ -13,7 +13,7 @@ import TextLayout from '@/shared/components/TextLayout';
 const TERMS = [
   {
     id: 'service',
-    apiId: 1,
+    apiId: 10,
     required: true,
     hasDetailsLink: true,
     title: '[필수] 서비스 이용약관 동의',
@@ -22,7 +22,7 @@ const TERMS = [
   },
   {
     id: 'privacy',
-    apiId: 2,
+    apiId: 11,
     required: true,
     hasDetailsLink: true,
     title: '[필수] 개인정보 수집 및 이용 동의',
@@ -31,7 +31,7 @@ const TERMS = [
   },
   {
     id: 'age',
-    apiId: 3,
+    apiId: 12,
     required: true,
     hasDetailsLink: false,
     title: '[필수] 만 14세 이상입니다.',
@@ -40,7 +40,7 @@ const TERMS = [
   },
   {
     id: 'ai-transfer',
-    apiId: 4,
+    apiId: 13,
     required: true,
     hasDetailsLink: true,
     title: '[필수] 회고 내용의 AI 처리 및 국외이전 동의',
@@ -49,7 +49,7 @@ const TERMS = [
   },
   {
     id: 'calendar',
-    apiId: 5,
+    apiId: 14,
     required: false,
     hasDetailsLink: false,
     title: '[선택] 캘린더 연동을 위한 일정 정보 수집 동의',
@@ -58,7 +58,7 @@ const TERMS = [
   },
   {
     id: 'spotify',
-    apiId: 6,
+    apiId: 15,
     required: false,
     hasDetailsLink: false,
     title: '[선택] 스포티파이 연동을 위한 정보 수집 동의',
@@ -67,7 +67,7 @@ const TERMS = [
   },
   {
     id: 'location',
-    apiId: 7,
+    apiId: 16,
     required: false,
     hasDetailsLink: false,
     title: '[선택] 위치정보 수집 및 이용 동의',
@@ -76,7 +76,7 @@ const TERMS = [
   },
   {
     id: 'exif',
-    apiId: 8,
+    apiId: 17,
     required: false,
     hasDetailsLink: false,
     title: '[선택] 위치 메타데이터(EXIF GPS) 수집 동의',
@@ -85,7 +85,7 @@ const TERMS = [
   },
   {
     id: 'marketing',
-    apiId: 9,
+    apiId: 18,
     required: false,
     hasDetailsLink: false,
     title: '[선택] 마케팅 정보 수신 동의',
