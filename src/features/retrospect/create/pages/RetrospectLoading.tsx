@@ -39,7 +39,10 @@ export default function RetrospectLoading() {
         navigate(`/retrospect-session/${diaryId}`);
       });
 
-    return () => { active = false; };
+    return () => {
+      active = false;
+      calledRef.current = false;
+    };
   }, [diaryId, navigate]);
 
   return (
