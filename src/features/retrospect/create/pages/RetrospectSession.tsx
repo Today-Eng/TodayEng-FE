@@ -169,7 +169,7 @@ export default function RetrospectSession() {
         const isRecording = uiStateRef.current === 'RECORDING'
         if (!isRecording && (!alreadyPlayed || wasUploaded)) {
           playedQuestionIdsRef.current.add(q.questionId)
-          void playQuestion(q.ttsAudioUrl)
+          void playQuestion(q.ttsAudioUrl!)
         }
       } else {
         setUiState('PROCESSING')
@@ -222,7 +222,7 @@ export default function RetrospectSession() {
             const isRecording = uiStateRef.current === 'RECORDING'
             if (!isRecording && (!alreadyPlayed || wasUploaded)) {
               playedQuestionIdsRef.current.add(q.questionId)
-              void playQuestion(q.ttsAudioUrl)
+              void playQuestion(q.ttsAudioUrl!)
             }
           }
         } catch { /* 재연결 대기 */ }
@@ -309,8 +309,6 @@ export default function RetrospectSession() {
       <div className="flex flex-col gap-4 pb-[120px]">
         {[...qnaList].sort((a, b) => a.questionOrder - b.questionOrder).map((item, index, sorted) => {
           const isCurrentQuestion = currentQuestionId === item.questionId
-          const isLastQuestion = index === sorted.length - 1
-          // 현재 질문 처리 중이거나, 다음 질문이 이미 왔는데 아직 originalText가 없는 경우
           const isPenultimateQuestion = index === sorted.length - 2
           const showLoading = !item.originalText && (
             (isCurrentQuestion && (uiState === 'UPLOADING' || uiState === 'PROCESSING'))
