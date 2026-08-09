@@ -108,7 +108,7 @@ export default function RetrospectDetailPage() {
           min-h-dvh
           w-full
           pb-[109px]
-          pt-[130px]
+          pt-[68px]
         "
       >
         <BackHeaderLayout

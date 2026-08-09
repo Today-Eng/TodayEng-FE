@@ -289,7 +289,7 @@ export default function IntegrationSettingsPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="min-h-screen w-full pt-[130px]">
+      <div className="min-h-screen w-full pt-[68px]">
         <BackHeaderLayout title="연동 관리" />
 
         {errorMessage && (

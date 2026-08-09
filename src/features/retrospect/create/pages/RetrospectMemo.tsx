@@ -36,7 +36,7 @@ export default function RetrospectMemo() {
   }
 
   return (
-    <div className="pt-[78px] flex flex-col p-4">
+    <div className="pt-[16px] flex flex-col p-4">
       <NoteIcon />
       <div className="mt-4 mb-6">
         <TextLayout mainText={"오늘 대화에서 남기고 싶은\n 메모를 자유롭게 적어주세요"} mainTextSize="title2" />

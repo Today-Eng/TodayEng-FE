@@ -58,7 +58,7 @@ export default function NicknameSetupPage({ onNext }: NicknameSetupPageProps) {
 
   return (
     <main className="relative min-h-dvh w-full bg-white text-black">
-      <div className="px-4 pt-[62px]">
+      <div className="px-4">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={1} />
 
