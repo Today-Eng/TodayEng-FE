@@ -58,6 +58,8 @@ export default function RetrospectSession() {
   const chunksRef = useRef<BlobPart[]>([])
   const pendingBlobRef = useRef<Blob | null>(null)
   const sseAbortRef = useRef<AbortController | null>(null)
+  const playedQuestionIdsRef = useRef<Set<number>>(new Set())
+  const uploadedQuestionIdsRef = useRef<Set<number>>(new Set())
 
   const uiStateRef = useRef(uiState)
   useEffect(() => { uiStateRef.current = uiState }, [uiState])
@@ -112,7 +114,13 @@ export default function RetrospectSession() {
           questionText: data.questionText,
           koreanTranslation: data.koreanTranslation,
         })
-        void playQuestion(data.audioUrl)
+        const alreadyPlayed = playedQuestionIdsRef.current.has(data.questionId)
+        const wasUploaded = uploadedQuestionIdsRef.current.has(data.questionId)
+        const isRecording = uiStateRef.current === 'RECORDING'
+        if (!isRecording && (!alreadyPlayed || wasUploaded)) {
+          playedQuestionIdsRef.current.add(data.questionId)
+          void playQuestion(data.audioUrl)
+        }
         break
       }
       case 'answer.transcribed': {
@@ -148,14 +156,21 @@ export default function RetrospectSession() {
       if (res.status === 'READY_TO_COMPLETE') {
         navigate(`/retrospect-memo/${diaryId}`)
       } else if (res.status === 'QUESTION_READY' && res.question?.ttsAudioUrl) {
-        setCurrentQuestionId(res.question.questionId)
+        const q = res.question
+        setCurrentQuestionId(q.questionId)
         upsertQna({
-          questionId: res.question.questionId,
-          questionOrder: res.question.questionOrder,
-          questionText: res.question.questionText,
-          koreanTranslation: res.question.koreanTranslation,
+          questionId: q.questionId,
+          questionOrder: q.questionOrder,
+          questionText: q.questionText,
+          koreanTranslation: q.koreanTranslation,
         })
-        void playQuestion(res.question.ttsAudioUrl)
+        const alreadyPlayed = playedQuestionIdsRef.current.has(q.questionId)
+        const wasUploaded = uploadedQuestionIdsRef.current.has(q.questionId)
+        const isRecording = uiStateRef.current === 'RECORDING'
+        if (!isRecording && (!alreadyPlayed || wasUploaded)) {
+          playedQuestionIdsRef.current.add(q.questionId)
+          void playQuestion(q.ttsAudioUrl)
+        }
       } else {
         setUiState('PROCESSING')
       }
@@ -195,13 +210,20 @@ export default function RetrospectSession() {
           if (res.status === 'READY_TO_COMPLETE') {
             navigate(`/retrospect-memo/${diaryId}`)
           } else if (res.status === 'QUESTION_READY' && res.question?.ttsAudioUrl) {
-            setCurrentQuestionId(res.question.questionId)
+            const q = res.question
+            setCurrentQuestionId(q.questionId)
             upsertQna({
-              questionId: res.question.questionId,
-              questionText: res.question.questionText,
-              koreanTranslation: res.question.koreanTranslation,
+              questionId: q.questionId,
+              questionText: q.questionText,
+              koreanTranslation: q.koreanTranslation,
             })
-            void playQuestion(res.question.ttsAudioUrl)
+            const alreadyPlayed = playedQuestionIdsRef.current.has(q.questionId)
+            const wasUploaded = uploadedQuestionIdsRef.current.has(q.questionId)
+            const isRecording = uiStateRef.current === 'RECORDING'
+            if (!isRecording && (!alreadyPlayed || wasUploaded)) {
+              playedQuestionIdsRef.current.add(q.questionId)
+              void playQuestion(q.ttsAudioUrl)
+            }
           }
         } catch { /* 재연결 대기 */ }
       },
@@ -261,6 +283,7 @@ export default function RetrospectSession() {
     setUiState('UPLOADING')
     try {
       await uploadAnswer(diaryId, currentQuestionId, blob)
+      uploadedQuestionIdsRef.current.add(currentQuestionId)
       setUiState('PROCESSING')
     } catch {
       setUiState('ERROR')
