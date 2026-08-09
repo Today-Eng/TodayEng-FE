@@ -34,7 +34,6 @@ export default function RetrospectListPage() {
             top-0
             z-20
             px-4
-            pt-[62px]
             bg-white
             pb-2
           "

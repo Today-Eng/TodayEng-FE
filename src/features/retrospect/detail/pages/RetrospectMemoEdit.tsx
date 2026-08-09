@@ -58,7 +58,7 @@ export default function RetrospectMemoEditPage() {
         className="
           min-h-dvh
           w-full
-          pt-[130px]
+          pt-[68px]
         "
       >
         <BackHeader
