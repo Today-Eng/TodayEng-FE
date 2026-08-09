@@ -20,12 +20,34 @@ export interface MyPageProfile {
   interests: Interest[];
 }
 
+export type AgreementStatus = 'AGREED' | 'NOT_ANSWERED' | 'DISAGREED';
+
+export interface UserAgreement {
+  termId: number;
+  termsType: string;
+  title: string;
+  content: string;
+  required: boolean;
+  displayOrder: number;
+  agreementStatus: AgreementStatus;
+  agreedAt: string | null;
+}
+
+export interface MyAgreements {
+  allRequiredAgreed: boolean;
+  agreements: UserAgreement[];
+}
+
 function request<T>(path: string, init: RequestInit = {}) {
   return sharedRequest<T>(path, init);
 }
 
 export function getMyPageProfile() {
   return request<MyPageProfile>('/users/me');
+}
+
+export function getMyAgreements() {
+  return request<MyAgreements>('/users/me/agreements');
 }
 
 export function updateProfile(nickname: string) {

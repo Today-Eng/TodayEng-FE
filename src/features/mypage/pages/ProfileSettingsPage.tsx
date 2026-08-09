@@ -41,20 +41,18 @@ export default function ProfileSettingsPage() {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white text-black">
-      <header className="relative">
-        <BackHeaderLayout title="프로필 설정" />
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={!nickname.trim() || isSaving}
-          className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500 disabled:text-grey-300"
-        >
-          수정
-        </button>
-      </header>
+    <main className="min-h-dvh w-full bg-white pt-[130px] text-black">
+      <BackHeaderLayout
+        title="프로필 설정"
+        rightAction={{
+          type: 'confirm',
+          label: isSaving ? '수정 중...' : '수정',
+          disabled: !nickname.trim() || isSaving,
+          onClick: handleSave,
+        }}
+      />
 
-      <section className="mt-4 flex flex-col gap-4 px-4">
+      <section className="mt-9 flex flex-col gap-4 px-4">
         <label htmlFor="profile-nickname" className="text-headline tracking-[-0.41px]">
           닉네임 입력
         </label>

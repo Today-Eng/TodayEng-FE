@@ -35,7 +35,9 @@ let isHandlingSessionExpiration = false;
 async function fetchApi<T>(path: string, init: RequestInit, accessToken?: string | null) {
   const headers = new Headers(init.headers);
 
-  headers.set('Content-Type', 'application/json');
+  if (!(init.body instanceof FormData)) {
+    headers.set('Content-Type', 'application/json');
+  }
 
   if (accessToken) {
     headers.set('Authorization', `Bearer ${accessToken}`);
