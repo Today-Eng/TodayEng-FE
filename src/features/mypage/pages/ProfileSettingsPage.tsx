@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getMyPageProfile, updateProfile } from '@/features/mypage/api/mypageApi';
+import { getMyPageProfile } from '@/features/mypage/api/mypageApi';
 import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import CloseCircleIcon from '@/shared/components/icons/CloseCircleIcon';
+import { useUpdateProfileMutation } from '../queries/MypageQueries';
 
 const MAX_NICKNAME_LENGTH = 20;
 
 export default function ProfileSettingsPage() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const {
+  mutateAsync: updateProfileMutation,
+  isPending,
+} = useUpdateProfileMutation();
 
   useEffect(() => {
     getMyPageProfile()
@@ -28,15 +33,17 @@ export default function ProfileSettingsPage() {
       return;
     }
 
-    setIsSaving(true);
     setErrorMessage('');
 
     try {
-      await updateProfile(trimmedNickname);
+      await updateProfileMutation(trimmedNickname);
       navigate('/mypage');
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : '프로필 수정에 실패했습니다.');
-      setIsSaving(false);
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : '프로필 수정에 실패했습니다.',
+      );
     }
   };
 
@@ -46,9 +53,9 @@ export default function ProfileSettingsPage() {
         title="프로필 설정"
         rightAction={{
           type: 'confirm',
-          label: isSaving ? '수정 중...' : '수정',
-          disabled: !nickname.trim() || isSaving,
-          onClick: handleSave,
+          label: isPending ? '수정 중...' : '수정',
+          disabled: !nickname.trim() || isPending,
+        onClick: handleSave,
         }}
       />
 
