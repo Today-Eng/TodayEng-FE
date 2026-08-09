@@ -93,20 +93,18 @@ export default function InterestSettingsPage() {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white pb-10 text-black">
-      <header className="relative">
-        <BackHeaderLayout title="관심사 설정" />
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={!canSave || isSaving}
-          className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500 disabled:text-grey-300"
-        >
-          수정
-        </button>
-      </header>
+    <main className="relative min-h-dvh w-full bg-white pb-10 pt-[130px] text-black">
+      <BackHeaderLayout
+        title="관심사 설정"
+        rightAction={{
+          type: 'confirm',
+          label: isSaving ? '수정 중...' : '수정',
+          disabled: !canSave || isSaving,
+          onClick: handleSave,
+        }}
+      />
 
-      <p className="px-4 text-subheadline tracking-[-0.24px] text-grey-500">
+      <p className="mt-2 px-4 text-subheadline tracking-[-0.24px] text-grey-500">
         * 관심사를 최소 3개 이상 선택해주세요
       </p>
       {errorMessage && <p className="mt-2 px-4 text-footnote text-error-500">{errorMessage}</p>}

@@ -74,25 +74,23 @@ export default function LearningSettingsPage() {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white text-black">
-      <header className="relative">
-        <BackHeaderLayout title="학습 설정" />
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={!isLoaded || selectedLevel === null || isSaving}
-          className="absolute right-4 top-5 text-body font-semibold tracking-[-0.32px] text-main-500 disabled:text-grey-300"
-        >
-          수정
-        </button>
-      </header>
+    <main className="relative flex min-h-dvh w-full flex-col bg-white pt-[130px] text-black">
+      <BackHeaderLayout
+        title="학습 설정"
+        rightAction={{
+          type: 'confirm',
+          label: isSaving ? '수정 중...' : '수정',
+          disabled: !isLoaded || selectedLevel === null || isSaving,
+          onClick: handleSave,
+        }}
+      />
       {(loadError || saveError) && (
-        <p role="alert" className="px-4 text-footnote text-error-500">
+        <p role="alert" className="absolute top-[138px] px-4 text-footnote text-error-500">
           {loadError || saveError}
         </p>
       )}
 
-      <fieldset className="mt-[131px] flex flex-col gap-[26px] px-4">
+      <fieldset className="flex w-[calc(100%-31px)] max-w-[371px] flex-1 flex-col justify-center gap-[26px] self-center py-4">
         <legend className="sr-only">현재 영어 레벨 선택</legend>
 
         {LEVEL_OPTIONS.map((option) => {
@@ -106,10 +104,10 @@ export default function LearningSettingsPage() {
               disabled={!isLoaded || isSaving}
               aria-pressed={isSelected}
               className={[
-                'flex h-[100px] w-full flex-col items-start justify-center gap-1 rounded-2xl px-5 text-left transition-colors',
+                'flex h-[100px] w-full flex-col items-start justify-center gap-1 rounded-2xl text-left transition-colors',
                 isSelected
-                  ? 'border-[1.5px] border-main-400 bg-main-100 text-main-500'
-                  : 'border-[1.5px] border-transparent bg-grey-50 text-grey-500',
+                  ? 'border-[1.5px] border-main-400 bg-main-100 px-[17px] text-main-500'
+                  : 'border-[1.5px] border-transparent bg-grey-50 px-5 text-grey-500',
               ].join(' ')}
             >
               <span className="text-subheadline font-semibold tracking-[-0.24px]">
