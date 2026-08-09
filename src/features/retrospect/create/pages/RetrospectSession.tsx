@@ -319,7 +319,7 @@ export default function RetrospectSession() {
                     correctionReason={item.correctionReason}
                   />
                 </div>
-              ) : showLoading && (
+              ) : showLoading ? (
                 <div className="mt-4 w-full pr-4 pl-20">
                   <div className="p-4 bg-main-500/30 rounded-[24px]">
                     <div className="flex gap-1 items-center h-5">
@@ -327,6 +327,12 @@ export default function RetrospectSession() {
                       <span className="w-2 h-2 bg-white/50 rounded-full animate-bounce [animation-delay:150ms]" />
                       <span className="w-2 h-2 bg-white/50 rounded-full animate-bounce [animation-delay:300ms]" />
                     </div>
+                  </div>
+                </div>
+              ) : !isCurrentQuestion && (
+                <div className="mt-4 w-full pr-4 pl-20">
+                  <div className="p-4 bg-main-500/30 rounded-[24px]">
+                    <p className="text-subheadline text-white/50">답변 없음</p>
                   </div>
                 </div>
               )}
