@@ -6,13 +6,23 @@ export function useCompleteDiaryMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ diaryId, finalMemo }: { diaryId: number; finalMemo: string | null }) =>
-      completeDiary(diaryId, finalMemo),
+    mutationFn: ({
+      diaryId,
+      finalMemo,
+    }: {
+      diaryId: number;
+      finalMemo: string | null;
+    }) => completeDiary(diaryId, finalMemo),
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['home'],
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['home'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['retrospect-list'],
+        }),
+      ]);
     },
   });
 }
@@ -25,9 +35,14 @@ export function usePauseDiaryMutation() {
       pauseDiary(diaryId),
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['home'],
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['home'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['retrospect-list'],
+        }),
+      ]);
     },
   });
 }
