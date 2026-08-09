@@ -48,7 +48,7 @@ export default function BackHeader({
         top-0
         z-50
         flex
-        h-[130px]
+        h-[68px]
         w-full
         items-end
         justify-between
