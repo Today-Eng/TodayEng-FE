@@ -10,7 +10,6 @@ export interface DiarySSEHandlers {
 }
 
 export function subscribeDiarySSE(diaryId: number, handlers: DiarySSEHandlers): AbortController {
-  console.log('[SSE] subscribeDiarySSE called, diaryId:', diaryId)
   const controller = new AbortController();
   const token = getAccessToken();
 
@@ -22,11 +21,11 @@ export function subscribeDiarySSE(diaryId: number, handlers: DiarySSEHandlers): 
     signal: controller.signal,
     openWhenHidden: true,
     onopen: async (response) => {
-      console.log('[SSE] onopen', response.status, response.ok);
+      if (import.meta.env.DEV) console.log('[SSE] onopen', response.status);
       if (!response.ok) throw new Error(`SSE 연결 실패: ${response.status}`);
     },
     onmessage: (event) => {
-      console.log('[SSE] onmessage', event.event, event.data);
+      if (import.meta.env.DEV) console.log('[SSE] onmessage', event.event);
       if (!event.data) return;
       try {
         const envelope = JSON.parse(event.data) as SseEnvelope;
@@ -36,7 +35,7 @@ export function subscribeDiarySSE(diaryId: number, handlers: DiarySSEHandlers): 
       }
     },
     onerror: (error) => {
-      console.log('[SSE] onerror', error);
+      if (import.meta.env.DEV) console.log('[SSE] onerror', error);
       if (error instanceof DOMException && error.name === 'AbortError') {
         throw error;
       }
