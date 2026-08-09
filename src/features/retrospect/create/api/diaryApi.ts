@@ -1,5 +1,3 @@
-import { getAccessToken } from '@/features/auth/session';
-import ApiError from '@/shared/api/ApiError';
 import request from '@/shared/api/request';
 import type {
   AnswerDetail,
@@ -15,11 +13,6 @@ import type {
 
 const BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080').replace(/\/$/, '');
 
-function authHeaders(): HeadersInit {
-  const token = getAccessToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
-
 export function startDiary(diaryDate: string) {
   return request<DiaryStartResponse>('/diaries', {
     method: 'POST',
@@ -27,7 +20,7 @@ export function startDiary(diaryDate: string) {
   });
 }
 
-export async function createDiaryContext(
+export function createDiaryContext(
   diaryId: number,
   params: {
     memo?: string;
@@ -44,16 +37,11 @@ export async function createDiaryContext(
   if (params.longitude != null) formData.append('longitude', String(params.longitude));
   params.images?.forEach((file) => formData.append('images', file));
 
-  const response = await fetch(`${BASE_URL}/diaries/${diaryId}/contexts`, {
+  return request<DiaryContextResponse>(`/diaries/${diaryId}/contexts`, {
     method: 'POST',
-    headers: authHeaders(),
     body: formData,
     signal: AbortSignal.timeout(30_000),
   });
-
-  const body = await response.json() as { success: boolean; code?: string; message: string; data: DiaryContextResponse };
-  if (!response.ok || !body.success) throw new ApiError(body.message, body.code, response.status);
-  return body.data;
 }
 
 export function startReflectionSession(diaryId: number) {
@@ -70,23 +58,15 @@ export function getCurrentQuestion(diaryId: number) {
   return request<CurrentQuestionResponse>(`/diaries/${diaryId}/questions/next`);
 }
 
-export async function uploadAnswer(diaryId: number, questionId: number, blob: Blob) {
+export function uploadAnswer(diaryId: number, questionId: number, blob: Blob) {
   const formData = new FormData();
   formData.append('audio', blob, 'answer.webm');
 
-  const response = await fetch(
-    `${BASE_URL}/diaries/${diaryId}/questions/${questionId}/answers`,
-    {
-      method: 'POST',
-      headers: authHeaders(),
-      body: formData,
-      signal: AbortSignal.timeout(30_000),
-    },
-  );
-
-  const body = await response.json() as { success: boolean; code?: string; message: string; data: AnswerUploadResponse };
-  if (!response.ok || !body.success) throw new ApiError(body.message, body.code, response.status);
-  return body.data;
+  return request<AnswerUploadResponse>(`/diaries/${diaryId}/questions/${questionId}/answers`, {
+    method: 'POST',
+    body: formData,
+    signal: AbortSignal.timeout(30_000),
+  });
 }
 
 export function getAnswer(diaryId: number, answerId: number) {
