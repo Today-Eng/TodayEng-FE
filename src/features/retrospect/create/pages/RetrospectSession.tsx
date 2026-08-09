@@ -130,7 +130,7 @@ export default function RetrospectSession() {
         break
       }
       case 'processing_failed':
-        void syncCurrentQuestion()
+        setUiState('PROCESSING')
         break
       case 'ready-to-complete':
         setUiState('READY_TO_COMPLETE')
