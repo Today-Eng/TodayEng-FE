@@ -8,6 +8,12 @@ import CloseCircleIcon from '@/shared/components/icons/CloseCircleIcon';
 import { startDiary, createDiaryContext } from '@/features/retrospect/create/api/diaryApi';
 
 import galleryIcon from '@/assets/icons/gallery.svg';
+
+const getLocalDateString = () => {
+  const d = new Date()
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
 import quoteIcon from '@/assets/icons/quote-down-square.svg';
 import addIcon from '@/assets/icons/add_circle_regular.svg';
 
@@ -72,7 +78,7 @@ export default function RetrospectSetup() {
     setError(null);
 
     try {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = getLocalDateString();
       const { diaryId } = await startDiary(today);
 
       await createDiaryContext(diaryId, {
@@ -94,7 +100,7 @@ export default function RetrospectSetup() {
     setError(null);
 
     try {
-      const today = new Date().toISOString().slice(0, 10);
+      const today = getLocalDateString();
       const { diaryId } = await startDiary(today);
 
       await createDiaryContext(diaryId, { ...locationRef.current });
