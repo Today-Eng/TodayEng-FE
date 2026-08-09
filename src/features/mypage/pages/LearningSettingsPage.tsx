@@ -74,7 +74,7 @@ export default function LearningSettingsPage() {
   };
 
   return (
-    <main className="relative flex min-h-dvh w-full flex-col bg-white pt-[130px] text-black">
+    <main className="relative flex min-h-dvh w-full flex-col bg-white pt-[68px] text-black">
       <BackHeaderLayout
         title="학습 설정"
         rightAction={{

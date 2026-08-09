@@ -308,7 +308,7 @@ export default function RetrospectSession() {
   const isAiSpeaking = uiState === 'AI_SPEAKING'
 
   return (
-    <div className="min-h-screen pt-[62px]" style={{ background: 'linear-gradient(to bottom, #202939, #000000)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #202939, #000000)' }}>
       <div className="flex flex-col gap-4 pb-[120px]">
         {[...qnaList].sort((a, b) => a.questionOrder - b.questionOrder).map((item, index, sorted) => {
           const isCurrentQuestion = currentQuestionId === item.questionId
