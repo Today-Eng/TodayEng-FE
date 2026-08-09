@@ -19,6 +19,7 @@ export default function RetrospectSetup() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const locationRef = useRef<{ latitude?: number; longitude?: number }>({});
+  const previewsRef = useRef<string[]>([]);
 
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition((pos) => {
@@ -28,7 +29,7 @@ export default function RetrospectSetup() {
       };
     });
     return () => {
-      previews.forEach((url) => { if (url) URL.revokeObjectURL(url); });
+      previewsRef.current.forEach((url) => { if (url) URL.revokeObjectURL(url); });
     };
   }, []);
 
@@ -40,6 +41,7 @@ export default function RetrospectSetup() {
       const next = [...prev];
       if (next[index]) URL.revokeObjectURL(next[index]);
       next[index] = url;
+      previewsRef.current = next;
       return next;
     });
     setFiles((prev) => {
@@ -54,6 +56,7 @@ export default function RetrospectSetup() {
       const next = [...prev];
       if (next[index]) URL.revokeObjectURL(next[index]);
       next[index] = '';
+      previewsRef.current = next;
       return next;
     });
     setFiles((prev) => {
