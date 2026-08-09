@@ -184,50 +184,39 @@ export default function RetrospectSession() {
   const handleStart = () => {
     setIsStartModalOpen(false)
     void loadPreviousAnswers()
+
+    const controller = subscribeDiarySSE(diaryId, {
+      onMessage: (eventName, envelope) => {
+        handleSseMessageRef.current(eventName, envelope)
+      },
+      onError: async () => {
+        try {
+          const res = await getCurrentQuestion(diaryId)
+          if (res.status === 'READY_TO_COMPLETE') {
+            navigate(`/retrospect-memo/${diaryId}`)
+          } else if (res.status === 'QUESTION_READY' && res.question?.ttsAudioUrl) {
+            setCurrentQuestionId(res.question.questionId)
+            upsertQna({
+              questionId: res.question.questionId,
+              questionText: res.question.questionText,
+              koreanTranslation: res.question.koreanTranslation,
+            })
+            void playQuestion(res.question.ttsAudioUrl)
+          }
+        } catch { /* 재연결 대기 */ }
+      },
+    })
+    sseAbortRef.current = controller
     void syncCurrentQuestion()
   }
 
   useEffect(() => {
-    if (!diaryId) return
-
-    let aborted = false
-    let controller: AbortController | null = null
-
-    const timer = setTimeout(() => {
-      if (aborted) return
-      controller = subscribeDiarySSE(diaryId, {
-        onMessage: (eventName, envelope) => {
-          if (!aborted) handleSseMessageRef.current(eventName, envelope)
-        },
-        onError: async () => {
-          if (aborted) return
-          try {
-            const res = await getCurrentQuestion(diaryId)
-            if (res.status === 'READY_TO_COMPLETE') {
-              navigate(`/retrospect-memo/${diaryId}`)
-            } else if (res.status === 'QUESTION_READY' && res.question?.ttsAudioUrl) {
-              setCurrentQuestionId(res.question.questionId)
-              upsertQna({
-                questionId: res.question.questionId,
-                questionText: res.question.questionText,
-                koreanTranslation: res.question.koreanTranslation,
-              })
-              void playQuestion(res.question.ttsAudioUrl)
-            }
-          } catch { /* 재연결 대기 */ }
-        },
-      })
-      sseAbortRef.current = controller
-    }, 200)
-
     return () => {
-      aborted = true
-      clearTimeout(timer)
-      controller?.abort()
+      sseAbortRef.current?.abort()
       audioRef.current?.pause()
       recorderRef.current?.stop()
     }
-  }, [diaryId])
+  }, [])
 
   const startRecording = async () => {
     if (uiStateRef.current !== 'READY_TO_RECORD') return
