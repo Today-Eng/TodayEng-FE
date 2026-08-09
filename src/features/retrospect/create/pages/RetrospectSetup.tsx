@@ -8,12 +8,6 @@ import CloseCircleIcon from '@/shared/components/icons/CloseCircleIcon';
 import { startDiary, createDiaryContext } from '@/features/retrospect/create/api/diaryApi';
 
 import galleryIcon from '@/assets/icons/gallery.svg';
-
-const getLocalDateString = () => {
-  const d = new Date();
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-};
 import quoteIcon from '@/assets/icons/quote-down-square.svg';
 import addIcon from '@/assets/icons/add_circle_regular.svg';
 

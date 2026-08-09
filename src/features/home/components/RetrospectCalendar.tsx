@@ -81,8 +81,6 @@ export default function RetrospectCalendar({
 
   const isInProgress = diaryStatus === 'IN_PROGRESS';
 
-  const isDeleted = diaryStatus === 'DELETED';
-
   const isUnavailable = diaryStatus === 'UNAVAILABLE';
 
   return (
