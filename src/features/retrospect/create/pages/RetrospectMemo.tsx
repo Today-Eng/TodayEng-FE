@@ -19,10 +19,15 @@ export default function RetrospectMemo() {
   const [isLoading, setIsLoading] = useState(false)
 
   const complete = async (finalMemo: string | null) => {
+    if (isLoading) return
+    if (!Number.isFinite(diaryId)) {
+      navigate('/home', { replace: true })
+      return
+    }
     setIsLoading(true)
     try {
       await completeDiary(diaryId, finalMemo)
-      navigate('/retrospect-complete')
+      navigate('/retrospect-complete', { replace: true })
     } catch {
       setIsLoading(false)
     }
