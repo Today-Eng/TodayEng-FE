@@ -1,9 +1,9 @@
-import BottomNav from "@/shared/components/BottomNav"
+import BottomNav from '@/shared/components/BottomNav';
 
-import MonthBottomSheet from "@/features/retrospect/record/components/MonthBottomSheet"
-import RetrospectCard from "@/features/retrospect/record/components/RetrospectCard"
-import RetrospectMonthButton from "@/features/retrospect/record/components/RetrospectMonthButton"
-import useRetrospectList from "../hooks/useRetrospectList"
+import MonthBottomSheet from '@/features/retrospect/record/components/MonthBottomSheet';
+import RetrospectCard from '@/features/retrospect/record/components/RetrospectCard';
+import RetrospectMonthButton from '@/features/retrospect/record/components/RetrospectMonthButton';
+import useRetrospectList from '../hooks/useRetrospectList';
 
 export default function RetrospectListPage() {
   const {
@@ -12,6 +12,8 @@ export default function RetrospectListPage() {
     currentYear,
     currentMonth,
     diaries,
+    isLoading,
+    isError,
     isMonthSheetOpen,
     handlePreviousMonth,
     handleNextMonth,
@@ -19,11 +21,9 @@ export default function RetrospectListPage() {
     handleMonthSheetClose,
     handleMonthSelect,
     handleDetailClick,
-  } = useRetrospectList()
+  } = useRetrospectList();
 
-  const isCurrentMonth =
-    selectedYear === currentYear &&
-    selectedMonth === currentMonth
+  const isCurrentMonth = selectedYear === currentYear && selectedMonth === currentMonth;
 
   return (
     <div className="min-h-dvh bg-gradient-to-b from-white to-grey-50">
@@ -51,14 +51,24 @@ export default function RetrospectListPage() {
         </header>
 
         <section className="space-y-4 px-4 pt-2 pb-6 mb-4">
-          {diaries.length > 0 ? (
+          {isLoading ? (
+            <div className="flex min-h-[420px] items-center justify-center">
+              <p className="text-subheadline text-grey-500">
+                회고록을 불러오는 중이에요
+              </p>
+            </div>
+          ) : isError ? (
+            <div className="flex min-h-[420px] items-center justify-center px-6 text-center">
+              <p className="text-subheadline text-grey-500">
+                회고록을 불러오지 못했습니다. 다시 시도해주세요.
+              </p>
+            </div>
+          ) : diaries.length > 0 ? (
             diaries.map((diary) => (
               <RetrospectCard
                 key={diary.diaryId}
                 diary={diary}
-                onDetailClick={
-                  handleDetailClick
-                }
+                onDetailClick={handleDetailClick}
               />
             ))
           ) : (
@@ -97,5 +107,5 @@ export default function RetrospectListPage() {
         onSelect={handleMonthSelect}
       />
     </div>
-  )
+  );
 }

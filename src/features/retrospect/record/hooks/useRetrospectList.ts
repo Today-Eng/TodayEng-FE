@@ -18,7 +18,14 @@ const [selectedMonth, setSelectedMonth] =
 
   const [isMonthSheetOpen, setIsMonthSheetOpen] = useState(false);
 
-  const { data } = useRetrospectListQuery(selectedYear, selectedMonth);
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useRetrospectListQuery(
+    selectedYear,
+    selectedMonth,
+  );
 
   const diaries = data?.diaries ?? [];
 
@@ -66,14 +73,19 @@ const [selectedMonth, setSelectedMonth] =
   const handleDetailClick = (diaryId: number) => {
     navigate(`/retrospects/${diaryId}`);
   };
-
+  
   return {
     selectedYear,
     selectedMonth,
     currentYear: CURRENT_YEAR,
     currentMonth: CURRENT_MONTH,
+
     diaries,
+    isLoading,
+    isError,
+
     isMonthSheetOpen,
+
     handlePreviousMonth,
     handleNextMonth,
     handleMonthSheetOpen,
