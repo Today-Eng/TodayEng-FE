@@ -9,7 +9,9 @@ declare const self: ServiceWorkerGlobalScope;
 precacheAndRoute(self.__WB_MANIFEST);
 
 registerRoute(
-  ({ url }) => url.pathname.startsWith('/api') || url.pathname.startsWith('/diaries'),
+  ({ url, request }) =>
+    /^\/(api|diaries)(\/|$)/.test(url.pathname) &&
+    request.headers.get('Accept') !== 'text/event-stream',
   new NetworkOnly(),
 );
 
