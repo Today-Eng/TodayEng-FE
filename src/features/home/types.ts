@@ -69,8 +69,8 @@ export interface HomeDateData {
   dayOfWeek: DayOfWeek;
   diaryStatus: DiaryStatus;
   keywords: string[];
-  questionText?: string;
-  correctedText?: string;
+  questionText?: string | null;
+  correctedText?: string | null;
 }
 
 export type CalendarDayStatus = 'WRITTEN' | 'TODAY' | 'WRITABLE' | 'EXPIRED' | 'FUTURE';

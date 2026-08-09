@@ -196,7 +196,7 @@ export default function useHome() {
     }
 
     if (selectedDiary.diaryStatus === 'NOT_STARTED') {
-      navigate('/retrospect');
+      navigate(`/retrospect?date=${selectedDate}`);
       return;
     }
 
