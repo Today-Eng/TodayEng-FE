@@ -299,9 +299,10 @@ export default function RetrospectSession() {
           const isCurrentQuestion = currentQuestionId === item.questionId
           const isLastQuestion = index === sorted.length - 1
           // 현재 질문 처리 중이거나, 다음 질문이 이미 왔는데 아직 originalText가 없는 경우
+          const isPenultimateQuestion = index === sorted.length - 2
           const showLoading = !item.originalText && (
             (isCurrentQuestion && (uiState === 'UPLOADING' || uiState === 'PROCESSING'))
-            || (!isLastQuestion)
+            || isPenultimateQuestion
           )
           return (
             <div key={item.questionId}>
