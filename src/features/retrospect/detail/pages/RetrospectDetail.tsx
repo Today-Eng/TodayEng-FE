@@ -21,8 +21,8 @@ export default function RetrospectDetailPage() {
   const navigate = useNavigate();
 
   const [isActionSheetOpen, setIsActionSheetOpen] = useState(false);
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   const {
     retrospect,
@@ -86,6 +86,8 @@ export default function RetrospectDetailPage() {
       return;
     }
 
+    setDeleteError('');
+
     try {
       await deleteRetrospect(retrospect.diaryId);
 
@@ -94,7 +96,9 @@ export default function RetrospectDetailPage() {
       navigate('/retrospects', {
         replace: true,
       });
-    } catch {}
+    } catch (error) {
+      setDeleteError('회고록 삭제에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   return (
@@ -170,11 +174,20 @@ export default function RetrospectDetailPage() {
 
       {isDeleteModalOpen && (
         <Modal
-          mainText="회고록을 삭제하시겠습니까?"
-          subText="삭제한 회고록은 다시 복구할 수 없어요"
-          leftButtonText="취소"
-          rightButtonText="삭제"
+          mainText={
+            deleteError
+              ? '회고록을 삭제하지 못했습니다'
+              : '회고록을 삭제하시겠습니까?'
+          }
+          subText={
+            deleteError
+              ? deleteError
+              : '삭제하면 복구하거나 같은 날짜에 다시 작성할 수 없어요'
+          }
+          leftButtonText={deleteError ? '닫기' : '취소'}
+          rightButtonText={deleteError ? '다시 시도' : '삭제'}
           onLeftClick={() => {
+            setDeleteError('');
             setIsDeleteModalOpen(false);
           }}
           onRightClick={handleDeleteConfirm}

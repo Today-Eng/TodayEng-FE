@@ -21,6 +21,7 @@ export default function RetrospectMemoEditPage() {
   const initialMemo = locationState?.memo ?? '';
 
   const [memo, setMemo] = useState(initialMemo);
+  const [memoError, setMemoError] = useState('');
 
   const { mutateAsync: updateMemo, isPending: isSaving } =
     useUpdateRetrospectMemoMutation(parsedDiaryId);
@@ -47,6 +48,7 @@ export default function RetrospectMemoEditPage() {
 
       navigate(-1);
     } catch {
+      setMemoError('메모 수정에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -94,6 +96,12 @@ export default function RetrospectMemoEditPage() {
               placeholder:text-grey-300
             "
           />
+
+          {memoError && (
+            <p className="mt-2 text-footnote text-error-500">
+              {memoError}
+            </p>
+          )}
         </section>
       </main>
     </div>
