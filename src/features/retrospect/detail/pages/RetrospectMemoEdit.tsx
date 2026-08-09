@@ -1,87 +1,56 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react"
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom"
+import { useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import BackHeader from "@/shared/components/BackHeaderLayout"
+import BackHeader from '@/shared/components/BackHeaderLayout';
+
+import { useUpdateRetrospectMemoMutation } from '@/features/retrospect/detail/queries';
 
 interface MemoEditLocationState {
-  memo?: string
+  memo?: string;
 }
 
 export default function RetrospectMemoEditPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { diaryId } = useParams();
 
-  const locationState =
-    location.state as
-      | MemoEditLocationState
-      | null
+  const parsedDiaryId = Number(diaryId);
 
-  const initialMemo =
-    locationState?.memo ?? ""
+  const locationState = location.state as MemoEditLocationState | null;
 
-  const [memo, setMemo] =
-    useState(initialMemo)
+  const initialMemo = locationState?.memo ?? '';
 
-  const [isSaving, setIsSaving] =
-    useState(false)
+  const [memo, setMemo] = useState(initialMemo);
+  const [memoError, setMemoError] = useState('');
 
-  const saveTimerRef =
-    useRef<number | null>(null)
+  const { mutateAsync: updateMemo, isPending: isSaving } =
+    useUpdateRetrospectMemoMutation(parsedDiaryId);
 
-  const isChanged =
-    memo.trim() !== initialMemo.trim()
+  const isChanged = memo.trim() !== initialMemo.trim();
 
-  const canSave =
-    memo.trim().length > 0 &&
-    isChanged &&
-    !isSaving
-
-  useEffect(() => {
-    return () => {
-      if (saveTimerRef.current !== null) {
-        window.clearTimeout(
-          saveTimerRef.current
-        )
-      }
-    }
-  }, [])
+  const canSave = isChanged && !isSaving;
 
   const handleBack = () => {
     if (isSaving) {
-      return
+      return;
     }
 
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   const handleSave = async () => {
-    if (!canSave) {
-      return
+    if (!canSave || !Number.isFinite(parsedDiaryId)) {
+      return;
     }
 
     try {
-      setIsSaving(true)
+      await updateMemo(memo.trim());
 
-      await new Promise<void>((resolve) => {
-        saveTimerRef.current =
-          window.setTimeout(() => {
-            saveTimerRef.current = null
-            resolve()
-          }, 500)
-      })
-
-      navigate(-1)
-    } finally {
-      setIsSaving(false)
+      navigate(-1);
+    } catch {
+      setMemoError('메모 수정에 실패했습니다. 다시 시도해주세요.');
     }
-  }
+  };
 
   return (
     <div className="min-h-dvh bg-white">
@@ -96,7 +65,7 @@ export default function RetrospectMemoEditPage() {
           title="메모 수정하기"
           onBack={handleBack}
           rightAction={{
-            type: "confirm",
+            type: 'confirm',
             onClick: handleSave,
             disabled: !canSave,
           }}
@@ -106,7 +75,7 @@ export default function RetrospectMemoEditPage() {
           <textarea
             value={memo}
             onChange={(event) => {
-              setMemo(event.target.value)
+              setMemo(event.target.value);
             }}
             placeholder="나눈 대화에 대해서 느낀 점을 자유롭게 적어주세요"
             maxLength={1000}
@@ -127,8 +96,14 @@ export default function RetrospectMemoEditPage() {
               placeholder:text-grey-300
             "
           />
+
+          {memoError && (
+            <p className="mt-2 text-footnote text-error-500">
+              {memoError}
+            </p>
+          )}
         </section>
       </main>
     </div>
-  )
+  );
 }

@@ -98,7 +98,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="mt-5 border-t-8 border-grey-50 px-4 pt-4">
+        <div className="mt-5 border-t-8 border-grey-50 px-4 pt-4 mb-4">
           <TodayMaterials
             materials={home.materials}
           />

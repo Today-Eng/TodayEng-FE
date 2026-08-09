@@ -1,7 +1,7 @@
 import type { DayOfWeek } from '@/shared/types/retrospect';
 
 export type { DayOfWeek, RetrospectPreviewData } from '@/shared/types/retrospect';
-export type DiaryStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' | 'DELETED';
+export type DiaryStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED' | 'DELETED' | 'UNAVAILABLE';
 
 export interface HomeData {
   user: {
@@ -69,8 +69,8 @@ export interface HomeDateData {
   dayOfWeek: DayOfWeek;
   diaryStatus: DiaryStatus;
   keywords: string[];
-  questionText?: string;
-  correctedText?: string;
+  questionText?: string | null;
+  correctedText?: string | null;
 }
 
 export type CalendarDayStatus = 'WRITTEN' | 'TODAY' | 'WRITABLE' | 'EXPIRED' | 'FUTURE';

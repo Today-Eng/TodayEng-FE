@@ -10,6 +10,7 @@ import {
   preloadDailyContexts,
   startDiary,
 } from '@/features/home/api';
+import type { HomeMaterials } from './types';
 
 export function useHomeQuery(
   year: number,
@@ -46,14 +47,16 @@ export function useDailyContextPreloadMutation(
     mutationFn: preloadDailyContexts,
 
     onSuccess: async () => {
-      await queryClient.refetchQueries({
-        queryKey: [
-          'home',
-          year,
-          month,
-        ],
-        type: 'active',
+      const updatedHome = await queryClient.fetchQuery({
+        queryKey: ['home', year, month],
+        queryFn: () => getHome(year, month),
+        staleTime: 0,
       });
+
+      queryClient.setQueryData(
+        ['home-materials'],
+        updatedHome.materials,
+      );
     },
   });
 }
@@ -77,5 +80,15 @@ export function useStartDiaryMutation() {
         queryKey: ['home'],
       });
     },
+  });
+}
+
+export function useHomeMaterialsQuery() {
+  return useQuery<HomeMaterials>({
+    queryKey: ['home-materials'],
+    queryFn: async () => {
+      throw new Error('home-materials는 직접 fetch하지 않습니다.');
+    },
+    enabled: false,
   });
 }

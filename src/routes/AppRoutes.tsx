@@ -30,6 +30,7 @@ import RetrospectComplete from '@/features/retrospect/create/pages/RetrospectCom
 import RetrospectList from '@/features/retrospect/record/pages/RetrospectList';
 import RetrospectDetail from '@/features/retrospect/detail/pages/RetrospectDetail';
 import RetrospectMemoEdit from '@/features/retrospect/detail/pages/RetrospectMemoEdit';
+import ScrollToTop from '@/shared/components/ScrollToTop';
 
 function EntryRoute() {
   if (!isAuthenticated()) {
@@ -57,8 +58,10 @@ function MemberRoute({ children }: { children: React.ReactNode }) {
 
 export default function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<EntryRoute />} />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<EntryRoute />} />
 
       <Route path="/login" element={<LoginRoute />} />
       <Route
@@ -220,5 +223,6 @@ export default function AppRoutes() {
 
       <Route path="*" element={<EntryRoute />} />
     </Routes>
+    </>
   );
 }

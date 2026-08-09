@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   disconnectExternalAccount,
@@ -17,8 +18,8 @@ import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import Modal from '@/shared/components/Modal';
 
 const AGREEMENT_TERM_ID: Record<IntegrationProvider, number> = {
-  spotify: 15,
-  googleCalendar: 14,
+  spotify: 6,
+  googleCalendar: 5,
 };
 
 const API_PROVIDER: Record<IntegrationProvider, ExternalProvider> = {
@@ -57,6 +58,20 @@ export default function IntegrationSettingsPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const oauthPopupRef = useRef<Window | null>(null);
   const oauthPollingRef = useRef<number | null>(null);
+
+  const queryClient = useQueryClient();
+
+  const refreshHomeAfterIntegrationChange = async () => {
+  queryClient.removeQueries({
+    queryKey: ['home-materials'],
+    exact: true,
+  });
+
+  await queryClient.refetchQueries({
+    queryKey: ['home'],
+    type: 'all',
+  });
+};
 
   useEffect(() => {
     let isActive = true;
@@ -208,6 +223,7 @@ export default function IntegrationSettingsPage() {
 
         if (externalAccount?.connected) {
           applyExternalAccount(provider, externalAccount);
+          await refreshHomeAfterIntegrationChange();
           stopOAuthPolling();
           popup.close();
           oauthPopupRef.current = null;
@@ -243,6 +259,7 @@ export default function IntegrationSettingsPage() {
     try {
       const result = await updateExternalAccountSetting(API_PROVIDER[provider], nextEnabled);
       setSettings((current) => ({ ...current, [provider]: result.useEnabled }));
+      await refreshHomeAfterIntegrationChange();
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : '연동 설정을 변경하지 못했습니다.');
     } finally {
@@ -262,6 +279,7 @@ export default function IntegrationSettingsPage() {
       updateStatus(provider, 'unlinked');
       setAccountIdentifiers((current) => ({ ...current, [provider]: null }));
       setDeleteTarget(null);
+      await refreshHomeAfterIntegrationChange();
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : '연동을 해제하지 못했습니다.');
     } finally {

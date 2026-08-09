@@ -7,6 +7,7 @@ import { getHome } from '@/features/home/api';
 import {
   useDailyContextPreloadMutation,
   useHomeDateQuery,
+  useHomeMaterialsQuery,
   useHomeQuery,
   useStartDiaryMutation,
 } from '@/features/home/queries';
@@ -37,6 +38,31 @@ export default function useHome() {
     isLoading: isHomeLoading,
     isError: isHomeError,
   } = useHomeQuery(currentYear, currentMonth);
+
+  const { data: cachedMaterials } = useHomeMaterialsQuery();
+
+  useEffect(() => {
+    if (!home) {
+      return;
+    }
+
+    const existingMaterials = queryClient.getQueryData(['home-materials']);
+
+    if (!existingMaterials) {
+      queryClient.setQueryData(['home-materials'], home.materials);
+    }
+  }, [home, queryClient]);
+
+  const displayHome = useMemo(() => {
+    if (!home) {
+      return undefined;
+    }
+
+    return {
+      ...home,
+      materials: cachedMaterials ?? home.materials,
+    };
+  }, [home, cachedMaterials]);
 
   const selectedDate = useMemo(() => {
     if (!home) {
@@ -196,7 +222,7 @@ export default function useHome() {
     }
 
     if (selectedDiary.diaryStatus === 'NOT_STARTED') {
-      navigate('/retrospect');
+      navigate(`/retrospect?date=${selectedDate}`);
       return;
     }
 
@@ -220,7 +246,7 @@ export default function useHome() {
     Boolean(selectedDate) && !shouldFetchSelectedDate && getDateStatus(selectedDate!) === 'EXPIRED';
 
   return {
-    home,
+    home: displayHome,
 
     currentYear,
     currentMonth,
