@@ -14,9 +14,10 @@ import {
   getCurrentQuestion,
   getAnswers,
   uploadAnswer,
-  pauseDiary,
   toAbsoluteAudioUrl,
 } from '@/features/retrospect/create/api/diaryApi'
+
+import { usePauseDiaryMutation } from '@/features/retrospect/create/queries/diaryQueries';
 
 // types
 import type {
@@ -60,6 +61,8 @@ export default function RetrospectSession() {
   const sseAbortRef = useRef<AbortController | null>(null)
   const playedQuestionIdsRef = useRef<Set<number>>(new Set())
   const uploadedQuestionIdsRef = useRef<Set<number>>(new Set())
+
+  const { mutateAsync: pauseDiaryMutation } = usePauseDiaryMutation()
 
   const uiStateRef = useRef(uiState)
   useEffect(() => { uiStateRef.current = uiState }, [uiState])
@@ -297,7 +300,7 @@ export default function RetrospectSession() {
   }
 
   const handleStop = async () => {
-    try { await pauseDiary(diaryId) } catch { /* 무시 */ }
+    try { await pauseDiaryMutation(diaryId) } catch { /* 무시 */ }
     navigate('/home')
   }
 

@@ -8,7 +8,7 @@ import NoteIcon from "@/shared/components/icons/NoteIcon"
 import ButtonPair from "@/shared/components/ButtonPair"
 
 // api
-import { completeDiary } from "@/features/retrospect/create/api/diaryApi"
+import { useCompleteDiaryMutation } from "@/features/retrospect/create/queries/diaryQueries"
 
 export default function RetrospectMemo() {
   const navigate = useNavigate()
@@ -18,6 +18,8 @@ export default function RetrospectMemo() {
   const [memo, setMemo] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const { mutateAsync: completeDiary } = useCompleteDiaryMutation()
+
   const complete = async (finalMemo: string | null) => {
     if (isLoading) return
     if (!Number.isFinite(diaryId)) {
@@ -26,7 +28,7 @@ export default function RetrospectMemo() {
     }
     setIsLoading(true)
     try {
-      await completeDiary(diaryId, finalMemo)
+      await completeDiary({ diaryId, finalMemo })
       navigate('/retrospect-complete', { replace: true })
     } catch {
       setIsLoading(false)
