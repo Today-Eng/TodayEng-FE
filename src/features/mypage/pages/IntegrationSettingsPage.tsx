@@ -17,8 +17,8 @@ import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import Modal from '@/shared/components/Modal';
 
 const AGREEMENT_TERM_ID: Record<IntegrationProvider, number> = {
-  spotify: 15,
-  googleCalendar: 14,
+  spotify: 6,
+  googleCalendar: 5,
 };
 
 const API_PROVIDER: Record<IntegrationProvider, ExternalProvider> = {
