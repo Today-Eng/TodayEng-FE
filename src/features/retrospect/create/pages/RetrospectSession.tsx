@@ -140,7 +140,7 @@ export default function RetrospectSession() {
   }
 
   const handleSseMessageRef = useRef(handleSseMessage)
-  handleSseMessageRef.current = handleSseMessage
+  useEffect(() => { handleSseMessageRef.current = handleSseMessage })
 
   const syncCurrentQuestion = async () => {
     try {
