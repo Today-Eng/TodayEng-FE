@@ -50,7 +50,7 @@ export default function RetrospectListPage() {
           />
         </header>
 
-        <section className="space-y-4 px-4 pt-2 pb-6">
+        <section className="space-y-4 px-4 pt-2 pb-6 mb-4">
           {diaries.length > 0 ? (
             diaries.map((diary) => (
               <RetrospectCard
