@@ -19,7 +19,7 @@ export function useHomeQuery(
   return useQuery({
     queryKey: ['home', year, month],
     queryFn: () => getHome(year, month),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
     gcTime: 30 * 60 * 1000,
   });
 }
@@ -32,7 +32,7 @@ export function useHomeDateQuery(
     queryKey: ['home', 'date', date],
     queryFn: () => getHomeDate(date!),
     enabled: Boolean(date) && enabled,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
     gcTime: 30 * 60 * 1000,
   });
 }
