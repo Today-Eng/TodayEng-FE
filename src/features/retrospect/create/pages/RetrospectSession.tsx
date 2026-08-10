@@ -309,7 +309,7 @@ export default function RetrospectSession() {
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #202939, #000000)' }}>
-      <div className="flex flex-col gap-4 pb-[120px]">
+      <div className="pt-4 flex flex-col gap-4 pb-[120px]">
         {[...qnaList].sort((a, b) => a.questionOrder - b.questionOrder).map((item, index, sorted) => {
           const isCurrentQuestion = currentQuestionId === item.questionId
           const isPenultimateQuestion = index === sorted.length - 2

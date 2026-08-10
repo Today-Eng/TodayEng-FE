@@ -195,7 +195,7 @@ export default function RetrospectSetup() {
         </div>
 
         <div className="fixed bottom-[50px] left-0 right-0 px-4">
-          <ButtonPair disabled={isSubmitting} onSkip={handleSkip} onClick={handleSubmit} />
+          <ButtonPair disabled={isSubmitting || (!content.trim() && !files.some(f => f !== null))} onSkip={handleSkip} onClick={handleSubmit} />
         </div>
       </div>
     </div>
