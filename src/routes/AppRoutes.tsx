@@ -18,6 +18,7 @@ import ProfileSettingsPage from '@/features/mypage/pages/ProfileSettingsPage';
 import LearningSettingsPage from '@/features/mypage/pages/LearningSettingsPage';
 import InterestSettingsPage from '@/features/mypage/pages/InterestSettingsPage';
 import IntegrationSettingsPage from '@/features/mypage/pages/IntegrationSettingsPage';
+import IntegrationTermsPage from '@/features/mypage/pages/IntegrationTermsPage';
 
 // retrospect
 import RetrospectSetup from '@/features/retrospect/create/pages/RetrospectSetup';
@@ -63,166 +64,174 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<EntryRoute />} />
 
-      <Route path="/login" element={<LoginRoute />} />
-      <Route
-        path="/onboarding/nickname"
-        element={
-          <OnboardingRoute>
-            <NicknameSetupPage />
-          </OnboardingRoute>
-        }
-      />
-      <Route
-        path="/onboarding/english-level"
-        element={
-          <OnboardingRoute>
-            <EnglishLevelSetupPage />
-          </OnboardingRoute>
-        }
-      />
-      <Route
-        path="/onboarding/interests"
-        element={
-          <OnboardingRoute>
-            <InterestSetupPage />
-          </OnboardingRoute>
-        }
-      />
-      <Route
-        path="/onboarding/terms"
-        element={
-          <OnboardingRoute>
-            <TermsAgreementPage />
-          </OnboardingRoute>
-        }
-      />
-      <Route
-        path="/onboarding/complete"
-        element={
-          <OnboardingRoute>
-            <OnboardingCompletePage />
-          </OnboardingRoute>
-        }
-      />
+        <Route path="/login" element={<LoginRoute />} />
+        <Route
+          path="/onboarding/nickname"
+          element={
+            <OnboardingRoute>
+              <NicknameSetupPage />
+            </OnboardingRoute>
+          }
+        />
+        <Route
+          path="/onboarding/english-level"
+          element={
+            <OnboardingRoute>
+              <EnglishLevelSetupPage />
+            </OnboardingRoute>
+          }
+        />
+        <Route
+          path="/onboarding/interests"
+          element={
+            <OnboardingRoute>
+              <InterestSetupPage />
+            </OnboardingRoute>
+          }
+        />
+        <Route
+          path="/onboarding/terms"
+          element={
+            <OnboardingRoute>
+              <TermsAgreementPage />
+            </OnboardingRoute>
+          }
+        />
+        <Route
+          path="/onboarding/complete"
+          element={
+            <OnboardingRoute>
+              <OnboardingCompletePage />
+            </OnboardingRoute>
+          }
+        />
 
-      <Route
-        path="/home"
-        element={
-          <>
-            <HomePage />
-          </>
-        }
-      />
+        <Route
+          path="/home"
+          element={
+            <MemberRoute>
+              <HomePage />
+            </MemberRoute>
+          }
+        />
 
-      <Route
-        path="/retrospect"
-        element={
-          <MemberRoute>
-            <RetrospectSetup />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/retrospect-loading/:diaryId"
-        element={
-          <MemberRoute>
-            <RetrospectLoading />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/retrospect-session/:diaryId"
-        element={
-          <MemberRoute>
-            <RetrospectSession />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/retrospect-memo/:diaryId"
-        element={
-          <MemberRoute>
-            <RetrospectMemo />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/retrospect-complete"
-        element={
-          <MemberRoute>
-            <RetrospectComplete />
-          </MemberRoute>
-        }
-      />
+        <Route
+          path="/retrospect"
+          element={
+            <MemberRoute>
+              <RetrospectSetup />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/retrospect-loading/:diaryId"
+          element={
+            <MemberRoute>
+              <RetrospectLoading />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/retrospect-session/:diaryId"
+          element={
+            <MemberRoute>
+              <RetrospectSession />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/retrospect-memo/:diaryId"
+          element={
+            <MemberRoute>
+              <RetrospectMemo />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/retrospect-complete"
+          element={
+            <MemberRoute>
+              <RetrospectComplete />
+            </MemberRoute>
+          }
+        />
 
-      <Route
-        path="/retrospects"
-        element={
-          <MemberRoute>
-            <RetrospectList />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/retrospects/:diaryId"
-        element={
-          <MemberRoute>
-            <RetrospectDetail />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/retrospects/:diaryId/memo/edit"
-        element={
-          <MemberRoute>
-            <RetrospectMemoEdit />
-          </MemberRoute>
-        }
-      />
+        <Route
+          path="/retrospects"
+          element={
+            <MemberRoute>
+              <RetrospectList />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/retrospects/:diaryId"
+          element={
+            <MemberRoute>
+              <RetrospectDetail />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/retrospects/:diaryId/memo/edit"
+          element={
+            <MemberRoute>
+              <RetrospectMemoEdit />
+            </MemberRoute>
+          }
+        />
 
-      <Route
-        path="/mypage"
-        element={
-          <MemberRoute>
-            <MyPage />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/mypage/profile"
-        element={
-          <MemberRoute>
-            <ProfileSettingsPage />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/mypage/learning"
-        element={
-          <MemberRoute>
-            <LearningSettingsPage />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/mypage/interests"
-        element={
-          <MemberRoute>
-            <InterestSettingsPage />
-          </MemberRoute>
-        }
-      />
-      <Route
-        path="/mypage/integrations"
-        element={
-          <MemberRoute>
-            <IntegrationSettingsPage />
-          </MemberRoute>
-        }
-      />
+        <Route
+          path="/mypage"
+          element={
+            <MemberRoute>
+              <MyPage />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/mypage/profile"
+          element={
+            <MemberRoute>
+              <ProfileSettingsPage />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/mypage/learning"
+          element={
+            <MemberRoute>
+              <LearningSettingsPage />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/mypage/interests"
+          element={
+            <MemberRoute>
+              <InterestSettingsPage />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/mypage/integrations"
+          element={
+            <MemberRoute>
+              <IntegrationSettingsPage />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/mypage/integrations/terms/:provider"
+          element={
+            <MemberRoute>
+              <IntegrationTermsPage />
+            </MemberRoute>
+          }
+        />
 
-      <Route path="*" element={<EntryRoute />} />
-    </Routes>
+        <Route path="*" element={<EntryRoute />} />
+      </Routes>
     </>
   );
 }
