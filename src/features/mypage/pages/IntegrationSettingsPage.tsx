@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import {
   disconnectExternalAccount,
@@ -36,6 +37,7 @@ const OAUTH_POLL_INTERVAL_MS = 1_500;
 const OAUTH_MAX_POLL_COUNT = 80;
 
 export default function IntegrationSettingsPage() {
+  const navigate = useNavigate();
   const [statuses, setStatuses] = useState<Record<IntegrationProvider, IntegrationStatus>>({
     spotify: 'terms-required',
     googleCalendar: 'terms-required',
@@ -62,16 +64,16 @@ export default function IntegrationSettingsPage() {
   const queryClient = useQueryClient();
 
   const refreshHomeAfterIntegrationChange = async () => {
-  queryClient.removeQueries({
-    queryKey: ['home-materials'],
-    exact: true,
-  });
+    queryClient.removeQueries({
+      queryKey: ['home-materials'],
+      exact: true,
+    });
 
-  await queryClient.refetchQueries({
-    queryKey: ['home'],
-    type: 'all',
-  });
-};
+    await queryClient.refetchQueries({
+      queryKey: ['home'],
+      type: 'all',
+    });
+  };
 
   useEffect(() => {
     let isActive = true;
@@ -289,7 +291,7 @@ export default function IntegrationSettingsPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="min-h-screen w-full pt-[68px]">
+      <div className="min-h-screen w-full [&>header]:static [&>header]:h-auto [&>header]:pt-[62px]">
         <BackHeaderLayout title="연동 관리" />
 
         {errorMessage && (
@@ -314,6 +316,7 @@ export default function IntegrationSettingsPage() {
               email={accountIdentifiers[provider] ?? undefined}
               disabled={isLoading || isDeleting || isAuthorizing}
               onLink={() => handleLink(provider)}
+              onTermsRequired={() => navigate(`/mypage/integrations/terms/${provider}`)}
               onDelete={() => setDeleteTarget(provider)}
             />
           ))}

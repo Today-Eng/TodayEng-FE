@@ -12,6 +12,7 @@ interface IntegrationAccountRowProps {
   email?: string;
   disabled?: boolean;
   onLink: () => void;
+  onTermsRequired: () => void;
   onDelete: () => void;
 }
 
@@ -21,11 +22,12 @@ export default function IntegrationAccountRow({
   email,
   disabled = false,
   onLink,
+  onTermsRequired,
   onDelete,
 }: IntegrationAccountRowProps) {
   const isSpotify = provider === 'spotify';
   const isLinked = status === 'linked';
-  const isLinkDisabled = status === 'terms-required' || disabled;
+  const requiresTerms = status === 'terms-required';
 
   return (
     <div className="flex min-h-[70px] items-center gap-3 px-4 py-3">
@@ -61,16 +63,16 @@ export default function IntegrationAccountRow({
       ) : (
         <button
           type="button"
-          disabled={isLinkDisabled}
-          onClick={onLink}
+          disabled={disabled}
+          onClick={requiresTerms ? onTermsRequired : onLink}
+          aria-label={requiresTerms ? `${PROVIDER_LABEL[provider]} 약관 동의` : undefined}
           className={[
             'h-8 shrink-0 rounded-full px-5 text-xs font-semibold',
-            isLinkDisabled
-              ? 'cursor-not-allowed bg-grey-100 text-grey-300'
-              : 'bg-main-100 text-main-500',
+            requiresTerms ? 'bg-grey-100 text-grey-300' : 'bg-main-100 text-main-500',
+            disabled ? 'cursor-not-allowed opacity-50' : '',
           ].join(' ')}
         >
-          연동
+          {requiresTerms ? '약관 동의' : '연동'}
         </button>
       )}
     </div>

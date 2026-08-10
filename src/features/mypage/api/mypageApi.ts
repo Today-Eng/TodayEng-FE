@@ -38,6 +38,11 @@ export interface MyAgreements {
   agreements: UserAgreement[];
 }
 
+export interface AgreementUpdate {
+  termId: number;
+  agree: boolean;
+}
+
 function request<T>(path: string, init: RequestInit = {}) {
   return sharedRequest<T>(path, init);
 }
@@ -48,6 +53,13 @@ export function getMyPageProfile() {
 
 export function getMyAgreements() {
   return request<MyAgreements>('/users/me/agreements');
+}
+
+export function updateMyAgreements(agreements: AgreementUpdate[]) {
+  return request<void>('/users/me/agreements', {
+    method: 'PATCH',
+    body: JSON.stringify({ agreements }),
+  });
 }
 
 export function updateProfile(nickname: string) {
