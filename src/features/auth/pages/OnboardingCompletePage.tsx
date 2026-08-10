@@ -36,8 +36,8 @@ export default function OnboardingCompletePage() {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white pt-[62px] text-black">
-      <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-20 px-4">
+    <main className="flex min-h-dvh w-full bg-white pt-[62px] text-black">
+      <div className="flex w-full flex-1 flex-col items-center justify-center gap-20 px-4">
         <section className="flex w-full flex-col items-center gap-6 text-center">
           <div className="relative h-[135px] w-[138px]" aria-hidden="true">
             <img

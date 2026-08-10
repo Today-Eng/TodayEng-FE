@@ -1,10 +1,6 @@
 import IntegrationIcon from '@/features/mypage/components/IntegrationIcon';
+import { INTEGRATION_PROVIDER_LABEL } from '@/features/mypage/constants';
 import type { IntegrationProvider, IntegrationStatus } from '@/features/mypage/types';
-
-const PROVIDER_LABEL: Record<IntegrationProvider, string> = {
-  spotify: '스포티파이',
-  googleCalendar: '구글캘린더',
-};
 
 interface IntegrationAccountRowProps {
   provider: IntegrationProvider;
@@ -40,7 +36,7 @@ export default function IntegrationAccountRow({
               isSpotify ? 'bg-success-100 text-success-500' : 'bg-grey-100 text-grey-700',
             ].join(' ')}
           >
-            {PROVIDER_LABEL[provider]}
+            {INTEGRATION_PROVIDER_LABEL[provider]}
           </span>
         </div>
 
@@ -65,10 +61,12 @@ export default function IntegrationAccountRow({
           type="button"
           disabled={disabled}
           onClick={requiresTerms ? onTermsRequired : onLink}
-          aria-label={requiresTerms ? `${PROVIDER_LABEL[provider]} 약관 동의` : undefined}
+          aria-label={
+            requiresTerms ? `${INTEGRATION_PROVIDER_LABEL[provider]} 약관 동의` : undefined
+          }
           className={[
             'h-8 shrink-0 rounded-full px-5 text-xs font-semibold',
-            requiresTerms ? 'bg-grey-100 text-grey-300' : 'bg-main-100 text-main-500',
+            requiresTerms ? 'bg-grey-100 text-grey-700' : 'bg-main-100 text-main-500',
             disabled ? 'cursor-not-allowed opacity-50' : '',
           ].join(' ')}
         >

@@ -109,9 +109,9 @@ export default function AppRoutes() {
         <Route
           path="/home"
           element={
-            <>
+            <MemberRoute>
               <HomePage />
-            </>
+            </MemberRoute>
           }
         />
 

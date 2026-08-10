@@ -6,19 +6,10 @@ import {
   updateMyAgreements,
   type UserAgreement,
 } from '@/features/mypage/api/mypageApi';
+import { INTEGRATION_PROVIDER_LABEL, INTEGRATION_TERM_ID } from '@/features/mypage/constants';
 import type { IntegrationProvider } from '@/features/mypage/types';
 import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import Button from '@/shared/components/Button';
-
-const TERM_ID_BY_PROVIDER: Record<IntegrationProvider, number> = {
-  googleCalendar: 5,
-  spotify: 6,
-};
-
-const PROVIDER_LABEL: Record<IntegrationProvider, string> = {
-  googleCalendar: '구글캘린더',
-  spotify: '스포티파이',
-};
 
 function isIntegrationProvider(value: string | undefined): value is IntegrationProvider {
   return value === 'googleCalendar' || value === 'spotify';
@@ -34,7 +25,7 @@ export default function IntegrationTermsPage() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const provider = isIntegrationProvider(providerParam) ? providerParam : null;
-  const termId = provider ? TERM_ID_BY_PROVIDER[provider] : null;
+  const termId = provider ? INTEGRATION_TERM_ID[provider] : null;
 
   useEffect(() => {
     if (termId === null) return;
@@ -92,7 +83,7 @@ export default function IntegrationTermsPage() {
 
   return (
     <main className="min-h-dvh bg-white pb-28 pt-[62px] text-black [&>header]:h-[62px]">
-      <BackHeaderLayout title={`${PROVIDER_LABEL[provider]} 약관 동의`} />
+      <BackHeaderLayout title={`${INTEGRATION_PROVIDER_LABEL[provider]} 약관 동의`} />
 
       <div className="px-4 pt-8">
         {isLoading ? (
