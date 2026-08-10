@@ -110,7 +110,7 @@ export default function MyPage() {
   return (
     <main className="min-h-screen bg-white pb-[109px]">
       <div className="w-full">
-        <header className="px-4 pb-5 pt-[62px]">
+        <header className="px-4 pb-5 pt-[20px]">
           <h1 className="text-title2 font-semibold tracking-[0.35px] text-black">마이페이지</h1>
         </header>
 

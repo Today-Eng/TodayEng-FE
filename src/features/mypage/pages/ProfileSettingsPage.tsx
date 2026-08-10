@@ -48,7 +48,7 @@ export default function ProfileSettingsPage() {
   };
 
   return (
-    <main className="min-h-dvh w-full bg-white text-black [&>header]:static [&>header]:h-auto [&>header]:pt-[62px]">
+    <main className="min-h-dvh w-full bg-white text-black [&>header]:static [&>header]:h-auto [&>header]:pt-[20px]">
       <BackHeaderLayout
         title="프로필 설정"
         rightAction={{
