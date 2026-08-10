@@ -6,7 +6,7 @@ interface ButtonPairProps{
     onClick: () => void
 }
 
-export default function ButtonPair({ leftLabel = '건너뛰기', rightLabel = '추가하기', disabled = false, onSkip, onClick }: ButtonPairProps) {
+export default function ㅇButtonPair({ leftLabel = '건너뛰기', rightLabel = '추가하기', disabled = false, onSkip, onClick }: ButtonPairProps) {
   return (
     <div className="flex w-full gap-2">
         <button onClick={onSkip} className="flex-1 bg-gray-100 text-headline font-semibold text-gray-700 py-4 rounded-[100px] hover:bg-gray-300">{leftLabel}</button>
