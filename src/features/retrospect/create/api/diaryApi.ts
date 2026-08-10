@@ -47,6 +47,7 @@ export function createDiaryContext(
 export function startReflectionSession(diaryId: number) {
   return request<ReflectionSessionResponse>(`/diaries/${diaryId}/reflection-sessions`, {
     method: 'POST',
+    signal: AbortSignal.timeout(30_000),
   });
 }
 
