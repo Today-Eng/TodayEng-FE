@@ -93,7 +93,7 @@ export default function InterestSettingsPage() {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white pb-10 text-black [&>header]:static [&>header]:h-auto [&>header]:pt-[62px]">
+    <main className="relative min-h-dvh w-full bg-white pb-10 text-black [&>header]:static [&>header]:h-auto [&>header]:pt-[20px]">
       <BackHeaderLayout
         title="관심사 설정"
         rightAction={{
