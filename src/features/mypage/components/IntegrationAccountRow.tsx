@@ -1,10 +1,6 @@
 import IntegrationIcon from '@/features/mypage/components/IntegrationIcon';
+import { INTEGRATION_PROVIDER_LABEL } from '@/features/mypage/constants';
 import type { IntegrationProvider, IntegrationStatus } from '@/features/mypage/types';
-
-const PROVIDER_LABEL: Record<IntegrationProvider, string> = {
-  spotify: '스포티파이',
-  googleCalendar: '구글캘린더',
-};
 
 interface IntegrationAccountRowProps {
   provider: IntegrationProvider;
@@ -12,6 +8,7 @@ interface IntegrationAccountRowProps {
   email?: string;
   disabled?: boolean;
   onLink: () => void;
+  onTermsRequired: () => void;
   onDelete: () => void;
 }
 
@@ -21,11 +18,12 @@ export default function IntegrationAccountRow({
   email,
   disabled = false,
   onLink,
+  onTermsRequired,
   onDelete,
 }: IntegrationAccountRowProps) {
   const isSpotify = provider === 'spotify';
   const isLinked = status === 'linked';
-  const isLinkDisabled = status === 'terms-required' || disabled;
+  const requiresTerms = status === 'terms-required';
 
   return (
     <div className="flex min-h-[70px] items-center gap-3 px-4 py-3">
@@ -38,7 +36,7 @@ export default function IntegrationAccountRow({
               isSpotify ? 'bg-success-100 text-success-500' : 'bg-grey-100 text-grey-700',
             ].join(' ')}
           >
-            {PROVIDER_LABEL[provider]}
+            {INTEGRATION_PROVIDER_LABEL[provider]}
           </span>
         </div>
 
@@ -61,16 +59,18 @@ export default function IntegrationAccountRow({
       ) : (
         <button
           type="button"
-          disabled={isLinkDisabled}
-          onClick={onLink}
+          disabled={disabled}
+          onClick={requiresTerms ? onTermsRequired : onLink}
+          aria-label={
+            requiresTerms ? `${INTEGRATION_PROVIDER_LABEL[provider]} 약관 동의` : undefined
+          }
           className={[
             'h-8 shrink-0 rounded-full px-5 text-xs font-semibold',
-            isLinkDisabled
-              ? 'cursor-not-allowed bg-grey-100 text-grey-300'
-              : 'bg-main-100 text-main-500',
+            requiresTerms ? 'bg-grey-100 text-grey-700' : 'bg-main-100 text-main-500',
+            disabled ? 'cursor-not-allowed opacity-50' : '',
           ].join(' ')}
         >
-          연동
+          {requiresTerms ? '약관 동의' : '연동'}
         </button>
       )}
     </div>

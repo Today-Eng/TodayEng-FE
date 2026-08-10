@@ -98,7 +98,7 @@ export default function InterestSetupPage({ onNext }: InterestSetupPageProps) {
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white pb-24 text-black">
+    <main className="relative min-h-dvh w-full bg-white pb-24 pt-[62px] text-black">
       <div className="px-4">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={3} />

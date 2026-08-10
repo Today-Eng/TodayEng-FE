@@ -202,7 +202,7 @@ export default function TermsAgreementPage({ onSubmit }: TermsAgreementPageProps
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white pb-24 text-black">
+    <main className="relative min-h-dvh w-full bg-white pb-24 pt-[62px] text-black">
       <div className="px-[15px]">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={4} />

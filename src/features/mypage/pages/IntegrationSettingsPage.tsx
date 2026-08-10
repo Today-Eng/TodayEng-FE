@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import {
   disconnectExternalAccount,
@@ -13,29 +14,21 @@ import {
 import { getMyAgreements } from '@/features/mypage/api/mypageApi';
 import IntegrationAccountRow from '@/features/mypage/components/IntegrationAccountRow';
 import IntegrationSettingRow from '@/features/mypage/components/IntegrationSettingRow';
+import { INTEGRATION_PROVIDER_NAME, INTEGRATION_TERM_ID } from '@/features/mypage/constants';
 import type { IntegrationProvider, IntegrationStatus } from '@/features/mypage/types';
 import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import Modal from '@/shared/components/Modal';
-
-const AGREEMENT_TERM_ID: Record<IntegrationProvider, number> = {
-  spotify: 6,
-  googleCalendar: 5,
-};
 
 const API_PROVIDER: Record<IntegrationProvider, ExternalProvider> = {
   spotify: 'SPOTIFY',
   googleCalendar: 'GOOGLE_CALENDAR',
 };
 
-const PROVIDER_NAME: Record<IntegrationProvider, string> = {
-  spotify: 'Spotify',
-  googleCalendar: 'Google Calendar',
-};
-
 const OAUTH_POLL_INTERVAL_MS = 1_500;
 const OAUTH_MAX_POLL_COUNT = 80;
 
 export default function IntegrationSettingsPage() {
+  const navigate = useNavigate();
   const [statuses, setStatuses] = useState<Record<IntegrationProvider, IntegrationStatus>>({
     spotify: 'terms-required',
     googleCalendar: 'terms-required',
@@ -62,16 +55,16 @@ export default function IntegrationSettingsPage() {
   const queryClient = useQueryClient();
 
   const refreshHomeAfterIntegrationChange = async () => {
-  queryClient.removeQueries({
-    queryKey: ['home-materials'],
-    exact: true,
-  });
+    queryClient.removeQueries({
+      queryKey: ['home-materials'],
+      exact: true,
+    });
 
-  await queryClient.refetchQueries({
-    queryKey: ['home'],
-    type: 'all',
-  });
-};
+    await queryClient.refetchQueries({
+      queryKey: ['home'],
+      type: 'all',
+    });
+  };
 
   useEffect(() => {
     let isActive = true;
@@ -85,7 +78,7 @@ export default function IntegrationSettingsPage() {
         const hasAgreed = (provider: IntegrationProvider) =>
           agreements.some(
             ({ termId, agreementStatus }) =>
-              termId === AGREEMENT_TERM_ID[provider] && agreementStatus === 'AGREED',
+              termId === INTEGRATION_TERM_ID[provider] && agreementStatus === 'AGREED',
           );
 
         const externalAccounts =
@@ -172,7 +165,7 @@ export default function IntegrationSettingsPage() {
   const handleLink = async (provider: IntegrationProvider) => {
     if (isAuthorizing) return;
 
-    const providerName = PROVIDER_NAME[provider];
+    const providerName = INTEGRATION_PROVIDER_NAME[provider];
     const requestAuthorization =
       provider === 'googleCalendar'
         ? getGoogleCalendarAuthorizationUrl
@@ -289,7 +282,7 @@ export default function IntegrationSettingsPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="min-h-screen w-full pt-[68px]">
+      <div className="min-h-screen w-full [&>header]:static [&>header]:h-auto [&>header]:pt-[62px]">
         <BackHeaderLayout title="연동 관리" />
 
         {errorMessage && (
@@ -314,6 +307,7 @@ export default function IntegrationSettingsPage() {
               email={accountIdentifiers[provider] ?? undefined}
               disabled={isLoading || isDeleting || isAuthorizing}
               onLink={() => handleLink(provider)}
+              onTermsRequired={() => navigate(`/mypage/integrations/terms/${provider}`)}
               onDelete={() => setDeleteTarget(provider)}
             />
           ))}
