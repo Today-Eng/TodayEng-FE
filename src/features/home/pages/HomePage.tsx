@@ -56,7 +56,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen w-full bg-gradient-to-b from-main-100 via-white to-white pb-[110px]">
       <div className="w-full">
-        <div className="px-4 pt-[61px]">
+        <div className="px-4 pt-[8px]">
           <header>
           <TextLayout
             mainText={`${home.user.nickname}님\n오늘 하루는 어땠나요?`}
