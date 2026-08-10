@@ -30,11 +30,16 @@ export function createDiaryContext(
   },
 ) {
   const formData = new FormData();
-  formData.append('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-  if (params.memo) formData.append('memo', params.memo);
-  if (params.latitude != null) formData.append('latitude', String(params.latitude));
-  if (params.longitude != null) formData.append('longitude', String(params.longitude));
+  const requestBody: { memo?: string; location?: { latitude: number; longitude: number } } = {};
+  if (params.memo) requestBody.memo = params.memo;
+  if (params.latitude != null && params.longitude != null) {
+    requestBody.location = { latitude: params.latitude, longitude: params.longitude };
+  }
+  if (Object.keys(requestBody).length > 0) {
+    formData.append('request', JSON.stringify(requestBody));
+  }
+
   params.images?.forEach((file) => formData.append('images', file));
 
   return request<DiaryContextResponse>(`/diaries/${diaryId}/contexts`, {
@@ -47,6 +52,7 @@ export function createDiaryContext(
 export function startReflectionSession(diaryId: number) {
   return request<ReflectionSessionResponse>(`/diaries/${diaryId}/reflection-sessions`, {
     method: 'POST',
+    signal: AbortSignal.timeout(30_000),
   });
 }
 
