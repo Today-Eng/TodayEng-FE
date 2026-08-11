@@ -314,7 +314,7 @@ export default function RetrospectSession() {
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #202939, #000000)' }}>
-      <div className="pt-4 flex flex-col gap-4 pb-[120px]">
+      <div className="pt-[calc(var(--sat)+16px)] flex flex-col gap-4 pb-[120px]">
         {[...qnaList].sort((a, b) => a.questionOrder - b.questionOrder).map((item, index, sorted) => {
           const isCurrentQuestion = currentQuestionId === item.questionId
           const isPenultimateQuestion = index === sorted.length - 2
@@ -359,7 +359,7 @@ export default function RetrospectSession() {
         })}
       </div>
 
-      <div className="fixed z-10 bottom-[34px] left-0 right-0 px-4 flex items-center">
+      <div className="fixed z-10 left-0 right-0 px-4 flex items-center" style={{ bottom: 'max(var(--sab), 16px)' }}>
         <button
           onClick={() => setIsStopModalOpen(true)}
           className="w-[74px] h-[42px] bg-error-100 text-error-500 text-[14px] font-semibold rounded-[100px] hover:bg-error-200"

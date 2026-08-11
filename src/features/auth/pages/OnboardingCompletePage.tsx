@@ -36,7 +36,7 @@ export default function OnboardingCompletePage() {
   };
 
   return (
-    <main className="flex min-h-dvh w-full bg-white pt-[62px] text-black">
+    <main className="flex min-h-dvh w-full bg-white pt-[calc(62px+var(--sat))] text-black">
       <div className="flex w-full flex-1 flex-col items-center justify-center gap-20 px-4">
         <section className="flex w-full flex-col items-center gap-6 text-center">
           <div className="relative h-[135px] w-[138px]" aria-hidden="true">
