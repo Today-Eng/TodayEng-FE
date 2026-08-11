@@ -54,7 +54,7 @@ export default function RetrospectSession() {
   const [currentQuestionId, setCurrentQuestionId] = useState<number | null>(null)
   const [qnaList, setQnaList] = useState<QnaItem[]>([])
 
-  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const audioRef = useRef<HTMLAudioElement>(new Audio())
   const recorderRef = useRef<MediaRecorder | null>(null)
   const chunksRef = useRef<BlobPart[]>([])
   const pendingBlobRef = useRef<Blob | null>(null)
@@ -87,23 +87,24 @@ export default function RetrospectSession() {
     })
   }
 
-  const playQuestion = async (audioUrl: string) => {
-    audioRef.current?.pause()
+  const playQuestion = (audioUrl: string): Promise<void> => {
+    const audio = audioRef.current
+    audio.pause()
+    audio.src = toAbsoluteAudioUrl(audioUrl)
+    audio.load()
     setUiState('AI_SPEAKING')
 
-    const audio = new Audio(toAbsoluteAudioUrl(audioUrl))
-    audioRef.current = audio
-
-    try {
-      await audio.play()
-      await new Promise<void>((resolve, reject) => {
-        audio.onended = () => resolve()
-        audio.onerror = () => reject(new Error('음성 재생 실패'))
-      })
-      setUiState('READY_TO_RECORD')
-    } catch {
-      setUiState('READY_TO_RECORD')
-    }
+    return new Promise<void>((resolve) => {
+      const cleanup = () => {
+        audio.removeEventListener('ended', onEnded)
+        audio.removeEventListener('error', onError)
+      }
+      const onEnded = () => { cleanup(); setUiState('READY_TO_RECORD'); resolve() }
+      const onError = () => { cleanup(); setUiState('READY_TO_RECORD'); resolve() }
+      audio.addEventListener('ended', onEnded)
+      audio.addEventListener('error', onError)
+      audio.play().catch(() => { cleanup(); setUiState('READY_TO_RECORD'); resolve() })
+    })
   }
 
   const handleSseMessage = (eventName: string, envelope: SseEnvelope) => {
@@ -200,6 +201,10 @@ export default function RetrospectSession() {
   }
 
   const handleStart = () => {
+    // iOS PWA: 사용자 제스처 컨텍스트에서 Audio 요소를 미리 unlock해 이후 SSE 트리거 재생을 허용
+    audioRef.current.play().catch(() => {})
+    audioRef.current.pause()
+
     setIsStartModalOpen(false)
     void loadPreviousAnswers()
 
@@ -238,7 +243,7 @@ export default function RetrospectSession() {
   useEffect(() => {
     return () => {
       sseAbortRef.current?.abort()
-      audioRef.current?.pause()
+      audioRef.current.pause()
       recorderRef.current?.stop()
     }
   }, [])
