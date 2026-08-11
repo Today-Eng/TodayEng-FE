@@ -36,6 +36,7 @@ export default function RetrospectListPage() {
             px-4
             bg-white
             pb-2
+            pt-[var(--sat)]
           "
         >
           <RetrospectMonthButton
