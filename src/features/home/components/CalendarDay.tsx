@@ -21,8 +21,10 @@ export default function CalendarDay({
   const hasDiary = status === 'WRITTEN';
   const isFuture = status === 'FUTURE';
 
+  const showMarker = selected || hasDiary;
+
   const textClassName = (() => {
-    if (isToday) {
+    if (selected) {
       return 'text-white';
     }
 
@@ -38,48 +40,47 @@ export default function CalendarDay({
   })();
 
   return (
-  <button
-  type="button"
-  disabled={isFuture}
-  onClick={() => onClick(date)}
-  aria-label={`${date} 선택`}
-  aria-pressed={selected}
-  className={[
-    'relative flex h-7 w-7 items-center justify-center',
-    'disabled:cursor-default',
+    <button
+      type="button"
+      disabled={isFuture}
+      onClick={() => onClick(date)}
+      aria-label={`${date} 선택`}
+      aria-pressed={selected}
+      className={[
+        'relative flex h-7 w-7 items-center justify-center',
+        'disabled:cursor-default',
+      ].join(' ')}
+    >
+      {showMarker && (
+        <CalendarWrittenMarker active={selected} />
+      )}
 
-    selected && !hasDiary && !isToday
-      ? [
-          'after:absolute',
-          'after:-bottom-[3px]',
-          'after:left-1/2',
-          'after:h-1',
-          'after:w-1',
-          'after:-translate-x-1/2',
-          'after:rounded-full',
-          'after:bg-main-500',
-        ].join(' ')
-      : '',
-  ].join(' ')}
->
-  {isToday && (
-    <CalendarWrittenMarker active />
-  )}
+      <span
+        className={[
+          'relative z-10 translate-y-px',
+          'flex h-[18px] min-w-4 items-center justify-center',
+          'text-footnote font-normal',
+          textClassName,
+        ].join(' ')}
+      >
+        {day}
+      </span>
 
-  {!isToday && hasDiary && (
-    <CalendarWrittenMarker active={false} />
-  )}
-
-  <span
-    className={[
-      'relative z-10 translate-y-px',
-      'flex h-[18px] min-w-4 items-center justify-center',
-      'text-footnote font-normal',
-      textClassName,
-    ].join(' ')}
-  >
-    {day}
-  </span>
-</button>
+      {isToday && (
+        <span
+          aria-hidden="true"
+          className="
+            absolute
+            -bottom-[8px]
+            left-1/2
+            h-1
+            w-1
+            -translate-x-1/2
+            rounded-full
+            bg-main-500
+          "
+        />
+      )}
+    </button>
   );
 }
