@@ -39,8 +39,8 @@ export default defineConfig({
         name: 'TodayEng',
         short_name: 'TodayEng',
         description: 'TodayEng PWA App',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        theme_color: '#202939',
+        background_color: '#202939',
         display: 'standalone',
         start_url: '/',
         icons: [

@@ -48,7 +48,6 @@ export default function BackHeader({
         top-0
         z-50
         flex
-        h-[68px]
         w-full
         items-end
         justify-between
@@ -56,6 +55,7 @@ export default function BackHeader({
         px-4
         pb-5
       "
+      style={{ paddingTop: 'var(--sat)', minHeight: 'calc(68px + var(--sat))' }}
     >
       <div className="flex min-w-0 items-center gap-4">
         <button

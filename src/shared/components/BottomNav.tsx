@@ -50,8 +50,8 @@ function NavItem({
 
 export default function BottomNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 h-[109px] w-full border-t border-grey-100 bg-white pb-[34px]">
-      <div className="grid h-full grid-cols-3 gap-[10px] px-3 pt-3">
+    <nav className="fixed inset-x-0 bottom-0 z-50 w-full border-t border-grey-100 bg-white" style={{ paddingBottom: 'var(--sab)' }}>
+      <div className="grid grid-cols-3 gap-[10px] px-3 pt-3 pb-1">
         <NavItem
           to="/home"
           label="홈"

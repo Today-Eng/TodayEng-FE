@@ -75,7 +75,7 @@ export default function EnglishLevelSetupPage({ onNext }: EnglishLevelSetupPageP
   };
 
   return (
-    <main className="relative min-h-dvh w-full bg-white pt-[62px] text-black">
+    <main className="relative min-h-dvh w-full bg-white pt-[calc(62px+var(--sat))] text-black">
       <div className="px-4">
         <section className="flex flex-col gap-4">
           <OnboardingProgress currentStep={2} />
