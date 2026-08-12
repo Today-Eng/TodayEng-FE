@@ -9,7 +9,7 @@ import BackHeaderLayout from '@/shared/components/BackHeaderLayout';
 import { startReflectionSession } from '@/features/retrospect/create/api/diaryApi';
 
 // assets
-import loadingVideo from '@/assets/loading.mp4';
+import loadingGif from '@/assets/loading.gif';
 
 export default function RetrospectLoading() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function RetrospectLoading() {
     <div>
       <BackHeaderLayout title="회고하기" />
       <div className="flex flex-col items-center mt-[208px]">
-        <video src={loadingVideo} autoPlay loop muted className="w-[247px] h-[247px]" />
+        <img src={loadingGif} alt="loading" className="w-[247px] h-[247px]" />
         <div className="mt-[30px] flex flex-col items-center">
           <h1 className="text-title2 font-semibold mb-4">오늘의 질문을 준비하고 있어요</h1>
           {error ? (
