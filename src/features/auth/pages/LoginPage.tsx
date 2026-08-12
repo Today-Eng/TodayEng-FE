@@ -127,7 +127,7 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
       </div>
 
       <section className="relative z-10 mx-auto h-[max(100dvh,874px)] w-full max-w-[402px]">
-        <div className="absolute left-[calc(50%-185px)] top-[129px] h-[320px] w-[320px]">
+        <div className="absolute left-[calc(50%-185px)] top-[129px] h-[320px] w-[320px] origin-top scale-90 min-[360px]:scale-100">
           <div className="absolute left-6 top-[69px] h-[197px] w-[262px]">
             <LogoIcon width={262} height={197} />
             <div
