@@ -90,7 +90,7 @@ export default function LearningSettingsPage() {
         </p>
       )}
 
-      <fieldset className="flex w-[calc(100%-31px)] max-w-[371px] flex-1 flex-col justify-center gap-[26px] self-center py-4">
+      <fieldset className="mx-auto flex w-[calc(100%-32px)] max-w-[371px] min-w-0 flex-1 flex-col justify-center gap-[26px] border-0 px-0 py-4">
         <legend className="sr-only">현재 영어 레벨 선택</legend>
 
         {LEVEL_OPTIONS.map((option) => {
