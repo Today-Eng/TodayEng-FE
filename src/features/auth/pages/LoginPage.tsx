@@ -54,8 +54,7 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
 
         saveSession(loginResponse);
         if (!loginResponse.isNewUser) {
-          void restorePushSubscriptionIfNeeded().catch(() => {
-          });
+          void restorePushSubscriptionIfNeeded().catch(() => {});
         }
 
         onGoogleLogin?.();
@@ -100,22 +99,25 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
   }, [navigate, onGoogleLogin]);
 
   return (
-    <main className="relative min-h-dvh w-full overflow-hidden bg-gradient-to-b from-main-500 to-main-400">
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+    <main className="relative min-h-dvh w-full overflow-hidden bg-gradient-to-b from-main-500 to-[#8862C6]">
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-[max(100dvh,874px)] w-full max-w-[402px] -translate-x-1/2 overflow-hidden"
+        aria-hidden="true"
+      >
         <img
           src={ellipse19}
           alt=""
-          className="absolute left-1/2 top-[42.1%] h-[868px] w-[868px] max-w-none -translate-x-[54.1%] -translate-y-1/2 -rotate-[41.6deg]"
+          className="absolute left-1/2 top-[330px] size-[868px] max-w-none -translate-x-[54.1%] -translate-y-1/2 -rotate-[41.6deg]"
         />
         <img
           src={ellipse18}
           alt=""
-          className="absolute left-1/2 top-[42.1%] h-[665px] w-[665px] max-w-none -translate-x-[55.3%] -translate-y-1/2 rotate-[34.35deg]"
+          className="absolute left-1/2 top-[331px] size-[665px] max-w-none -translate-x-[55.3%] -translate-y-1/2 rotate-[34.35deg]"
         />
         <img
           src={ellipse16}
           alt=""
-          className="absolute left-1/2 top-[42.1%] h-[431px] w-[431px] max-w-none -translate-x-[58.3%] -translate-y-1/2 rotate-[145.46deg]"
+          className="absolute left-1/2 top-[330px] size-[431px] max-w-none -translate-x-[58.3%] -translate-y-1/2 rotate-[145.46deg]"
         />
         <img
           src={ellipse17}
@@ -124,18 +126,18 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
         />
       </div>
 
-      <section className="relative z-10 mx-auto h-[874px] min-h-dvh w-full">
-        <div className="flex justify-center pt-[25vh]">
-          <div className="relative h-[197px] w-[262px]">
+      <section className="relative z-10 mx-auto h-[max(100dvh,874px)] w-full max-w-[402px]">
+        <div className="absolute left-[calc(50%-185px)] top-[129px] h-[320px] w-[320px] origin-top scale-90 min-[360px]:scale-100">
+          <div className="absolute left-6 top-[69px] h-[197px] w-[262px]">
             <LogoIcon width={262} height={197} />
             <div
-              className="absolute left-5 top-[207px] -rotate-[11.15deg] font-['NanumSquareRound'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
+              className="absolute left-[48px] top-[218px] -rotate-[11.15deg] font-['Nata_Sans'] text-[70px] font-extrabold leading-normal tracking-[-1.4px] text-white"
               aria-label="Today Eng"
             >
               Today
             </div>
             <div
-              className="absolute left-[206px] top-[177px] rotate-[11.75deg] font-['NanumSquareRound'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
+              className="absolute left-[241px] top-[190px] rotate-[11.75deg] font-['Nata_Sans'] text-[50px] font-extrabold leading-normal tracking-[-1px] text-white"
               aria-hidden="true"
             >
               Eng
@@ -144,7 +146,7 @@ export default function LoginPage({ onGoogleLogin }: LoginPageProps) {
         </div>
         <div
           ref={googleButtonRef}
-          className={`absolute bottom-[239px] left-1/2 flex h-[54px] w-[calc(100%-32px)] -translate-x-1/2 items-center justify-center ${isLoading ? 'pointer-events-none opacity-60' : ''}`}
+          className={`absolute left-1/2 top-[581px] flex h-[54px] w-[calc(100%-32px)] max-w-[370px] -translate-x-1/2 items-center justify-center ${isLoading ? 'pointer-events-none opacity-60' : ''}`}
           aria-label="Google 로그인"
           aria-busy={isLoading}
         />
